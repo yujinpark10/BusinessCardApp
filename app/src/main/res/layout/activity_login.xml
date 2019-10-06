@@ -22,14 +22,14 @@
             tools:layout_editor_absoluteY="213dp">
 
             <EditText
-                android:id="@+id/ID"
+                android:id="@+id/et_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="ID"
                 android:padding="20dp" />
 
             <EditText
-                android:id="@+id/PASSWORD"
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="PASSWORD"

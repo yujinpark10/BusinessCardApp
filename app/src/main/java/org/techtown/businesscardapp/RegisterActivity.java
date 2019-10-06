@@ -1,13 +1,13 @@
 package org.techtown.businesscardapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,21 +18,79 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static  final String TAG = "RegisterAcitivity";
     private EditText et_id, et_password, et_name, et_birth, et_pnumber, et_email;
     private Button btn_register;
+    private AlertDialog dialog;
+    private  boolean validate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //  아이디 값 찾아주기
         et_id = (EditText)findViewById(R.id.et_id);
         et_password = (EditText)findViewById(R.id.et_password);
         et_name = (EditText)findViewById(R.id.et_name);
         et_birth = (EditText)findViewById(R.id.et_birth);
         et_pnumber = (EditText)findViewById(R.id.et_pnumber);
         et_email = (EditText)findViewById(R.id.et_email);
+
+        final Button validateButton = (Button)findViewById(R.id.btn_chkid);
+        validateButton.setOnClickListener(new View.OnClickListener() {
+            // 아이디 중복체크를 눌렀을때, 중복여부 체크
+            @Override
+            public void onClick(View view) {
+                String userID = et_id.getText().toString();
+                if(validate){
+                    return;
+                }
+                if(userID.equals((""))){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("아이디를 입력해주세요.")
+                            .setPositiveButton("획인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    // 서버에 접속한 뒤, 응답을 받는 부분
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            Log.d(TAG, "오케이 !!!!!!!!!!!");
+                            if (success) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create();
+                                dialog.show();
+                                et_id.setEnabled(false);  // 아이디값을 변경할 수 없도록 고정
+                                validate = true;
+                                et_id.setBackgroundColor(getResources().getColor(R.color.colorGray));
+                                validateButton.setBackgroundColor(getResources().getColor(R.color.colorGray));
+
+                            } else {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                dialog = builder.setMessage("사용할 수 없는 아이디입니다.")
+                                        .setNegativeButton("확인", null)
+                                        .create();
+                                dialog.show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                queue.add(validateRequest);
+
+            }
+        });
 
         // 회원가입 버튼 클릭 시 수행
         btn_register = (Button)findViewById(R.id.btn_register);
@@ -47,19 +105,50 @@ public class RegisterActivity extends AppCompatActivity {
                 String userNum = et_pnumber.getText().toString();
                 String userEmail = et_email.getText().toString();
 
+//                if(!validate){
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+//                    dialog = builder.setMessage("아이디 중복체크를 해주세요.")
+//                            .setNegativeButton("확인", null)
+//                            .create();
+//                    dialog.show();
+//                    return;
+//                }
+//
+//                if(userID.equals("") || userPassword.equals("") || userName.equals("") || userBirth.equals("") || userNum.equals("") || userEmail.equals("")){
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+//                    dialog = builder.setMessage("빈칸없이 입력해주세요.")
+//                            .setNegativeButton("획인", null)
+//                            .create();
+//                    dialog.show();
+//                    return;
+//                }
+
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
+                            public void onResponse(String response) {
+                                try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
+                            //Log.d(TAG, "오케이 222222222");
                             if(success){ // 회원등록에 성공한 경우
-                                Toast.makeText(getApplicationContext(),"회원등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                startActivity(intent);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                dialog = builder.setMessage("회원등록에 성공했습니다.")
+                                        .setPositiveButton("획인", null)
+                                        .create();
+                                dialog.show();
+                                finish();
+
+                                // Toast.makeText(getApplicationContext(),"회원등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                                // Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                // startActivity(intent);
                             } else { // 회원등록에 실패한 경우
-                                Toast.makeText(getApplicationContext(), "회원등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                return;
+                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                dialog = builder.setMessage("회원등록에 실패했습니다.")
+                                        .setNegativeButton("획인", null)
+                                        .create();
+                                dialog.show();
+
                             }
                         }
                         catch (JSONException e) {
@@ -74,4 +163,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+   /* @Override
+    protected  void onStop(){
+        super.onStop();
+        if(dialog != null){
+            dialog.dismiss();
+            dialog = null;
+        }
+    }*/
 }

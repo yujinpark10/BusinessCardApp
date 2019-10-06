@@ -14,16 +14,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
-//        tv_id = (TextView)findViewById(R.id.tv_id);
-//        tv_pass = (TextView)findViewById(R.id.tv_pass);
-//
-//        Intent intent = getIntent();
-//        String userID = intent.getStringExtra("userID");
-//        String userPassword = intent.getStringExtra("userPassword");
-//
-//        tv_id.setText(userID);
-//        tv_pass.setText(userPassword);
+
+        tv_id = (TextView)findViewById(R.id.tv_id);
+        tv_pass = (TextView)findViewById(R.id.tv_pass);
+
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
+        String userPassword = intent.getStringExtra("userPassword");
+
+        tv_id.setText(userID);
+        tv_pass.setText(userPassword);
 
     }
 }
