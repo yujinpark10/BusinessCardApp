@@ -3,6 +3,7 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static  final String TAG = "RegisterAcitivity";
     private EditText et_id, et_password, et_name, et_birth, et_pnumber, et_email;
-    private Button btn_register;
+    private Button btn_register, btn_cancel;
     private AlertDialog dialog;
     private  boolean validate = false;
 
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().hide();
 
         et_id = (EditText)findViewById(R.id.et_id);
         et_password = (EditText)findViewById(R.id.et_password);
@@ -89,6 +91,16 @@ public class RegisterActivity extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(validateRequest);
 
+            }
+        });
+
+        //취소 버튼 클릭시 수행
+        btn_cancel = (Button)findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
