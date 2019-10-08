@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     // 일단 전에 했던 부분으로 복붙
     // id들 통일 시키고 수정해야할 부분 다시 하기
 
@@ -61,7 +62,7 @@
                 android:textSize="20dp"
                 android:layout_marginRight="100dp"/>
             <Button
-                android:id="@+id/asdf2"
+                android:id="@+id/btn_UserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="내이름"
@@ -217,5 +218,6 @@
             android:text="password"/>
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
