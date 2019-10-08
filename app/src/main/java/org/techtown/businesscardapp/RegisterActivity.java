@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_pnumber = (EditText)findViewById(R.id.et_pnumber);
         et_email = (EditText)findViewById(R.id.et_email);
 
+        //회원가입시 아이디가 사용가능한지 검증하는 부분
         final Button validateButton = (Button)findViewById(R.id.btn_chkid);
         validateButton.setOnClickListener(new View.OnClickListener() {
             // 아이디 중복체크를 눌렀을때, 중복여부 체크
@@ -61,7 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            Log.d(TAG, "오케이 !!!!!!!!!!!");
                             if (success) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 dialog = builder.setMessage("사용할 수 있는 아이디입니다.")
@@ -104,44 +104,41 @@ public class RegisterActivity extends AppCompatActivity {
                 String userBirth = et_birth.getText().toString();
                 String userNum = et_pnumber.getText().toString();
                 String userEmail = et_email.getText().toString();
+                //String cardNum = null;
 
-//                if(!validate){
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-//                    dialog = builder.setMessage("아이디 중복체크를 해주세요.")
-//                            .setNegativeButton("확인", null)
-//                            .create();
-//                    dialog.show();
-//                    return;
-//                }
-//
-//                if(userID.equals("") || userPassword.equals("") || userName.equals("") || userBirth.equals("") || userNum.equals("") || userEmail.equals("")){
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-//                    dialog = builder.setMessage("빈칸없이 입력해주세요.")
-//                            .setNegativeButton("획인", null)
-//                            .create();
-//                    dialog.show();
-//                    return;
-//                }
+                if(userID.equals("") || userPassword.equals("") || userName.equals("") || userBirth.equals("") || userNum.equals("") || userEmail.equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("빈칸없이 입력해주세요.")
+                            .setNegativeButton("획인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
 
+                if(!validate){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("아이디 중복체크를 해주세요.")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
 
+                // 회원가입 시작
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                             public void onResponse(String response) {
                                 try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            //Log.d(TAG, "오케이 222222222");
                             if(success){ // 회원등록에 성공한 경우
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 dialog = builder.setMessage("회원등록에 성공했습니다.")
                                         .setPositiveButton("획인", null)
                                         .create();
                                 dialog.show();
-                                finish();
+                                // finish();
 
-                                // Toast.makeText(getApplicationContext(),"회원등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                                // Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                // startActivity(intent);
                             } else { // 회원등록에 실패한 경우
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 dialog = builder.setMessage("회원등록에 실패했습니다.")
@@ -163,12 +160,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-   /* @Override
+
+    @Override
     protected  void onStop(){
         super.onStop();
         if(dialog != null){
             dialog.dismiss();
             dialog = null;
         }
-    }*/
+    }
 }
