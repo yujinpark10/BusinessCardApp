@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .setPositiveButton("획인", null)
                                         .create();
                                 dialog.show();
-                                // finish();
+                                finish();
 
                             } else { // 회원등록에 실패한 경우
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);

@@ -49,9 +49,9 @@ public class UserInfoAdapter extends BaseAdapter {
         TextView faxNum = (TextView)v.findViewById(R.id.faxNum);
         TextView address = (TextView)v.findViewById(R.id.address);
         TextView userID = (TextView)v.findViewById(R.id.userID);
-        String m = userCardList.get(i).getName();
+        //String m = userCardList.get(i).getName();
 
-        Log.d(m, "오케이1");
+        // Log.d(m, "오케이1");
         cardNum.setText(userCardList.get(i).getCardNum());
         name.setText(userCardList.get(i).getName());
         company.setText(userCardList.get(i).getCompany());
