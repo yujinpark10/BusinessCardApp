@@ -1,6 +1,7 @@
 package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         et_id = (EditText)findViewById(R.id.et_id);
         et_password = (EditText)findViewById(R.id.et_password);
@@ -87,6 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+    }
+    private long time= 0;
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis()-time>=2000){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<2000){
+            ActivityCompat.finishAffinity(this);
+        }
     }
 }
 
