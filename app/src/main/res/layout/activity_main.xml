@@ -6,216 +6,210 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<<<<<<< HEAD
     // 일단 전에 했던 부분으로 복붙
     // id들 통일 시키고 수정해야할 부분 다시 하기
-
+=======
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <EditText
+            android:id="@+id/SEARCH1"
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:hint="검색"
+            android:padding="20dp" />
+        <Button
+            android:id="@+id/SEARCH2"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="검색"
+            android:textSize="20dp" />
+        <Button
+            android:id="@+id/SETTING"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:text="설정"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#444444"/>
+>>>>>>> parent of cf99919... Merge branch 'master' of https://github.com/yujinpark10/BusinessCardApp
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:background="#444444"
+        android:layout_margin="20dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/asdf1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사진"
+            android:textSize="20dp"
+            android:layout_marginRight="100dp"/>
+        <Button
+            android:id="@+id/btn_UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내이름"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#444444"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="514dp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
-
-            <EditText
-                android:id="@+id/SEARCH1"
-                android:layout_width="183dp"
-                android:layout_height="wrap_content"
-                android:hint="검색"
-                android:padding="20dp" />
-            <Button
-                android:id="@+id/SEARCH2"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:text="검색"
-                android:textSize="20dp" />
-            <Button
-                android:id="@+id/SETTING"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:text="설정"
-                android:textSize="20dp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#444444"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="#444444"
             android:layout_margin="20dp"
-            android:gravity="center">
+            android:background="#444444"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <Button
-                android:id="@+id/asdf1"
+                android:id="@+id/asdf3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
                 android:text="사진"
-                android:textSize="20dp"
-                android:layout_marginRight="100dp"/>
+                android:textSize="20dp" />
+
             <Button
+                android:id="@+id/asdf4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="니 이름"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="#444444"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/asdf5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:text="사진"
+                android:textSize="20dp" />
+
+            <Button
+<<<<<<< HEAD
                 android:id="@+id/asdf2"
+=======
+                android:id="@+id/asdf6"
+>>>>>>> parent of cf99919... Merge branch 'master' of https://github.com/yujinpark10/BusinessCardApp
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="내이름"
+                android:text="니 이름"
                 android:textSize="20dp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#444444"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="514dp"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#444444"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/asdf3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    android:text="사진"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/asdf4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="니 이름"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#444444"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/asdf5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    android:text="사진"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/asdf6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="니 이름"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#444444"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/asdf7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    android:text="사진"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/asdf8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="니 이름"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#444444"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/asdf9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    android:text="사진"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/asdf0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="니 이름"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#444444"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_margin="20dp"
+            android:background="#444444"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <Button
-                android:id="@+id/asdf10"
+                android:id="@+id/asdf7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="명함등록"
+                android:layout_marginRight="100dp"
+                android:text="사진"
                 android:textSize="20dp" />
 
             <Button
-                android:id="@+id/asdf11"
+                android:id="@+id/asdf8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="명함교환"
+                android:text="니 이름"
                 android:textSize="20dp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_id"
-            android:text="id"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_pass"
-            android:text="password"/>
+            android:layout_margin="20dp"
+            android:background="#444444"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
+            <Button
+                android:id="@+id/asdf9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:text="사진"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/asdf0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="니 이름"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#444444"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/asdf10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명함등록"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/asdf11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명함교환"
+            android:textSize="20dp" />
+    </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
