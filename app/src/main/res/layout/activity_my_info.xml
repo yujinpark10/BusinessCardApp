@@ -8,12 +8,6 @@
     android:background="#d1d1d1">
 
 
-    <TextView
-        android:id="@+id/userListTextView"
-        android:layout_width="469dp"
-        android:layout_height="141dp"
-        android:text="TextView" />
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"

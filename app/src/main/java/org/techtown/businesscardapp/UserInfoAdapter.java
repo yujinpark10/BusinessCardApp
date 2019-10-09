@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+//  User를 리스트뷰에 뿌려주기 위한 어댑터
 public class UserInfoAdapter extends BaseAdapter {
     private Context context;
     private List<User> userCardList;
@@ -20,16 +21,19 @@ public class UserInfoAdapter extends BaseAdapter {
 
     }
 
+    // 출력할 총갯수를 설정하는 메소드
     @Override
     public int getCount() {
         return userCardList.size();
     }
 
+    // 특정한 유저를 반환하는 메소드
     @Override
-    public Object getItem(int i) { // 특정한 명함정보를 반환
+    public Object getItem(int i) {
         return userCardList.get(i);
     }
 
+    //아이템별 아이디를 반환하는 메소드
     @Override
     public long getItemId(int i) {
         return i;
@@ -52,15 +56,16 @@ public class UserInfoAdapter extends BaseAdapter {
         //String m = userCardList.get(i).getName();
 
         // Log.d(m, "오케이1");
-        cardNum.setText(userCardList.get(i).getCardNum());
+
+        cardNum.setText("" + userCardList.get(i).getCardNum());
         name.setText(userCardList.get(i).getName());
         company.setText(userCardList.get(i).getCompany());
         team.setText(userCardList.get(i).getTeam());
         position.setText(userCardList.get(i).getPosition());
-        coNum.setText(userCardList.get(i).getCoNum());
+        coNum.setText("" + userCardList.get(i).getCoNum());
         num.setText(userCardList.get(i).getNum());
         e_mail.setText(userCardList.get(i).getE_mail());
-        faxNum.setText(userCardList.get(i).getFaxNum());
+        faxNum.setText("" + userCardList.get(i).getFaxNum());
         address.setText(userCardList.get(i).getAddress());
         userID.setText(userCardList.get(i).getUserID());
         Log.d(MSG, "오케이2");

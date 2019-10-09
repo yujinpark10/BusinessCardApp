@@ -30,11 +30,6 @@ public class MyInfoActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listView);
         userCardList = new ArrayList<User>();
 
-        //userCardList.add(new User(1,"1","1","1","1",1,"1","1",1,"1","1"));
-        //userCardList.add(new User(2,"2","1","1","1",1,"1","1",1,"1","1"));
-        //userCardList.add(new User(3,"3","1","1","1",1,"1","1",1,"1","1"));
-        //userCardList.add(new User(4,"4","1","1","1",1,"1","1",1,"1","1"));
-
         adapter = new UserInfoAdapter(getApplicationContext(), userCardList);
         listView.setAdapter(adapter);
 
