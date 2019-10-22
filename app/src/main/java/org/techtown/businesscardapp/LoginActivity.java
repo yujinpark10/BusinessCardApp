@@ -1,8 +1,6 @@
 package org.techtown.businesscardapp;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,73 +36,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private EditText et_id, et_password;
     private Button btn_register, btn_login;
+
     private static final int RC_SIGN_IN = 10;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
 
-    String autoid, autopwd;
-
-    
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        et_id = (EditText)findViewById(R.id.et_id);
-        et_password = (EditText)findViewById(R.id.et_password);
-        btn_login = (Button)findViewById(R.id.btn_login);
-        btn_register = (Button)findViewById(R.id.btn_register);
-
-        final SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);//자동로그인 저장
-
-        //loginactctivity로 들어왔을때 ID PWD가 null이 아니면 자동 로그인
-        autoid = auto.getString(("et_id"),null);//자동로그인 변수저장
-        autopwd = auto.getString("et_password",null);
-
-        if(autoid!=null&&autopwd!=null){
-
-            String userID = autoid;
-            String userPassword = autopwd;
-
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        boolean success = jsonObject.getBoolean("success");
-                        if (success) { // 로그인에 성공한 경우
-                            String userID = jsonObject.getString("userID");
-                            String userPassword = jsonObject.getString("userPassword");
-                            String userName = jsonObject.getString("userName");
-                            String userBirth = jsonObject.getString("userBirth");
-                            String userNum = jsonObject.getString("userNum");
-                            String userEmail = jsonObject.getString("userEmail");
-                            // String cardNum = jsonObject.getString("cardNum");
-
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("userID", userID);
-                            intent.putExtra("userPassword", userPassword);
-                            intent.putExtra("userName", userName);
-                            intent.putExtra("userBirth", userBirth);
-                            intent.putExtra("userNum", userNum);
-                            intent.putExtra("userEmail", userEmail);
-                            //intent.putExtra("cardNum", cardNum);
-                            startActivity(intent);
-                        } else { // 로그인에 실패한 경우
-                            Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-            queue.add(loginRequest);
-        }
-
-        //구글 로그인 연동 시작
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
@@ -127,9 +65,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
-        });//구글 로그인 연동 기본 끝
+        });
 
-
+        et_id = (EditText)findViewById(R.id.et_id);
+        et_password = (EditText)findViewById(R.id.et_password);
+        btn_login = (Button)findViewById(R.id.btn_login);
+        btn_register = (Button)findViewById(R.id.btn_register);
 
         // 회원가입 버튼을 클릭 시 수행
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +81,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        //로그인 버튼클릭시
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,13 +113,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 intent.putExtra("userEmail", userEmail);
                                 //intent.putExtra("cardNum", cardNum);
 
-
-                                //로그인성공시 auto에 id pwd 저장
-                                SharedPreferences.Editor autoLogin = auto.edit();
-                                autoLogin.putString("autoid", et_id.getText().toString());
-                                autoLogin.putString("autopwd", et_password.getText().toString());
-                                autoLogin.commit();
-
                                 startActivity(intent);
                             } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
@@ -197,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-//뒤로가기 두번 누를시 종료
+
     private long time= 0;
     @Override
     public void onBackPressed(){
@@ -209,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-//구글로그인 부분
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -235,11 +168,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {//구글로그인 성공
-                            Intent intent = new Intent(LoginActivity.this, google_login.class);
-                            startActivity(intent);
+                        if (task.isSuccessful()) {
                         }
-                        else{//실패
+                        else{
                             Toast.makeText(LoginActivity.this,"ID 생성이 완료 되었습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
