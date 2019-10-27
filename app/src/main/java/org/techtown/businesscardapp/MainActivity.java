@@ -1,6 +1,11 @@
 package org.techtown.businesscardapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,8 +62,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //내 정보에 들어갈 뷰페이저
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(3);
 
+        pagerAdapter mycard_adapter = new pagerAdapter(getSupportFragmentManager());
+
+        mycard_Fragment1 mycard_fragment1 = new mycard_Fragment1();
+        mycard_adapter.addItem(mycard_fragment1);
+        mycard_Fragment2 mycard_fragment2 = new mycard_Fragment2();
+        mycard_adapter.addItem(mycard_fragment2);
+        mycard_Fragment3 mycard_fragment3 = new mycard_Fragment3();
+        mycard_adapter.addItem(mycard_fragment3);
+
+        pager.setAdapter(mycard_adapter);
     }
+
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String target;
@@ -100,6 +120,28 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
             intent.putExtra("userCardList", result );
             MainActivity.this.startActivity(intent);
+        }
+    }
+
+    class pagerAdapter extends FragmentStatePagerAdapter {
+        ArrayList<Fragment> items = new ArrayList<Fragment>();
+
+        public pagerAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addItem(Fragment item){
+            items.add(item);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return items.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
         }
     }
 }
