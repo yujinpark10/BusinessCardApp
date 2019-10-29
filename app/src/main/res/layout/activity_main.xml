@@ -23,10 +23,18 @@
 
             <EditText
                 android:id="@+id/editSearch"
-                android:layout_width="240dp"
+                android:layout_width="187dp"
                 android:layout_height="wrap_content"
                 android:hint="검색"
                 android:padding="20dp" />
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="logout" />
+
             <Button
                 android:id="@+id/SEARCH2"
                 android:layout_width="65dp"
@@ -163,16 +171,6 @@
 
 
         // 이거 이제 필요 없으면 지우기
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_id"
-            android:text="id"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_pass"
-            android:text="password"/>
 
     </LinearLayout>
 
