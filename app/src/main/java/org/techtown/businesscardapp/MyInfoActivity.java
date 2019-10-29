@@ -6,8 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,6 +30,7 @@ public class MyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_info);
 
         Intent intent = getIntent();
+        final String ID = intent.getStringExtra("userID");
         // TextView userListTextView = (TextView)findViewById(R.id.userListTextView);
         // userListTextView.setText(intent.getStringExtra("userCardList"));
 
@@ -34,7 +41,11 @@ public class MyInfoActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
        try {
-            JSONObject jsonObject = new JSONObject(intent.getStringExtra("userCardList"));
+
+           JSONObject jsonObject = new JSONObject(intent.getStringExtra("userCardList"));
+           //final String ID = intent.getStringExtra("userID");
+           jsonObject.put("userID", ID);
+
             JSONArray jsonArray = jsonObject.getJSONArray("response");
             int count = 0; // 해당 명함갯수를 관리
             String name, company, team, position, num, e_mail, address, userID;

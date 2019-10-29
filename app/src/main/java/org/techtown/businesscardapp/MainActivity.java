@@ -8,6 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,13 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn_UserName = (Button)findViewById(R.id.btn_UserName);
         Intent intent = getIntent();
-        String userName = intent.getStringExtra("userName");
+        final String userName = intent.getStringExtra("userName");
+        final String userID = intent.getStringExtra("userID");
         btn_UserName.setText(userName);
 
         btn_UserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MyInfoActivity.class);
+                //final String userID = intent.getStringExtra("userID");
+                Intent intent = new Intent(MainActivity.this,MyInfoActivity.class);
+                intent.putExtra("userID", "park");
                 startActivity(intent);
             }
         });
