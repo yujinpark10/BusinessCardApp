@@ -1,6 +1,8 @@
 package org.techtown.businesscardapp;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,23 +43,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
 
+    String loginid, loginpw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
-        mAuth = FirebaseAuth.getInstance();
 
+        //변수 설정
+        et_id = (EditText)findViewById(R.id.et_id);
+        et_password = (EditText)findViewById(R.id.et_password);
+        btn_login = (Button)findViewById(R.id.btn_login);
+        btn_register = (Button)findViewById(R.id.btn_register);
+        this.SetListener();//버튼클릭시 이벤트 모음
+
+        //구글 로그인, 파이어베이스
+        mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
-
         SignInButton button = (SignInButton) findViewById((R.id.btn_signin));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,22 +76,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+    }
 
-        et_id = (EditText)findViewById(R.id.et_id);
-        et_password = (EditText)findViewById(R.id.et_password);
-        btn_login = (Button)findViewById(R.id.btn_login);
-        btn_register = (Button)findViewById(R.id.btn_register);
-
-        // 회원가입 버튼을 클릭 시 수행
-        btn_register.setOnClickListener(new View.OnClickListener() {
+    //버튼 클릭시 발생 이벤트 모음
+    public void SetListener()
+    {
+        //회원가입 버튼 클릭시
+        btn_register.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
+
+        btn_login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 // EditText에 현재 입력되어있는 값을 get 해온다.
@@ -113,6 +123,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 intent.putExtra("userEmail", userEmail);
                                 //intent.putExtra("cardNum", cardNum);
 
+                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor autologin = auto.edit();
+                                autologin.putString("et_id", et_id.getText().toString());
+                                autologin.putString("et_password", et_password.getText().toString());
+                                autologin.commit();
                                 startActivity(intent);
                             } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
@@ -128,9 +143,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 queue.add(loginRequest);
             }
         });
+
     }
 
-
+    //백버튼 두번 누를시종료
     private long time= 0;
     @Override
     public void onBackPressed(){
@@ -142,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-
+    //구글 로그인 관련
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -160,7 +176,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
     }
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -176,10 +191,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 });
     }
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 }
 
