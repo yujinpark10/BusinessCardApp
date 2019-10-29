@@ -23,10 +23,18 @@
 
             <EditText
                 android:id="@+id/editSearch"
-                android:layout_width="240dp"
+                android:layout_width="187dp"
                 android:layout_height="wrap_content"
                 android:hint="검색"
                 android:padding="20dp" />
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="logout" />
+
             <Button
                 android:id="@+id/SEARCH2"
                 android:layout_width="65dp"
@@ -70,7 +78,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="420dp"
             android:orientation="vertical">
 
             // 명함 목록 띄울 리스트 뷰
@@ -78,7 +86,7 @@
                 android:id="@+id/cardList"
                 android:layout_width="match_parent"
                 android:textFilterEnabled="true"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_margin="20dp"
                 android:background="#444444"
                 android:gravity="center"
@@ -109,31 +117,6 @@
                     android:textSize="20dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="#444444"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <Button
-                    android:id="@+id/asdf7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="100dp"
-                    android:text="사진"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/asdf8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="니 이름"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <View
@@ -161,19 +144,12 @@
                 android:textSize="20dp" />
         </LinearLayout>
 
+<<<<<<< HEAD
+=======
 
         // 이거 이제 필요 없으면 지우기
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_id"
-            android:text="id"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_pass"
-            android:text="password"/>
 
+>>>>>>> d24994286ab99022258531a267c1c9946c3e97ad
     </LinearLayout>
 
 

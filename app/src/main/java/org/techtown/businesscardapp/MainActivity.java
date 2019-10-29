@@ -2,13 +2,16 @@ package org.techtown.businesscardapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -49,6 +52,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //버튼 로그아웃 클릭시 실행
+        Button logout = (Button)findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = auto.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
         Button btn_UserName = (Button)findViewById(R.id.btn_UserName);
         Intent intent = getIntent();
         final String userName = intent.getStringExtra("userName");
@@ -64,17 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-//        tv_id = (TextView)findViewById(R.id.tv_id);
-//        tv_pass = (TextView)findViewById(R.id.tv_pass);
-//
-//        Intent intent = getIntent();
-//        String userID = intent.getStringExtra("userID");
-//        String userPassword = intent.getStringExtra("userPassword");
-//
-//        tv_id.setText(userID);
-//        tv_pass.setText(userPassword);
 
         btn_UserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(mycard_adapter);
 
         //명함 목록을 위한 리스트뷰
-        cardListViewAdapter cardlistAdapter;
-
-        cardlistAdapter = new cardListViewAdapter();
+        cardListViewAdapter cardlistAdapter = new cardListViewAdapter();
 
         cardList = (ListView)findViewById(R.id.cardList);
         cardList.setAdapter(cardlistAdapter);
@@ -204,6 +210,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 3;
+        }
+    }
+
+    //백버튼 두번 누를시종료
+    private long time= 0;
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis()-time>=2000){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<2000){
+            ActivityCompat.finishAffinity(this);
         }
     }
 }

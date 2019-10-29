@@ -86,6 +86,7 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
         return listFilter ;
     }
 
+    // 검색 부분
     private class ListFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
