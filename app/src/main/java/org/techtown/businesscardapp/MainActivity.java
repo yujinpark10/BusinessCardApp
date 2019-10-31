@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         //버튼 로그아웃 클릭시 실행
         Button logout = (Button)findViewById(R.id.logout);
@@ -88,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new BackgroundTask().execute();
+            }
+        });
+
+        // 명함 등록 버튼 클릭시
+        Button btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
+
+        btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                startActivity(intent);
             }
         });
 
