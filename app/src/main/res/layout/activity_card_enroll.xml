@@ -52,7 +52,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputName"
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="이름"
@@ -77,7 +77,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputCompany"
+                        android:id="@+id/et_company"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="회사명"
@@ -102,7 +102,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputTeam"
+                        android:id="@+id/et_team"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="팀명"
@@ -127,7 +127,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputPosition"
+                        android:id="@+id/et_position"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="직책"
@@ -152,7 +152,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputCoNumber"
+                        android:id="@+id/et_conumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="회사번호"
@@ -177,7 +177,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputPhone"
+                        android:id="@+id/et_pnumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="전화번호"
@@ -202,7 +202,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputMail"
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="이메일"
@@ -227,7 +227,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputFax"
+                        android:id="@+id/et_fnumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="팩스번호"
@@ -252,7 +252,7 @@
                         android:layout_marginRight="10dp"/>
 
                     <EditText
-                        android:id="@+id/edt_inputAddress"
+                        android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="주소"

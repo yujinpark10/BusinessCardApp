@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+
+
         //버튼 로그아웃 클릭시 실행
         Button logout = (Button)findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener(){
@@ -94,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 명함 등록 버튼 클릭시
         Button btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
-
         btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
