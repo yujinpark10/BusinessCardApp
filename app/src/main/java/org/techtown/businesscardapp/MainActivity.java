@@ -10,18 +10,22 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,13 +44,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String TAG = "businesscardapp";
     //private TextView tv_id, tv_pass;
     private Button btn_userName;
+    private static final String TAG_JSON="responseyou";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_COMPANY ="company";
+    ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
+    String mJsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,22 +132,12 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(mycard_adapter);
 
         //명함 목록을 위한 리스트뷰
-        cardListViewAdapter cardlistAdapter = new cardListViewAdapter();
 
         cardList = (ListView)findViewById(R.id.cardList);
-        cardList.setAdapter(cardlistAdapter);
+        mArrayList = new ArrayList<>();
 
-        // 임시 아이템 추가
-        cardlistAdapter.addItem("구교동", "1번");
-        cardlistAdapter.addItem("박유진", "2번");
-        cardlistAdapter.addItem("빈준호", "3번");
-        cardlistAdapter.addItem("임창섭", "4번");
-        cardlistAdapter.addItem("이름", "5번");
-        cardlistAdapter.addItem("이름", "6번");
-        cardlistAdapter.addItem("이름", "7번");
-        cardlistAdapter.addItem("이름", "8번");
-        cardlistAdapter.addItem("이름", "9번");
-        cardlistAdapter.addItem("이름", "10번");
+        GetData task = new GetData();
+        task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php");
 
         // 커스텀 리스트뷰 검색
         EditText editSearch = (EditText)findViewById(R.id.editSearch);
@@ -225,6 +227,129 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 3;
         }
+    }
+
+    // 리스트뷰 준비중
+    private class GetData extends AsyncTask<String, Void, String>{
+        ProgressDialog progressDialog;
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(MainActivity.this,
+                    "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+            Log.d(TAG, "response  - " + result);
+
+            if (result == null){
+
+            }
+            else {
+                mJsonString = result;
+                showResult();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.connect();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+
+    private void showResult(){
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String name = item.getString(TAG_NAME);
+                String company = item.getString(TAG_COMPANY);
+
+                HashMap<String,String> hashMap = new HashMap<>();
+
+                hashMap.put(TAG_NAME, name);
+                hashMap.put(TAG_COMPANY, "(" + company + ")");
+
+                mArrayList.add(hashMap);
+            }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    MainActivity.this, mArrayList, R.layout.card_list,
+                    new String[]{TAG_NAME, TAG_COMPANY},
+                    new int[]{R.id.cardListName, R.id.cardListCompany}
+            );
+
+            cardList.setAdapter(adapter);
+
+        } catch (JSONException e) {
+
+            Log.d(TAG, "showResult : ", e);
+        }
+
     }
 
     //백버튼 두번 누를시종료

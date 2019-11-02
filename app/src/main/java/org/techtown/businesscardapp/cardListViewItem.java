@@ -1,20 +1,20 @@
 package org.techtown.businesscardapp;
 
 public class cardListViewItem {
-    private String titleStr ;
-    private String descStr ;
+    private String nameStr ;
+    private String companyStr ;
 
-    public void setTitle(String title) {
-        titleStr = title ;
+    public void setName(String name) {
+        nameStr = name ;
     }
-    public void setDesc(String desc) {
-        descStr = desc ;
+    public void setCompany(String company) {
+        companyStr = company ;
     }
 
-    public String getTitle() {
-        return this.titleStr ;
+    public String getNmae() {
+        return this.nameStr ;
     }
-    public String getDesc() {
-        return this.descStr ;
+    public String getCompany() {
+        return this.companyStr ;
     }
 }
