@@ -43,15 +43,15 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
         }
 
         // 화면에 표시될 View로부터 위젯에 대한 참조 획득
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
+        TextView nameTextView = (TextView) convertView.findViewById(R.id.cardListName) ;
+        TextView companyTextView = (TextView) convertView.findViewById(R.id.cardListCompany) ;
 
         // Data set(filteredItemList)에서 position에 위치한 데이터 참조 획득
         cardListViewItem cardlistViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 대한 반영
-        titleTextView.setText(cardlistViewItem.getTitle());
-        descTextView.setText(cardlistViewItem.getDesc());
+        nameTextView.setText(cardlistViewItem.getNmae());
+        companyTextView.setText(cardlistViewItem.getCompany());
 
         return convertView;
     }
@@ -69,11 +69,11 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title, String desc) {
+    public void addItem(String name, String company) {
         cardListViewItem item = new cardListViewItem();
 
-        item.setTitle(title);
-        item.setDesc(desc);
+        item.setName(name);
+        item.setCompany(company);
 
         cardListViewItemList.add(item);
     }
@@ -100,8 +100,8 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
 
                 // 하나의 text 뷰에 대해서 할꺼면 조건을 하나만 걸기
                 for (cardListViewItem item : cardListViewItemList) {
-                    if (item.getTitle().toUpperCase().contains(constraint.toString().toUpperCase()) ||
-                            item.getDesc().toUpperCase().contains(constraint.toString().toUpperCase()))
+                    if (item.getNmae().toUpperCase().contains(constraint.toString().toUpperCase()) ||
+                            item.getCompany().toUpperCase().contains(constraint.toString().toUpperCase()))
                     {
                         itemList.add(item) ;
                     }
