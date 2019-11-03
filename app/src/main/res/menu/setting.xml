@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="로그아웃"
+        android:id="@+id/logout" />
+
+    <item
+        android:title="회원탈퇴"
+        android:id="@+id/dropID" />
+
+</menu>

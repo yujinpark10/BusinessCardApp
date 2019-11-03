@@ -15,12 +15,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_userName;
+    private Button btn_setting;
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         //버튼 로그아웃 클릭시 실행
         Button logout = (Button)findViewById(R.id.logout);
@@ -65,6 +69,23 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
                 Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        });
+
+        // 설정 버튼 클릭시
+        btn_setting = (Button)findViewById(R.id.btn_setting);
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu p = new PopupMenu(getApplicationContext(), view);
+                getMenuInflater().inflate(R.menu.setting, p.getMenu());
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        return false;
+                    }
+                });
+                p.show();
             }
         });
 
@@ -147,6 +168,37 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // 설정 메뉴 버튼
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.setting, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(logoutIntent);
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = auto.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+
+            case R.id.dropID:
+                Intent dropIDIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(dropIDIntent);
+                return true;
+
+             default:
+                return false;
+        }
     }
 
     // 내 정보 클릭시 정보 호출
