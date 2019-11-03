@@ -1,3 +1,6 @@
+
+// 현재 사용 안하는거 같음
+
 package org.techtown.businesscardapp;
 
 import android.content.Context;
@@ -50,7 +53,7 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
         cardListViewItem cardlistViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 대한 반영
-        nameTextView.setText(cardlistViewItem.getNmae());
+        nameTextView.setText(cardlistViewItem.getName());
         companyTextView.setText(cardlistViewItem.getCompany());
 
         return convertView;
@@ -100,7 +103,7 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
 
                 // 하나의 text 뷰에 대해서 할꺼면 조건을 하나만 걸기
                 for (cardListViewItem item : cardListViewItemList) {
-                    if (item.getNmae().toUpperCase().contains(constraint.toString().toUpperCase()) ||
+                    if (item.getName().toUpperCase().contains(constraint.toString().toUpperCase()) ||
                             item.getCompany().toUpperCase().contains(constraint.toString().toUpperCase()))
                     {
                         itemList.add(item) ;

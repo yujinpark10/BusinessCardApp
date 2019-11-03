@@ -3,54 +3,41 @@ package org.techtown.businesscardapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String TAG = "businesscardapp";
-    //private TextView tv_id, tv_pass;
     private Button btn_userName;
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
@@ -64,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-
-
 
         //버튼 로그아웃 클릭시 실행
         Button logout = (Button)findViewById(R.id.logout);
@@ -139,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         GetData task = new GetData();
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php");
 
-        // 커스텀 리스트뷰 검색
-        EditText editSearch = (EditText)findViewById(R.id.editSearch);
+        // 리스트뷰 검색
+        final EditText editSearch = (EditText)findViewById(R.id.editSearch);
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -154,13 +139,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString();
-                ((cardListViewAdapter)cardList.getAdapter()).getFilter().filter(filterText);
+                String filterText = edit.toString() ;
+                if (filterText.length() > 0) {
+                    cardList.setFilterText(filterText) ;
+                } else {
+                    cardList.clearTextFilter() ;
+                }
             }
         });
     }
 
-
+    // 내 정보 클릭시 정보 호출
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String target;
@@ -229,26 +218,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // 리스트뷰 준비중
+    // 상대 명함 리스트뷰
     private class GetData extends AsyncTask<String, Void, String>{
-        ProgressDialog progressDialog;
         String errorString = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(MainActivity.this,
-                    "Please Wait", null, true, true);
         }
 
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
-            progressDialog.dismiss();
-            Log.d(TAG, "response  - " + result);
 
             if (result == null){
 
@@ -266,10 +249,8 @@ public class MainActivity extends AppCompatActivity {
             String serverURL = params[0];
 
             try {
-
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
 
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
@@ -277,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "response code - " + responseStatusCode);
 
                 InputStream inputStream;
                 if(responseStatusCode == HttpURLConnection.HTTP_OK) {
@@ -306,8 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
 
             } catch (Exception e) {
-
-                Log.d(TAG, "InsertData: Error ", e);
                 errorString = e.toString();
 
                 return null;
@@ -316,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    // 상대 명함 리스트뷰 검색결과
     private void showResult(){
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
@@ -332,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String,String> hashMap = new HashMap<>();
 
                 hashMap.put(TAG_NAME, name);
-                hashMap.put(TAG_COMPANY, "(" + company + ")");
+                hashMap.put(TAG_COMPANY, company);
 
                 mArrayList.add(hashMap);
             }
@@ -347,7 +325,6 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
 
-            Log.d(TAG, "showResult : ", e);
         }
 
     }

@@ -23,6 +23,8 @@
                 android:id="@+id/editSearch"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionDone"
                 android:hint="검색"
                 android:gravity="center"/>
 

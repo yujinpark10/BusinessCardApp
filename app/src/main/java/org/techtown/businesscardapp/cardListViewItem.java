@@ -1,3 +1,6 @@
+
+// 현재 사용 안하는거 같음
+
 package org.techtown.businesscardapp;
 
 public class cardListViewItem {
@@ -11,7 +14,7 @@ public class cardListViewItem {
         companyStr = company ;
     }
 
-    public String getNmae() {
+    public String getName() {
         return this.nameStr ;
     }
     public String getCompany() {

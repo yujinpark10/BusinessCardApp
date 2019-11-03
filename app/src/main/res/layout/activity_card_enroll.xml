@@ -57,6 +57,8 @@
                         android:layout_height="wrap_content"
                         android:hint="이름"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -82,6 +84,8 @@
                         android:layout_height="wrap_content"
                         android:hint="회사명"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -107,6 +111,8 @@
                         android:layout_height="wrap_content"
                         android:hint="팀명"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -132,6 +138,8 @@
                         android:layout_height="wrap_content"
                         android:hint="직책"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -157,6 +165,8 @@
                         android:layout_height="wrap_content"
                         android:hint="회사번호"
                         android:gravity="center"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -182,6 +192,8 @@
                         android:layout_height="wrap_content"
                         android:hint="전화번호"
                         android:gravity="center"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -207,6 +219,8 @@
                         android:layout_height="wrap_content"
                         android:hint="이메일"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -232,6 +246,8 @@
                         android:layout_height="wrap_content"
                         android:hint="팩스번호"
                         android:gravity="center"
+                        android:inputType="number"
+                        android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -257,6 +273,8 @@
                         android:layout_height="wrap_content"
                         android:hint="주소"
                         android:gravity="center"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
                         android:textSize="10pt"/>
 
                 </LinearLayout>

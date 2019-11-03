@@ -31,7 +31,7 @@ public class CardEnrollActivity extends AppCompatActivity {
 
 
         //저장 버튼 클릭시 // 아직 데이터베이스에 저장 기능 구현 안됌
-        Button btn_enrollSave = (Button)findViewById(R.id.btn_enrollSave)
+        Button btn_enrollSave = (Button)findViewById(R.id.btn_enrollSave);
         btn_enrollSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,13 +57,6 @@ public class CardEnrollActivity extends AppCompatActivity {
     }
 
     private void SetListener() {
-
-        btn_enrollSave
-
-
-
-
-
 
     }
 }

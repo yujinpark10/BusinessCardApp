@@ -14,18 +14,32 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="New Text"
+        android:text="이름"
         android:id="@+id/cardListName"
-        android:textSize="32dp"
-        android:textColor="#000000" />
+        android:textSize="28dp"
+        android:textColor="#000000"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="("
+        android:textSize="28dp"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="New Text"
+        android:text="회사"
         android:id="@+id/cardListCompany"
-        android:textSize="32dp"
-        android:textColor="#000000" />
+        android:textSize="28dp"
+        android:textColor="#000000"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=")"
+        android:textSize="28dp"/>
 
 </LinearLayout>
