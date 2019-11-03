@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -54,23 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().hide();
-
-        //버튼 로그아웃 클릭시 실행
-        Button logout = (Button)findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = auto.edit();
-                editor.clear();
-                editor.commit();
-                Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+        getSupportActionBar().hide();
 
         // 설정 버튼 클릭시
         btn_setting = (Button)findViewById(R.id.btn_setting);
@@ -82,7 +67,28 @@ public class MainActivity extends AppCompatActivity {
                 p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        return false;
+                        switch (menuItem.getItemId()) {
+                            case R.id.logout:
+                                Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT);
+                                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(logoutIntent);
+                                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = auto.edit();
+                                editor.clear();
+                                editor.commit();
+                                Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
+                                finish();
+                                return true;
+
+                            case R.id.dropID:
+                                Toast.makeText(getApplicationContext(), "dropID", Toast.LENGTH_SHORT);
+                                Intent dropIDIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(dropIDIntent);
+                                return true;
+
+                            default:
+                                return false;
+                        }
                     }
                 });
                 p.show();
@@ -168,37 +174,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    // 설정 메뉴 버튼
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.setting, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(logoutIntent);
-                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = auto.edit();
-                editor.clear();
-                editor.commit();
-                Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
-                finish();
-                return true;
-
-            case R.id.dropID:
-                Intent dropIDIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(dropIDIntent);
-                return true;
-
-             default:
-                return false;
-        }
     }
 
     // 내 정보 클릭시 정보 호출

@@ -29,12 +29,6 @@
                 android:gravity="center"/>
 
             <Button
-                android:id="@+id/logout"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:text="logout" />
-
-            <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
