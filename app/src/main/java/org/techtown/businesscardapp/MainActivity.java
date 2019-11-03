@@ -9,12 +9,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,8 +44,9 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_userName;
     private Button btn_setting;
+    private Button btn_cardEnroll;
+    private Button btn_cardChange;
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 임시 버튼 참고용
+        /*
         Button btn_UserName = (Button)findViewById(R.id.btn_UserName);
         Intent intent = getIntent();
         final String userName = intent.getStringExtra("userName");
@@ -117,16 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 new BackgroundTask().execute();
             }
         });
-
-        // 명함 등록 버튼 클릭시
-        Button btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
-        btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
-                startActivity(intent);
-            }
-        });
+         */
 
         //내 정보에 들어갈 뷰페이저
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
@@ -174,9 +170,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // 명함등록 버튼
+        btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
+        btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowEnrollDialog();
+            }
+        });
+
+        // 명함교환 버튼
+        btn_cardChange = (Button)findViewById(R.id.btn_cardChange);
+        btn_cardChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowChangeDialog();
+            }
+        });
     }
 
-    // 내 정보 클릭시 정보 호출
+    // 내 정보 클릭시 정보 호출 참고용
+    /*
     class BackgroundTask extends AsyncTask<Void, Void, String>
     {
         String target;
@@ -221,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(intent);
         }
     }
+     */
 
     // 뷰페이저 어댑터
     class pagerAdapter extends FragmentStatePagerAdapter {
@@ -354,6 +370,101 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    // 명함 등록 다이어로그
+    private void ShowEnrollDialog(){
+        LayoutInflater enrollDialog = LayoutInflater.from(this);
+        final View enrollDialogLayout = enrollDialog.inflate(R.layout.enrolldialog, null);
+        final Dialog myEnrollDialog = new Dialog(this);
+
+        myEnrollDialog.setTitle("명함 등록");
+        myEnrollDialog.setContentView(enrollDialogLayout);
+        myEnrollDialog.show();
+
+        Button btn_cancel = (Button)enrollDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_myCardEnroll = (Button)enrollDialogLayout.findViewById(R.id.btn_myCardEnroll);
+        Button btn_youCardEnroll = (Button)enrollDialogLayout.findViewById(R.id.btn_yourCardEnroll);
+
+        btn_myCardEnroll.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        btn_youCardEnroll.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myEnrollDialog.cancel();
+            }
+        });
+    }
+
+    // 명함 교환 다이어로그
+    private void ShowChangeDialog(){
+        LayoutInflater changeDialog = LayoutInflater.from(this);
+        final View changeDialogLayout = changeDialog.inflate(R.layout.changedialog, null);
+        final Dialog myEnrollDialog = new Dialog(this);
+
+        myEnrollDialog.setTitle("명함 교환");
+        myEnrollDialog.setContentView(changeDialogLayout);
+        myEnrollDialog.show();
+
+        Button btn_cancel = (Button)changeDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_getNFC = (Button)changeDialogLayout.findViewById(R.id.btn_getNFC);
+        Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendNFC);
+        Button btn_QRCode = (Button)changeDialogLayout.findViewById(R.id.btn_QRCode);
+
+        btn_getNFC.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        btn_sendNFC.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        btn_QRCode.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myEnrollDialog.cancel();
+            }
+        });
     }
 
     //백버튼 두번 누를시종료

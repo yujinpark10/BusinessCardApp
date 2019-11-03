@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명함 교환"
+        android:textColor="#000000"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_getNFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="get NFC" />
+
+        <Button
+            android:id="@+id/btn_sendNFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send NFC" />
+
+        <Button
+            android:id="@+id/btn_QRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소" />
+
+</LinearLayout>
