@@ -97,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity {
         //취소 버튼 클릭시 수행
         btn_cancel = (Button)findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                @Override
+                public void onClick(View view) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
@@ -157,7 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         .setNegativeButton("획인", null)
                                         .create();
                                 dialog.show();
-
                             }
                         }
                         catch (JSONException e) {
