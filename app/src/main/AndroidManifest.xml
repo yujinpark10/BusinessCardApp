@@ -21,9 +21,11 @@
         <activity android:name=".MyInfoActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".nfcChangePage"/>
         <activity android:name=".MainActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 </manifest>

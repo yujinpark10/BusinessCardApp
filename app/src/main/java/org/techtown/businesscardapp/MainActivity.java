@@ -426,25 +426,16 @@ public class MainActivity extends AppCompatActivity {
         myEnrollDialog.show();
 
         Button btn_cancel = (Button)changeDialogLayout.findViewById(R.id.btn_cancel);
-        Button btn_getNFC = (Button)changeDialogLayout.findViewById(R.id.btn_getNFC);
-        Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendNFC);
+        Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendgetNFC);
         Button btn_QRCode = (Button)changeDialogLayout.findViewById(R.id.btn_QRCode);
-
-        btn_getNFC.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
 
         btn_sendNFC.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
+                Intent intent = new Intent(MainActivity.this, nfcChangePage.class);
+                startActivity(intent);
             }
         });
 

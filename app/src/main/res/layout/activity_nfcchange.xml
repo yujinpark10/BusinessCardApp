@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tglReadWrite"
+        android:textOn="NFC READ 상태"
+        android:textOff="NFC WRITE 상태"
+        android:checked="true"
+        android:onClick="tglReadWriteOnClick"/>
+
+    <EditText
+        android:id="@+id/txtTagContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

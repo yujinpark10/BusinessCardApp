@@ -18,16 +18,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_getNFC"
+            android:id="@+id/btn_sendgetNFC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="get NFC" />
-
-        <Button
-            android:id="@+id/btn_sendNFC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="send NFC" />
+            android:text="send/get with NFC" />
 
         <Button
             android:id="@+id/btn_QRCode"
