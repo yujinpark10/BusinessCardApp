@@ -19,6 +19,11 @@
             android:orientation="horizontal"
             android:gravity="end">
 
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
             <EditText
                 android:id="@+id/editSearch"
                 android:layout_width="200dp"

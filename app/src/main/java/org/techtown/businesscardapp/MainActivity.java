@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,16 +29,24 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_setting;
     private Button btn_cardEnroll;
     private Button btn_cardChange;
+    private static final String TAG_ID="userID";
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
@@ -54,11 +64,55 @@ public class MainActivity extends AppCompatActivity {
     ListView cardList = null;
     String mJsonString;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+
+     /*   //아이디값 넘어오는지 확인
+        String userID = getIntent().getStringExtra("userID");
+        TextView tv = (TextView) findViewById(R.id.tv);
+        tv.setText(userID);    */
+
+
+        /*
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL("http://yujinpark10.dothome.co.kr/maincardlist.php"); //요청 URL을 입력
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST"); //요청 방식을 설정 (default : GET)
+
+            conn.setDoInput(true); //input을 사용하도록 설정 (default : true)
+            conn.setDoOutput(true); //output을 사용하도록 설정 (default : false)
+
+            conn.setConnectTimeout(60); //타임아웃 시간 설정 (default : 무한대기)
+
+
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("userID").append("=").append(loginid).append("&");
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8")); //캐릭터셋 설정
+
+            writer.write(buffer.toString());
+            writer.flush();
+            writer.close();
+            os.close();
+            conn.connect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
+
+
+
+
+
+
 
         // 설정 버튼 클릭시
         btn_setting = (Button)findViewById(R.id.btn_setting);
@@ -144,8 +198,12 @@ public class MainActivity extends AppCompatActivity {
         cardList = (ListView)findViewById(R.id.cardList);
         mArrayList = new ArrayList<>();
 
+
         GetData task = new GetData();
-        task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php");
+        //아이디값 받아오기
+        String userID = getIntent().getStringExtra("userID");
+
+        task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
         // 리스트뷰 검색
         final EditText editSearch = (EditText)findViewById(R.id.editSearch);
@@ -290,15 +348,22 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String serverURL = params[0];
+            String userID = params[1];
+            String postParameters = "userID=" + userID;
 
             try {
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
+                httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.connect();
 
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
 
@@ -309,7 +374,6 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     inputStream = httpURLConnection.getErrorStream();
                 }
-
 
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
