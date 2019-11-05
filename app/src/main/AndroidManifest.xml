@@ -21,6 +21,7 @@
         <activity android:name=".MyInfoActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity"/>
+        <meta-data android:name="android.nfc.disable_beam_default" android:value="true" />
         <activity android:name=".nfcChangePage"/>
         <activity android:name=".MainActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
