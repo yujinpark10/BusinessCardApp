@@ -59,7 +59,7 @@ public class Loading extends AppCompatActivity {
                             intent.putExtra("userNum", userNum);
                             intent.putExtra("userEmail", userEmail);
                             //intent.putExtra("cardNum", cardNum);
-                            intent.putExtra("userID", userID);
+                           // intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else { // 로그인에 실패한 경우
                             Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();

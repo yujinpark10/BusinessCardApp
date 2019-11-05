@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 autologin.putString("et_id", et_id.getText().toString());
                                 autologin.putString("et_password", et_password.getText().toString());
                                 autologin.commit();
-                                intent.putExtra("userID", userID);
+                              //  intent.putExtra("userID", userID);
                                 startActivity(intent);
                             } else { // 로그인에 실패한 경우
                                 Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
     String mJsonString;
-
+    String loginid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        //아이디값 저장 변수
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        loginid = auto.getString("et_id",null);
 
      /*   //아이디값 넘어오는지 확인
         String userID = getIntent().getStringExtra("userID");
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
         GetData task = new GetData();
         //아이디값 받아오기
-        String userID = getIntent().getStringExtra("userID");
+        String userID = loginid;
 
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
@@ -455,7 +458,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                startActivity(intent);
             }
         });
 
