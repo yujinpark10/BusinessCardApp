@@ -30,6 +30,12 @@ public class CardEnrollActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_enroll);
         getSupportActionBar().hide();
 
+
+        Intent intent = new Intent(this.getIntent());
+        final int mine1 = intent.getIntExtra("mine1",0);
+        final String userID = getIntent().getStringExtra("userID");
+        final String mine = String.valueOf(mine1);
+
         //EditText 추가
         et_name = (EditText)findViewById(R.id.et_name);
         et_company = (EditText)findViewById(R.id.et_company);
@@ -105,7 +111,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, responseListener);
+                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
                 queue.add(cardEnroll);
             }

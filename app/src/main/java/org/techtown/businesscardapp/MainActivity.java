@@ -465,6 +465,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",1);
                 startActivity(intent);
             }
         });
@@ -475,6 +477,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",0);
                 startActivity(intent);
             }
         });
