@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
     String mJsonString;
-
+    private static searchAdapter searchAdapter;
+    String loginid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        //아이디값 저장 변수
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        loginid = auto.getString("et_id",null);
 
      /*   //아이디값 넘어오는지 확인
         String userID = getIntent().getStringExtra("userID");
@@ -198,10 +202,13 @@ public class MainActivity extends AppCompatActivity {
         cardList = (ListView)findViewById(R.id.cardList);
         mArrayList = new ArrayList<>();
 
+        searchAdapter = new searchAdapter();
+        cardList.setAdapter(searchAdapter);
+
 
         GetData task = new GetData();
         //아이디값 받아오기
-        String userID = getIntent().getStringExtra("userID");
+        String userID = loginid;
 
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
@@ -221,11 +228,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable edit) {
                 String filterText = edit.toString() ;
-                if (filterText.length() > 0) {
-                    cardList.setFilterText(filterText) ;
-                } else {
-                    cardList.clearTextFilter() ;
-                }
+
+                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
             }
         });
 
@@ -414,14 +418,19 @@ public class MainActivity extends AppCompatActivity {
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
 
-                HashMap<String,String> hashMap = new HashMap<>();
+                //HashMap<String,String> hashMap = new HashMap<>();
 
-                hashMap.put(TAG_NAME, name);
-                hashMap.put(TAG_COMPANY, company);
+                //hashMap.put(TAG_NAME, name);
+                //hashMap.put(TAG_COMPANY, company);
 
-                mArrayList.add(hashMap);
+                searchAdapter.addItem(name, company);
+
+                //mArrayList.add(hashMap);
             }
 
+            searchAdapter.notifyDataSetChanged();
+
+            /*
             ListAdapter adapter = new SimpleAdapter(
                     MainActivity.this, mArrayList, R.layout.card_list,
                     new String[]{TAG_NAME, TAG_COMPANY},
@@ -429,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
             );
 
             cardList.setAdapter(adapter);
-
+            */
         } catch (JSONException e) {
 
         }
@@ -455,7 +464,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                startActivity(intent);
             }
         });
 
