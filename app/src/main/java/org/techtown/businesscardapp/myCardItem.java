@@ -1,6 +1,6 @@
 package org.techtown.businesscardapp;
 
-public class cardListViewItem {
+public class myCardItem {
     private String nameStr ;
     private String companyStr ;
 

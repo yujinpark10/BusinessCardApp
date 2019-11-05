@@ -19,19 +19,14 @@
             android:orientation="horizontal"
             android:gravity="end">
 
-            <TextView
-                android:id="@+id/tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
             <EditText
                 android:id="@+id/editSearch"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:imeOptions="actionDone"
+                android:gravity="center"
                 android:hint="검색"
-                android:gravity="center"/>
+                android:imeOptions="actionDone"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/btn_setting"
@@ -56,11 +51,43 @@
             android:layout_margin="20dp"
             android:gravity="center">
 
-            <androidx.viewpager.widget.ViewPager
-                android:layout_width="match_parent"
+            // 메인 화면에 대표 목록
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:id="@+id/pager"/>
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="이름"
+                android:id="@+id/kingCardListName"
+                android:textSize="28dp"
+                android:textColor="#000000"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("
+                android:textSize="28dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="회사"
+                android:id="@+id/KingCardListCompany"
+                android:textSize="28dp"
+                android:textColor="#000000"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:textSize="28dp"/>
 
         </LinearLayout>
 
@@ -99,6 +126,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_margin="5dp">
+
+            <Button
+                android:id="@+id/btn_myCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="내 명함"
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/btn_cardEnroll"
