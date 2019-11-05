@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
-    ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
         //명함 목록을 위한 리스트뷰
         cardList = (ListView)findViewById(R.id.cardList);
-        mArrayList = new ArrayList<>();
 
         searchAdapter = new searchAdapter();
         cardList.setAdapter(searchAdapter);
@@ -116,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, CardClicked.class);
                 intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",0);
                 startActivity(intent);
             }
         });

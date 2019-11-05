@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".myCardListActivity"></activity>
-        <activity android:name=".myCard" />
         <activity android:name=".CardClicked" />
         <activity android:name=".Loading">
             <intent-filter>
@@ -34,10 +33,7 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".LoginActivity"/>
         <meta-data android:name="android.nfc.disable_beam_default" android:value="true" />
-        <activity android:name=".nfcChangePage"/>
-        <activity android:name=".MainActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

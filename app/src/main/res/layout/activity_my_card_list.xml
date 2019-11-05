@@ -17,12 +17,6 @@
             android:layout_weight="8"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/id123"
-                android:text="id123"/>
-
             <ListView
                 android:id="@+id/myCardList"
                 android:layout_width="match_parent"

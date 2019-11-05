@@ -11,9 +11,9 @@ package org.techtown.businesscardapp;
 
 public class myCardAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<myCardItem> myCardItem = new ArrayList<myCardItem>();
+    private ArrayList<cardListViewItem> myCardItem = new ArrayList<cardListViewItem>();
     // 필터링된 결과 데이터를 저장하기 위한 ArrayList
-    private ArrayList<myCardItem> filteredItemList = myCardItem;
+    private ArrayList<cardListViewItem> filteredItemList = myCardItem;
 
     // listViewAdapter의 생성자
     public myCardAdapter(){
@@ -43,11 +43,11 @@ public class myCardAdapter extends BaseAdapter{
         TextView companyTextView = (TextView) convertView.findViewById(R.id.cardListCompany) ;
 
         // Data set(filteredItemList)에서 position에 위치한 데이터 참조 획득
-        myCardItem mycarditem = filteredItemList.get(position);
+        cardListViewItem cardListViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 대한 반영
-        nameTextView.setText(mycarditem.getName());
-        companyTextView.setText(mycarditem.getCompany());
+        nameTextView.setText(cardListViewItem.getName());
+        companyTextView.setText(cardListViewItem.getCompany());
 
         return convertView;
     }
@@ -66,7 +66,7 @@ public class myCardAdapter extends BaseAdapter{
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String name, String company) {
-        myCardItem item = new myCardItem();
+        cardListViewItem item = new cardListViewItem();
 
         item.setName(name);
         item.setCompany(company);
