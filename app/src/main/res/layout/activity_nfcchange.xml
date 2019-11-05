@@ -15,6 +15,7 @@
     <EditText
         android:id="@+id/txtTagContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="여기에 쓰고 싶은 글을 써주세요"/>
 
 </LinearLayout>

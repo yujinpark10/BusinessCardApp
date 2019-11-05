@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 
@@ -29,7 +31,7 @@ public class nfcChangePage extends AppCompatActivity {
     NfcAdapter nfcAdapter;
 
     ToggleButton tglReadWrite;
-    EditText txtTagcontent;
+    TextView txtTagcontent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,7 +40,24 @@ public class nfcChangePage extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         tglReadWrite = (ToggleButton)findViewById(R.id.tglReadWrite);
-        txtTagcontent = (EditText) findViewById(R.id.txtTagContent);
+        txtTagcontent = (TextView) findViewById(R.id.txtTagContent);
+    }
+
+
+
+    public NdefRecord createTextRecord(String payload, Locale locale, boolean encodeInUtf8){
+        byte[] langBytes = locale.getLanguage().getBytes(Charset.forName("US-ASCII"));
+        Charset utfEncoding = encodeInUtf8 ? Charset.forName("UTF-8"):Charset.forName("UTF-16");
+        byte[] textBytes = payload.getBytes(utfEncoding);
+        int utfBit = encodeInUtf8 ? 0:(17);
+        char status = (char)(utfBit + langBytes.length);
+        byte[] data =new byte[1+ langBytes.length + textBytes.length];
+        data[0]=(byte) status;
+        System.arraycopy(langBytes, 0, data, 1, langBytes.length);
+        System.arraycopy(textBytes, 0, data,1+ langBytes.length, textBytes.length);
+        NdefRecord record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
+                NdefRecord.RTD_TEXT,new byte[0], data);
+        return record;
     }
 
     @Override
@@ -59,7 +78,6 @@ public class nfcChangePage extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-
         if(intent.hasExtra(NfcAdapter.EXTRA_TAG))
         {
 
@@ -75,14 +93,15 @@ public class nfcChangePage extends AppCompatActivity {
                 }
 
             }else{
-
+                NdefMessage ndefMessage = createNdefMessage(txtTagcontent.getText()+"");
+                nfcAdapter.setNdefPushMessage(ndefMessage, this);
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                /*byte[] payload = "나의 스트링".getBytes();
-                NdefRecord ndefRecord = NdefRecord.createExternal("nfc튜토리얼","external",payload);
-                NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});*/
-                NdefMessage ndefMessage = createNdefMessage(txtTagcontent.getText()+"");/*여기에 내가 넣고싶은 메시지를 넣음 */
+                //NdefRecord ndefRecord = NdefRecord.createTextRecord("UTF-8","please...");
+                //NdefMessage ndefMessage = new NdefMessage(new NdefRecord[]{ndefRecord});
 
-                writeNdefMessage(tag,ndefMessage);
+                // /*여기에 내가 넣고싶은 메시지를 넣음 */
+
+                //writeNdefMessage(tag,ndefMessage);
             }
         }
 
@@ -93,7 +112,7 @@ public class nfcChangePage extends AppCompatActivity {
 
         if(ndefRecords != null && ndefRecords.length>0){
 
-            NdefRecord ndefRecord = ndefRecords[0];
+            NdefRecord ndefRecord = ndefRecords[1];
 
             String tagcontent = getTextFromNdefRecord(ndefRecord);
 
@@ -182,8 +201,7 @@ public class nfcChangePage extends AppCompatActivity {
         try{
             byte[] language;
             language = Locale.getDefault().getLanguage().getBytes("UTF-8");
-
-            final byte[] text = content.getBytes("UTF-8");
+            final byte[] text = (content).getBytes("UTF-8");
             final int languageSize = language.length;
             final int textLength = text.length;
             final ByteArrayOutputStream payload = new ByteArrayOutputStream(1 + languageSize + textLength);
