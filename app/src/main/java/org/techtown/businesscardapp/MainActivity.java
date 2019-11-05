@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
     String mJsonString;
-
+    private static searchAdapter searchAdapter;
+    String loginid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,48 +72,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-
-     /*   //아이디값 넘어오는지 확인
-        String userID = getIntent().getStringExtra("userID");
-        TextView tv = (TextView) findViewById(R.id.tv);
-        tv.setText(userID);    */
-
-
-        /*
-        HttpURLConnection conn = null;
-        try {
-            URL url = new URL("http://yujinpark10.dothome.co.kr/maincardlist.php"); //요청 URL을 입력
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST"); //요청 방식을 설정 (default : GET)
-
-            conn.setDoInput(true); //input을 사용하도록 설정 (default : true)
-            conn.setDoOutput(true); //output을 사용하도록 설정 (default : false)
-
-            conn.setConnectTimeout(60); //타임아웃 시간 설정 (default : 무한대기)
-
-
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("userID").append("=").append(loginid).append("&");
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8")); //캐릭터셋 설정
-
-            writer.write(buffer.toString());
-            writer.flush();
-            writer.close();
-            os.close();
-            conn.connect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-
-
-
-
-
-
+        //아이디값 저장 변수
+        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+        loginid = auto.getString("et_id",null);
 
         // 설정 버튼 클릭시
         btn_setting = (Button)findViewById(R.id.btn_setting);
@@ -152,32 +114,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 임시 버튼 참고용
-        /*
-        Button btn_UserName = (Button)findViewById(R.id.btn_UserName);
-        Intent intent = getIntent();
-        final String userName = intent.getStringExtra("userName");
-        final String userID = intent.getStringExtra("userID");
-        btn_UserName.setText(userName);
-
-        btn_UserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //final String userID = intent.getStringExtra("userID");
-                Intent intent = new Intent(MainActivity.this,MyInfoActivity.class);
-                intent.putExtra("userID", "park");
-                startActivity(intent);
-            }
-        });
-
-        btn_UserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new BackgroundTask().execute();
-            }
-        });
-         */
-
         //내 정보에 들어갈 뷰페이저
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(3);
@@ -194,15 +130,16 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(mycard_adapter);
 
         //명함 목록을 위한 리스트뷰
-
         cardList = (ListView)findViewById(R.id.cardList);
         mArrayList = new ArrayList<>();
 
+        searchAdapter = new searchAdapter();
+        cardList.setAdapter(searchAdapter);
 
         GetData task = new GetData();
-        //아이디값 받아오기
-        String userID = getIntent().getStringExtra("userID");
 
+        //아이디값 받아오기
+        String userID = loginid;
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
         // 리스트뷰 검색
@@ -221,11 +158,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable edit) {
                 String filterText = edit.toString() ;
-                if (filterText.length() > 0) {
-                    cardList.setFilterText(filterText) ;
-                } else {
-                    cardList.clearTextFilter() ;
-                }
+
+                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
             }
         });
 
@@ -247,54 +181,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    // 내 정보 클릭시 정보 호출 참고용
-    /*
-    class BackgroundTask extends AsyncTask<Void, Void, String>
-    {
-        String target;
-        @Override
-        protected void onPreExecute(){
-            target = "http://yujinpark10.dothome.co.kr/CardList.php"; // 서버에 존재하는 php파일 초기화
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                URL url = new URL(target);
-                HttpURLConnection httpURLConnection =(HttpURLConnection)url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String temp;
-                StringBuilder stringBuilder = new StringBuilder();
-                while ((temp = bufferedReader.readLine()) != null){
-                    stringBuilder.append(temp + "\n");
-
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
-            intent.putExtra("userCardList", result );
-            MainActivity.this.startActivity(intent);
-        }
-    }
-     */
 
     // 뷰페이저 어댑터
     class pagerAdapter extends FragmentStatePagerAdapter {
@@ -329,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -342,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                 showResult();
             }
         }
-
 
         @Override
         protected String doInBackground(String... params) {
@@ -414,21 +298,10 @@ public class MainActivity extends AppCompatActivity {
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
 
-                HashMap<String,String> hashMap = new HashMap<>();
-
-                hashMap.put(TAG_NAME, name);
-                hashMap.put(TAG_COMPANY, company);
-
-                mArrayList.add(hashMap);
+                searchAdapter.addItem(name, company);
             }
 
-            ListAdapter adapter = new SimpleAdapter(
-                    MainActivity.this, mArrayList, R.layout.card_list,
-                    new String[]{TAG_NAME, TAG_COMPANY},
-                    new int[]{R.id.cardListName, R.id.cardListCompany}
-            );
-
-            cardList.setAdapter(adapter);
+            searchAdapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
 
@@ -455,7 +328,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",1);
+                startActivity(intent);
             }
         });
 
@@ -465,6 +341,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",0);
                 startActivity(intent);
             }
         });

@@ -26,10 +26,12 @@ public class Loading extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
         getSupportActionBar().hide();
 
+        // 자동로그인 id pw 세션에 저장
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         loginid = auto.getString("et_id",null);
         loginpw = auto.getString("et_password",null);
 
+        // 세션에 값이 있을 경우
         if(loginid!=null && loginpw!=null)
         {
             String userID = loginid;
@@ -59,7 +61,7 @@ public class Loading extends AppCompatActivity {
                             intent.putExtra("userNum", userNum);
                             intent.putExtra("userEmail", userEmail);
                             //intent.putExtra("cardNum", cardNum);
-                            intent.putExtra("userID", userID);
+                           // intent.putExtra("userID", userID);
                             startActivity(intent);
                         } else { // 로그인에 실패한 경우
                             Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
@@ -75,7 +77,7 @@ public class Loading extends AppCompatActivity {
             queue.add(loginRequest);
         }
 
-
+        // 세션에 값이 없을 경우
         else{
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -90,5 +92,3 @@ public class Loading extends AppCompatActivity {
              }
         }
     }
-
-

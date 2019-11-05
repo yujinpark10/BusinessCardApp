@@ -1,6 +1,3 @@
-
-// 현재 사용 안하는거 같음
-
 package org.techtown.businesscardapp;
 
 import android.content.Context;
@@ -14,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class cardListViewAdapter extends BaseAdapter implements Filterable {
+public class searchAdapter extends BaseAdapter implements Filterable {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<cardListViewItem> cardListViewItemList = new ArrayList<cardListViewItem>();
     // 필터링된 결과 데이터를 저장하기 위한 ArrayList
@@ -23,7 +20,7 @@ public class cardListViewAdapter extends BaseAdapter implements Filterable {
     Filter listFilter;
 
     // listViewAdapter의 생성자
-    public cardListViewAdapter(){
+    public searchAdapter(){
 
     }
 
