@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".myCardEnrollActivity"></activity>
+        <activity android:name=".KingCardActivity"></activity>
+        <activity android:name=".myCardEnrollActivity" />
         <activity android:name=".myCardListActivity" />
         <activity android:name=".CardClicked" />
         <activity android:name=".Loading">

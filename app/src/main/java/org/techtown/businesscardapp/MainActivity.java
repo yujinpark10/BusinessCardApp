@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_myCard;
     private Button btn_cardEnroll;
     private Button btn_cardChange;
+    private static final String TAG_CARDNUM = "cardNum";
     private static final String TAG_ID="userID";
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
@@ -267,10 +268,11 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
+                int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
 
-                searchAdapter.addItem(name, company);
+                searchAdapter.addItem(cardNum, name, company);
             }
 
             searchAdapter.notifyDataSetChanged();

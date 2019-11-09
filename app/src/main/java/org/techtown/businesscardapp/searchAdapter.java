@@ -43,6 +43,7 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         }
 
         // 화면에 표시될 View로부터 위젯에 대한 참조 획득
+        TextView cardNum = (TextView) convertView.findViewById(R.id.cardNum) ;
         TextView nameTextView = (TextView) convertView.findViewById(R.id.cardListName) ;
         TextView companyTextView = (TextView) convertView.findViewById(R.id.cardListCompany) ;
 
@@ -50,6 +51,7 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         cardListViewItem cardlistViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 대한 반영
+        //cardNum.setText(cardlistViewItem.getCardNum()); // 여기 정수를 문자로 해야할듯
         nameTextView.setText(cardlistViewItem.getName());
         companyTextView.setText(cardlistViewItem.getCompany());
 
@@ -69,9 +71,10 @@ public class searchAdapter extends BaseAdapter implements Filterable {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String name, String company) {
+    public void addItem(int cardNum, String name, String company) {
         cardListViewItem item = new cardListViewItem();
 
+        item.setCardNum(cardNum);
         item.setName(name);
         item.setCompany(company);
 

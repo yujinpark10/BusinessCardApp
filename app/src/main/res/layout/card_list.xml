@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardNum"
+        android:text=""/>
+        //android:visibility="gone"/>
+
     // 메인 화면에 명함 목록 리스트뷰
     <ImageView
         android:layout_width="0dp"

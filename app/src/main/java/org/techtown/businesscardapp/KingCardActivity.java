@@ -2,18 +2,13 @@ package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,15 +20,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-public class myCardListActivity extends AppCompatActivity {
+public class KingCardActivity extends AppCompatActivity {
 
-    private Button btn_kingCard;
-    private Button btn_cardEnroll;
     private Button btn_cancel;
-    String loginid;
+    String userID;
 
     private static final String TAG_JSON="responseme";
     private static final String TAG_CARDNUM = "cardNum";
@@ -46,12 +37,21 @@ public class myCardListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_card_list);
+        setContentView(R.layout.activity_king_card);
         getSupportActionBar().hide();
 
         //아이디값 저장 변수
-        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-        loginid = auto.getString("et_id",null);
+        userID = getIntent().getStringExtra("userID");
+
+        // 취소 버튼
+        btn_cancel = (Button)findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(KingCardActivity.this, myCardListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //명함 목록을 위한 리스트뷰
         myCardList = (ListView)findViewById(R.id.myCardList);
@@ -61,57 +61,21 @@ public class myCardListActivity extends AppCompatActivity {
 
         GetData task = new GetData();
 
-        //아이디값 받아오기
-        final String userID = loginid;
         task.execute("http://yujinpark10.dothome.co.kr/mycardlist.php", userID);//아이디값 받아온거  보내기
 
         myCardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myCardListActivity.this, CardClicked.class);
+                Intent intent = new Intent(KingCardActivity.this, myCardListActivity.class);
                 intent.putExtra("userID", userID);
                 intent.putExtra("mine1",1);
-                startActivity(intent);
-            }
-        });
-
-        // 대표 명함 버튼
-        btn_kingCard = (Button)findViewById(R.id.btn_kingCard);
-        btn_kingCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, KingCardActivity.class);
-                intent.putExtra("userID", loginid);
-                intent.putExtra("mine1",1);
-                startActivity(intent);
-            }
-        });
-
-        // 명함 등록 버튼
-        btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
-        btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, myCardEnrollActivity.class);
-                intent.putExtra("userID", loginid);
-                intent.putExtra("mine1",1);
-                startActivity(intent);
-            }
-        });
-
-        // 취소 버튼
-        btn_cancel = (Button)findViewById(R.id.btn_cancel);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     // 내 명함 리스트뷰
-    private class GetData extends AsyncTask<String, Void, String>{
+    private class GetData extends AsyncTask<String, Void, String> {
         String errorString = null;
 
         @Override
