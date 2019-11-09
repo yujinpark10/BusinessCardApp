@@ -1,12 +1,7 @@
 package org.techtown.businesscardapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -14,39 +9,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,13 +37,13 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     private Button btn_setting;
+    private Button btn_myCard;
     private Button btn_cardEnroll;
     private Button btn_cardChange;
     private static final String TAG_ID="userID";
     private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
-    ArrayList<HashMap<String, String>> mArrayList;
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
@@ -114,24 +97,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //내 정보에 들어갈 뷰페이저
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(3);
-
-        pagerAdapter mycard_adapter = new pagerAdapter(getSupportFragmentManager());
-
-        mycard_Fragment1 mycard_fragment1 = new mycard_Fragment1();
-        mycard_adapter.addItem(mycard_fragment1);
-        mycard_Fragment2 mycard_fragment2 = new mycard_Fragment2();
-        mycard_adapter.addItem(mycard_fragment2);
-        mycard_Fragment3 mycard_fragment3 = new mycard_Fragment3();
-        mycard_adapter.addItem(mycard_fragment3);
-
-        pager.setAdapter(mycard_adapter);
-
         //명함 목록을 위한 리스트뷰
         cardList = (ListView)findViewById(R.id.cardList);
-        mArrayList = new ArrayList<>();
 
         searchAdapter = new searchAdapter();
         cardList.setAdapter(searchAdapter);
@@ -142,8 +109,19 @@ public class MainActivity extends AppCompatActivity {
         String userID = loginid;
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
+        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, CardClicked.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",0);
+                startActivity(intent);
+            }
+        });
+
         // 리스트뷰 검색
         final EditText editSearch = (EditText)findViewById(R.id.editSearch);
+        editSearch.setText(userID);                                         //////////////////////////// 이거 보고 참고 해서 텍스트 적용
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -163,12 +141,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 명함등록 버튼
-        btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
-        btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
+        // 내 명함 버튼
+        btn_myCard = (Button)findViewById(R.id.btn_myCard);
+        btn_myCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowEnrollDialog();
+                Intent intent = new Intent(MainActivity.this, myCardListActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",1);
+                startActivity(intent);
+            }
+        });
+
+        // 명함등록 버튼
+        btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
+        btn_cardEnroll.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("mine1",0);
+                startActivity(intent);
             }
         });
 
@@ -180,29 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 ShowChangeDialog();
             }
         });
-    }
-
-    // 뷰페이저 어댑터
-    class pagerAdapter extends FragmentStatePagerAdapter {
-        ArrayList<Fragment> items = new ArrayList<Fragment>();
-
-        public pagerAdapter(@NonNull FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addItem(Fragment item){
-            items.add(item);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
     }
 
     // 상대 명함 리스트뷰
@@ -307,54 +279,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    // 명함 등록 다이어로그
-    private void ShowEnrollDialog(){
-        LayoutInflater enrollDialog = LayoutInflater.from(this);
-        final View enrollDialogLayout = enrollDialog.inflate(R.layout.enrolldialog, null);
-        final Dialog myEnrollDialog = new Dialog(this);
-
-        myEnrollDialog.setTitle("명함 등록");
-        myEnrollDialog.setContentView(enrollDialogLayout);
-        myEnrollDialog.show();
-
-        Button btn_cancel = (Button)enrollDialogLayout.findViewById(R.id.btn_cancel);
-        Button btn_myCardEnroll = (Button)enrollDialogLayout.findViewById(R.id.btn_myCardEnroll);
-        Button btn_youCardEnroll = (Button)enrollDialogLayout.findViewById(R.id.btn_yourCardEnroll);
-
-        btn_myCardEnroll.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
-                intent.putExtra("userID", loginid);
-                intent.putExtra("mine1",1);
-                startActivity(intent);
-            }
-        });
-
-        btn_youCardEnroll.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(MainActivity.this,CardEnrollActivity.class);
-                intent.putExtra("userID", loginid);
-                intent.putExtra("mine1",0);
-                startActivity(intent);
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                myEnrollDialog.cancel();
-            }
-        });
     }
 
     // 명함 교환 다이어로그
