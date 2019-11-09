@@ -16,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CardEnrollActivity extends AppCompatActivity {
+public class myCardEnrollActivity extends AppCompatActivity {
 
     private static final String TAG = "CardEnrollActivity";
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
@@ -52,7 +52,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         btn_enrollCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                Intent intent = new Intent(myCardEnrollActivity.this, myCardListActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class CardEnrollActivity extends AppCompatActivity {
 
                 //빈칸 없이 입력 확인
                 if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(myCardEnrollActivity.this);
                     dialog = builder.setMessage("빈칸없이 입력해주세요.")
                             .setNegativeButton("확인", null)
                             .create();
@@ -92,14 +92,14 @@ public class CardEnrollActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success) {//카드등록 성공한 경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(myCardEnrollActivity.this);
                                 dialog = builder.setMessage("명함 등록에 성공했습니다.")
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
                                 finish();
                             } else {//카드 등록 실패한경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(myCardEnrollActivity.this);
                                 dialog = builder.setMessage("명함 등록에 실패했습니다.")
                                         .setPositiveButton("확인", null)
                                         .create();
@@ -112,9 +112,9 @@ public class CardEnrollActivity extends AppCompatActivity {
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
                 CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
+                RequestQueue queue = Volley.newRequestQueue(myCardEnrollActivity.this);
                 queue.add(cardEnroll);
-                Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                Intent intent = new Intent(myCardEnrollActivity.this, myCardListActivity.class);
                 startActivity(intent);
             }
         });

@@ -88,7 +88,7 @@ public class myCardListActivity extends AppCompatActivity {
         btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, CardEnrollActivity.class);
+                Intent intent = new Intent(myCardListActivity.this, myCardEnrollActivity.class);
                 intent.putExtra("userID", loginid);
                 intent.putExtra("mine1",1);
                 startActivity(intent);

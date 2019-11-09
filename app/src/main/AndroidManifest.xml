@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".myCardListActivity"></activity>
+        <activity android:name=".myCardEnrollActivity"></activity>
+        <activity android:name=".myCardListActivity" />
         <activity android:name=".CardClicked" />
         <activity android:name=".Loading">
             <intent-filter>
@@ -26,14 +27,15 @@
         <activity android:name=".CardEnrollActivity" />
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".RegisterActivity" />
-
         <activity android:name=".LoginActivity" />
         <activity android:name=".nfcChangePage" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <meta-data android:name="android.nfc.disable_beam_default" android:value="true" />
+        <meta-data
+            android:name="android.nfc.disable_beam_default"
+            android:value="true" />
     </application>
 
 </manifest>

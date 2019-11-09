@@ -5,7 +5,7 @@
 
     // 내 명함 목록 리스트뷰
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
@@ -45,7 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkKing"
-        />
+        android:focusable="false"
+        android:clickable="false"
+        android:visibility="visible"/>
 
 
 </LinearLayout>
