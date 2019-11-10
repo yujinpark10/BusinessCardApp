@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CardExchange extends StringRequest {
 
-    final static private String URL = "http://yujinpark10.dothome.co.kr/makeKing.php";
+    final static private String URL = "http://yujinpark10.dothome.co.kr/cardExchange.php";
     private Map<String, String> map;
 
     public CardExchange(String userID, String yourID, Response.Listener<String> listener) {

@@ -26,7 +26,6 @@ public class nfcChangePage extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
     TextView Text1;
-    TextView txtTagcontent;
 
     private String userID;
     private String yourID;
@@ -41,7 +40,6 @@ public class nfcChangePage extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         Text1 = (TextView) findViewById(R.id.Text1);
-        txtTagcontent = (TextView) findViewById(R.id.txtTagContent);
 
         Text1.setText("교환할 디바이스와 접촉하여 주세요.\n교환이 끝나면 나가기를 해주세요.");
 
@@ -71,9 +69,6 @@ public class nfcChangePage extends AppCompatActivity {
 
         if(intent.hasExtra(NfcAdapter.EXTRA_TAG))
         {
-
-
-
                 Parcelable[] parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
                 if(parcelables != null && parcelables.length > 0)
                 {
@@ -98,7 +93,6 @@ public class nfcChangePage extends AppCompatActivity {
 
 
             // 여기가 읽은 메시지
-            txtTagcontent.setText(tagcontent);
             yourID = tagcontent;
 
             //Intent intent = new Intent(nfcChangePage.this,CardExchange.class);

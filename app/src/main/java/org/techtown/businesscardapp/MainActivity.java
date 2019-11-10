@@ -2,6 +2,7 @@ package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ShowChangeDialog();
+                searchAdapter.notifyDataSetChanged();
             }
         });
     }

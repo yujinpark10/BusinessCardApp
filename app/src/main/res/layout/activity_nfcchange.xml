@@ -11,11 +11,4 @@
         android:text="교환할 디바이스와 접촉하여 주세요. 교환이 끝나면 나가기를 해주세요."
         android:textSize="25dp"/>
 
-    <TextView
-        android:id="@+id/txtTagContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20dp"/>
-
 </LinearLayout>

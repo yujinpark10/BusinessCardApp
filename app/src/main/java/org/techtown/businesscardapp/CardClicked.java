@@ -100,7 +100,8 @@ public class CardClicked extends AppCompatActivity {
                 CardDelete CardDelete = new CardDelete(Integer.toString(cardNum), userID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardClicked.this);
                 queue.add(CardDelete);
-                finish();
+                Intent intent = new Intent(CardClicked.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
