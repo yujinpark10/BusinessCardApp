@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, CardClicked.class);
                 intent.putExtra("userID", loginid);
+                cardListViewItem selected = (cardListViewItem) adapterView.getItemAtPosition(i);
+                intent.putExtra("cardNum", selected.getCardNum());
                 intent.putExtra("mine1",0);
                 startActivity(intent);
             }
@@ -122,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 리스트뷰 검색
         final EditText editSearch = (EditText)findViewById(R.id.editSearch);
-        editSearch.setText(userID);                                         //////////////////////////// 이거 보고 참고 해서 텍스트 적용
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

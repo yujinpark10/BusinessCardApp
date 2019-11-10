@@ -52,8 +52,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         btn_enrollCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

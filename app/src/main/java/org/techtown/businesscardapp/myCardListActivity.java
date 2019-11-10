@@ -70,6 +70,8 @@ public class myCardListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(myCardListActivity.this, CardClicked.class);
                 intent.putExtra("userID", userID);
+                cardListViewItem selected = (cardListViewItem) adapterView.getItemAtPosition(i);
+                intent.putExtra("cardNum", selected.getCardNum());
                 intent.putExtra("mine1",1);
                 startActivity(intent);
             }
@@ -104,8 +106,7 @@ public class myCardListActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

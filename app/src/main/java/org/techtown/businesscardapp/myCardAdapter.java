@@ -1,6 +1,7 @@
 package org.techtown.businesscardapp;
 
         import android.content.Context;
+        import android.content.Intent;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -35,11 +36,11 @@ public class myCardAdapter extends BaseAdapter{
         // Layout을 inflate하여 convertView 참조 획득
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.card_list, parent, false);
+            convertView = inflater.inflate(R.layout.my_card_list, parent, false);
         }
 
         // 화면에 표시될 View로부터 위젯에 대한 참조 획득
-        TextView cardNum = (TextView) convertView.findViewById(R.id.cardNum) ;
+        TextView cardNum = (TextView) convertView.findViewById(R.id.cardNum);
         TextView nameTextView = (TextView) convertView.findViewById(R.id.cardListName) ;
         TextView companyTextView = (TextView) convertView.findViewById(R.id.cardListCompany) ;
 

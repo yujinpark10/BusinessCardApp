@@ -24,8 +24,7 @@
                 android:layout_margin="20dp"
                 android:background="#444444"
                 android:gravity="center"
-                android:padding="5dp"
-                android:choiceMode="singleChoice"/>
+                android:padding="5dp" />
 
         </LinearLayout>
 
