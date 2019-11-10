@@ -67,33 +67,15 @@ public class KingCardActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success) {//카드등록 성공한 경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(KingCardActivity.this);
-                                dialog = builder.setMessage("명함 등록에 성공했습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create();
-                                dialog.show();
-                                finish();
-                            } else {//카드 등록 실패한경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(KingCardActivity.this);
-                                dialog = builder.setMessage("명함 등록에 실패했습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create();
-                                dialog.show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
                     }
                 };
 
                 makeKing makeKing = new makeKing(Integer.toString(selected.getCardNum()), userID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(KingCardActivity.this);
                 queue.add(makeKing);
-                finish();
+                Intent intent = new Intent(KingCardActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

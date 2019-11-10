@@ -12,6 +12,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +29,7 @@ public class nfcChangePage extends AppCompatActivity {
     TextView txtTagcontent;
 
     private String userID;
+    private String yourID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -77,7 +82,6 @@ public class nfcChangePage extends AppCompatActivity {
                     Toast.makeText(this,"ndef 메시지를 찾을 수 없습니다.",Toast.LENGTH_SHORT).show();
                 }
 
-
         }
 
     }
@@ -95,14 +99,23 @@ public class nfcChangePage extends AppCompatActivity {
 
             // 여기가 읽은 메시지
             txtTagcontent.setText(tagcontent);
-            ///////////////////////////////////////////////////////////////////////////옮길 위치 정해야함
-            Intent intent = new Intent(nfcChangePage.this,CardEnrollActivity.class);
-            ////////////////////////////////////////////////////////////////////////////옮길 위치 정해야함
-            intent.putExtra("userID", userID);
-            intent.putExtra("yourID", tagcontent);
-            startActivity(intent);
+            yourID = tagcontent;
 
+            //Intent intent = new Intent(nfcChangePage.this,CardExchange.class);
+            //intent.putExtra("userID", userID);
+            //intent.putExtra("yourID", tagcontent);
+            //startActivity(intent);
 
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                }
+            };
+
+            CardExchange cardExchange = new CardExchange(userID, yourID, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(nfcChangePage.this);
+            queue.add(cardExchange);
 
         }else{
             Toast.makeText(this,"ndef 레코드를 찾을 수 없습니다.",Toast.LENGTH_SHORT).show();

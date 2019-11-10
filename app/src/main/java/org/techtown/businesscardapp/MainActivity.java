@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,8 +18,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -36,19 +39,25 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    private LinearLayout kingLayout;
     private Button btn_setting;
     private Button btn_myCard;
     private Button btn_cardEnroll;
     private Button btn_cardChange;
+    private TextView kingCardListName;
+    private TextView KingCardListCompany;
+
+    private static final String TAG_ME_JSON="responseme";
+    private static final String TAG_JSON="responseyou";
     private static final String TAG_CARDNUM = "cardNum";
     private static final String TAG_ID="userID";
-    private static final String TAG_JSON="responseyou";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
     String loginid;
+    private int kingCardNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +107,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //아이디값 받아오기
+        String userID = loginid;
+
+        // 대표 명함
+        kingCardListName = (TextView)findViewById(R.id.kingCardListName);
+        KingCardListCompany = (TextView)findViewById(R.id.KingCardListCompany);
+
+        GetKing taskKing = new GetKing();
+        taskKing.execute("http://yujinpark10.dothome.co.kr/kingCard.php", userID);
+
+        // 대표 명함 클릭시
+        kingLayout = (LinearLayout)findViewById(R.id.kingLayout);
+        kingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CardClicked.class);
+                intent.putExtra("userID", loginid);
+                intent.putExtra("cardNum", kingCardNum);
+                intent.putExtra("mine1",1);
+                startActivity(intent);
+            }
+        });
+
+
         //명함 목록을 위한 리스트뷰
         cardList = (ListView)findViewById(R.id.cardList);
 
@@ -105,9 +138,6 @@ public class MainActivity extends AppCompatActivity {
         cardList.setAdapter(searchAdapter);
 
         GetData task = new GetData();
-
-        //아이디값 받아오기
-        String userID = loginid;
         task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", userID);//아이디값 받아온거  보내기
 
         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -177,6 +207,111 @@ public class MainActivity extends AppCompatActivity {
                 ShowChangeDialog();
             }
         });
+    }
+
+    // 대표 명함 불러오기
+    private class GetKing extends AsyncTask<String, Void, String>{
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result == null){
+
+            }
+            else {
+                mJsonString = result;
+                showResultKing();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String userID = params[1];
+            String postParameters = "userID=" + userID;
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+    // 대표 명함 검색결과
+    private void showResultKing(){
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_ME_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                int cardNum = item.getInt(TAG_CARDNUM);
+                String name = item.getString(TAG_NAME);
+                String company = item.getString(TAG_COMPANY);
+
+                kingCardNum = cardNum;
+                kingCardListName.setText(name);
+                KingCardListCompany.setText(company);
+            }
+
+        } catch (JSONException e) {
+
+        }
+
     }
 
     // 상대 명함 리스트뷰
