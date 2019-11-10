@@ -27,9 +27,8 @@ public class myCardEnrollActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_enroll);
+        setContentView(R.layout.activity_my_card_enroll);
         getSupportActionBar().hide();
-
 
         Intent intent = new Intent(this.getIntent());
         final int mine1 = intent.getIntExtra("mine1",0);

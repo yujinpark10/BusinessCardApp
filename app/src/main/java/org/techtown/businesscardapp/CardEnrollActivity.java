@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,13 +24,13 @@ public class CardEnrollActivity extends AppCompatActivity {
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
     private boolean validate = false;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_enroll);
         getSupportActionBar().hide();
-
 
         Intent intent = new Intent(this.getIntent());
         final int mine1 = intent.getIntExtra("mine1",0);

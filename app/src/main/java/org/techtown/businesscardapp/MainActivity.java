@@ -24,6 +24,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,9 +97,26 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.dropID:
-                                Toast.makeText(getApplicationContext(), "dropID", Toast.LENGTH_SHORT);
-                                Intent dropIDIntent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(dropIDIntent);
+                                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+                                    }
+                                };
+
+                                MemberDelete MemberDelete = new MemberDelete(loginid, responseListener);
+                                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                                queue.add(MemberDelete);
+
+                                Toast.makeText(getApplicationContext(), "drop", Toast.LENGTH_SHORT);
+                                Intent dropIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                startActivity(dropIntent);
+                                SharedPreferences dropauto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor dropeditor = dropauto.edit();
+                                dropeditor.clear();
+                                dropeditor.commit();
+                                Toast.makeText(MainActivity.this, "회원탈퇴.", Toast.LENGTH_SHORT).show();
+                                finish();
                                 return true;
 
                             default:
