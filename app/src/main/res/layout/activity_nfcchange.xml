@@ -11,4 +11,10 @@
         android:text="교환할 디바이스와 접촉하여 주세요. 교환이 끝나면 나가기를 해주세요."
         android:textSize="25dp"/>
 
+    <Button
+        android:id="@+id/go_back"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="나가기" />
+
 </LinearLayout>

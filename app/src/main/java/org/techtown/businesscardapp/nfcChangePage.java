@@ -9,6 +9,8 @@ import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ public class nfcChangePage extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
     TextView Text1;
+    Button go_back;
 
     private String userID;
     private String yourID;
@@ -34,14 +37,24 @@ public class nfcChangePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfcchange);
+        getSupportActionBar().hide();
 
         //아이디값 저장 변수
         userID = getIntent().getStringExtra("userID");
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         Text1 = (TextView) findViewById(R.id.Text1);
+        go_back = (Button)findViewById(R.id.go_back);
 
-        Text1.setText("교환할 디바이스와 접촉하여 주세요.\n교환이 끝나면 나가기를 해주세요.");
+        go_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(nfcChangePage.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Text1.setText("교환할 디바이스와 접촉하여 주세요.\n교환이 끝나면 나가기를 눌러주세요.");
 
         //보내는 부분
         NdefMessage ndefMessage = createNdefMessage(userID);
@@ -94,11 +107,6 @@ public class nfcChangePage extends AppCompatActivity {
 
             // 여기가 읽은 메시지
             yourID = tagcontent;
-
-            //Intent intent = new Intent(nfcChangePage.this,CardExchange.class);
-            //intent.putExtra("userID", userID);
-            //intent.putExtra("yourID", tagcontent);
-            //startActivity(intent);
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
