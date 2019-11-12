@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -186,4 +187,10 @@ public class nfcChangePage extends AppCompatActivity {
         return tagContent;
     }
 
+    //백버튼
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(nfcChangePage.this, MainActivity.class);
+        startActivity(intent);
+    }
 }

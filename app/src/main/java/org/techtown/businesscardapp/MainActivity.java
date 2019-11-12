@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -44,13 +45,17 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean checkKing;
+
     private LinearLayout kingLayout;
     private Button btn_setting;
     private Button btn_myCard;
     private Button btn_cardEnroll;
     private Button btn_cardChange;
+    private ImageView kingCardImage;
     private TextView kingCardListName;
-    private TextView KingCardListCompany;
+    private TextView kingCardListCompany;
+    private TextView leftgalho, rightgalho;
 
     private static final String TAG_ME_JSON="responseme";
     private static final String TAG_JSON="responseyou";
@@ -133,8 +138,11 @@ public class MainActivity extends AppCompatActivity {
         String userID = loginid;
 
         // 대표 명함
+        kingCardImage = (ImageView)findViewById(R.id.kingCardImage);
         kingCardListName = (TextView)findViewById(R.id.kingCardListName);
-        KingCardListCompany = (TextView)findViewById(R.id.KingCardListCompany);
+        kingCardListCompany = (TextView)findViewById(R.id.kingCardListCompany);
+        leftgalho = (TextView)findViewById(R.id.leftgalho);
+        rightgalho = (TextView)findViewById(R.id.rightgalho);
 
         GetKing taskKing = new GetKing();
         taskKing.execute("http://yujinpark10.dothome.co.kr/kingCard.php", userID);
@@ -144,14 +152,21 @@ public class MainActivity extends AppCompatActivity {
         kingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CardClicked.class);
-                intent.putExtra("userID", loginid);
-                intent.putExtra("cardNum", kingCardNum);
-                intent.putExtra("mine1",1);
-                startActivity(intent);
+                if(checkKing) {
+                    Intent intent = new Intent(MainActivity.this, CardClicked.class);
+                    intent.putExtra("userID", loginid);
+                    intent.putExtra("cardNum", kingCardNum);
+                    intent.putExtra("mine1",1);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"대표 명함을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, myCardListActivity.class);
+                    intent.putExtra("userID", loginid);
+                    intent.putExtra("mine1",1);
+                    startActivity(intent);
+                }
             }
         });
-
 
         //명함 목록을 위한 리스트뷰
         cardList = (ListView)findViewById(R.id.cardList);
@@ -318,7 +333,11 @@ public class MainActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(mJsonString);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_ME_JSON);
 
+            checkKing = false;
+
             for(int i=0;i<jsonArray.length();i++){
+
+                checkKing = true;
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
@@ -328,7 +347,21 @@ public class MainActivity extends AppCompatActivity {
 
                 kingCardNum = cardNum;
                 kingCardListName.setText(name);
-                KingCardListCompany.setText(company);
+                kingCardListCompany.setText(company);
+            }
+
+            if(checkKing){
+                kingCardImage.setVisibility(View.VISIBLE);
+                kingCardListName.setVisibility(View.VISIBLE);
+                kingCardListCompany.setVisibility(View.VISIBLE);
+                leftgalho.setVisibility(View.VISIBLE);
+                rightgalho.setVisibility(View.VISIBLE);
+            } else {
+                kingCardImage.setVisibility(View.GONE);
+                kingCardListName.setText("내 명함에서\n대표 명함을 설정해주세요.");
+                kingCardListCompany.setVisibility(View.GONE);
+                leftgalho.setVisibility(View.GONE);
+                rightgalho.setVisibility(View.GONE);
             }
 
         } catch (JSONException e) {
@@ -461,9 +494,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainActivity.this, nfcChangePage.class);
-                intent.putExtra("userID", loginid);
-                startActivity(intent);
+                if(checkKing){
+                    Intent intent = new Intent(MainActivity.this, nfcChangePage.class);
+                    intent.putExtra("userID", loginid);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"대표 명함을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                    Intent kingintent = new Intent(MainActivity.this, myCardListActivity.class);
+                    kingintent.putExtra("userID", loginid);
+                    kingintent.putExtra("mine1",1);
+                    startActivity(kingintent);
+                }
             }
         });
 
