@@ -3,6 +3,7 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ import java.net.URL;
 
 public class CardClicked extends AppCompatActivity {
 
+    private String use_conumber, use_pnumber, use_address;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
     private Button btn_modify, btn_delete, btn_cancel;
 
@@ -72,6 +74,15 @@ public class CardClicked extends AppCompatActivity {
 
         GetData task = new GetData();
         task.execute("http://yujinpark10.dothome.co.kr/cardClicked.php", Integer.toString(cardNum));//아이디값 받아온거  보내기
+
+        // 전화번호 누르면 전화 다이얼 연결
+        inp_pnumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_pnumber));
+                startActivity(intent);
+            }
+        });
 
         // 수정 버튼
         btn_modify = (Button)findViewById(R.id.btn_modify);
@@ -225,6 +236,9 @@ public class CardClicked extends AppCompatActivity {
                 inp_fnumber.setText(faxNum);
                 inp_address.setText(address);
 
+                use_pnumber=num;
+                use_conumber=coNum;
+                use_address=address;
             }
 
         } catch (JSONException e) {
