@@ -3,14 +3,17 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,124 +29,134 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
-public class CardModifyActivity extends AppCompatActivity {
+public class MemberModifyActivity extends AppCompatActivity {
 
     private static final String TAG_JSON="response";
-    private static final String TAG_CARDNUM = "cardNum";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_COMPANY ="company";
-    private static final String TAG_TEAM="team";
-    private static final String TAG_POSITION="position";
-    private static final String TAG_CONUM="coNum";
-    private static final String TAG_NUM="num";
-    private static final String TAG_E_MAIL="e_mail";
-    private static final String TAG_FAXNUM="faxNum";
-    private static final String TAG_ADDRESS="address";
-    private static final String TAG_ID="userID";
-    private static final String TAG_MINE="mine";
-    private static final String TAG_KING="king";
-    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
-    private Button btn_modifySave, btn_modifyCancel;
-    private AlertDialog dialog;
-    private boolean validate = false;
+    private static final String TAG_USERID="userID";
+    private static final String TAG_PASSWORD="userPassword";
+    private static final String TAG_NAME="userName";
+    private static final String TAG_BIRTH="userBirth";
+    private static final String TAG_NUM="userNum";
+    private static final String TAG_E_MAIL="userEmail";
     String mJsonString;
+
+    private EditText et_id, et_password, et_name, et_birth, et_pnumber, et_email;
+    private Button btn_modify, btn_cancel;
+    private AlertDialog dialog;
+    private int TodayYear, TodayMonth, TodayDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_modify);
+        setContentView(R.layout.activity_member_modify);
         getSupportActionBar().hide();
 
-        Intent intent = new Intent(this.getIntent());
-        final int cardNum = intent.getIntExtra("cardNum", 0);
         final String userID = getIntent().getStringExtra("userID");
 
+        et_id = (EditText)findViewById(R.id.et_id);
+        et_password = (EditText)findViewById(R.id.et_password);
         et_name = (EditText)findViewById(R.id.et_name);
-        et_company = (EditText)findViewById(R.id.et_company);
-        et_team = (EditText)findViewById(R.id.et_team);
-        et_position = (EditText)findViewById(R.id.et_position);
-        et_conumber = (EditText)findViewById(R.id.et_conumber);
+        et_birth = (EditText)findViewById(R.id.et_birth);
         et_pnumber = (EditText)findViewById(R.id.et_pnumber);
         et_email = (EditText)findViewById(R.id.et_email);
-        et_fnumber = (EditText)findViewById(R.id.et_fnumber);
-        et_address = (EditText)findViewById(R.id.et_address);
 
         // 전화번호 형식으로 변환하기
-        et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        GetData task = new GetData();
-        task.execute("http://yujinpark10.dothome.co.kr/cardModify_select.php", Integer.toString(cardNum));
+        // 생일 달력 생성 및 설정
+        final Calendar calendar = Calendar.getInstance();
+        TodayYear = calendar.get(Calendar.YEAR);
+        TodayMonth = calendar.get(Calendar.MONTH);
+        TodayDate = calendar.get(Calendar.DATE);
 
-        //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
-        btn_modifyCancel = (Button)findViewById(R.id.btn_modifyCancel);
-        btn_modifyCancel.setOnClickListener(new View.OnClickListener() {
+        Button btn_calendar = (Button)findViewById(R.id.btn_calender);
+        btn_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MemberModifyActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                        et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+
+                        Toast.makeText(getApplicationContext(),"선택 날짜 : "+ year + "년 "+(month+1)+"월 "+dayOfMonth+"일", Toast.LENGTH_LONG).show();
+                    }
+                }, TodayYear, TodayMonth, TodayDate);
+
+                datePickerDialog.show();
             }
         });
 
-        //저장 버튼 클릭시
-        btn_modifySave = (Button)findViewById(R.id.btn_modifySave);
-        btn_modifySave.setOnClickListener(new View.OnClickListener() {
+        GetData task = new GetData();
+        task.execute("http://yujinpark10.dothome.co.kr/memberModify_select.php", userID);
+
+        //취소 버튼 클릭시 수행
+        btn_cancel = (Button)findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MemberModifyActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
-                //EditText에 현재 입력되어있는 값을 get 해온다.
-                String name = et_name.getText().toString();
-                String company = et_company.getText().toString();
-                String team = et_team.getText().toString();
-                String position = et_position.getText().toString();
-                String coNum = et_conumber.getText().toString();
-                String num = et_pnumber.getText().toString();
-                String e_mail = et_email.getText().toString();
-                String faxNum = et_fnumber.getText().toString();
-                String address = et_address.getText().toString();
+        // 회원가입 버튼 클릭 시 수행
+        btn_modify = (Button)findViewById(R.id.btn_modify);
+        btn_modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get 해온다.
+                String userID = et_id.getText().toString();
+                String userPassword = et_password.getText().toString();
+                String userName = et_name.getText().toString();
+                String userBirth = et_birth.getText().toString();
+                String userNum = et_pnumber.getText().toString();
+                String userEmail = et_email.getText().toString();
+                //String cardNum = null;
 
-                //빈칸 없이 입력 확인
-                if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CardModifyActivity.this);
+                if(userID.equals("") || userPassword.equals("") || userName.equals("") || userBirth.equals("") || userNum.equals("") || userEmail.equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MemberModifyActivity.this);
                     dialog = builder.setMessage("빈칸없이 입력해주세요.")
-                            .setNegativeButton("확인", null)
+                            .setNegativeButton("획인", null)
                             .create();
                     dialog.show();
                     return;
                 }
 
-                //카드 등록 시작
+                // 회원 수정 시작
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
-                            if (success) {//카드등록 성공한 경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardModifyActivity.this);
-                                dialog = builder.setMessage("명함 수정에 성공했습니다.")
-                                        .setPositiveButton("확인", null)
+                            if(success){ // 회원수정에 성공한 경우
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MemberModifyActivity.this);
+                                dialog = builder.setMessage("회원정보 수정에 성공했습니다.")
+                                        .setPositiveButton("획인", null)
                                         .create();
                                 dialog.show();
                                 finish();
-                            } else {//카드 등록 실패한경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardModifyActivity.this);
-                                dialog = builder.setMessage("명함 수정에 실패했습니다.")
-                                        .setPositiveButton("확인", null)
+
+                            } else { // 회원수정에 실패한 경우
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MemberModifyActivity.this);
+                                dialog = builder.setMessage("회원정보 수정에 실패했습니다.")
+                                        .setNegativeButton("획인", null)
                                         .create();
                                 dialog.show();
                             }
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 };
-                //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
-                queue.add(CardModify);
-                Intent intent = new Intent(CardModifyActivity.this, MainActivity.class);
+                // 서버로 Volley 이용해서 요청을 함.
+                MemberModify memberModify = new MemberModify(userID, userPassword, userName, userBirth, userNum, userEmail, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(MemberModifyActivity.this);
+                queue.add(memberModify);
+                Intent intent = new Intent(MemberModifyActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -185,8 +198,8 @@ public class CardModifyActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String serverURL = params[0];
-            String cardNum = params[1];
-            String postParameters = "cardNum=" + cardNum;
+            String userID = params[1];
+            String postParameters = "userID=" + userID;
 
             try {
                 URL url = new URL(serverURL);
@@ -248,25 +261,19 @@ public class CardModifyActivity extends AppCompatActivity {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
+                String userID = item.getString(TAG_USERID);
+                String password = item.getString(TAG_PASSWORD);
                 String name = item.getString(TAG_NAME);
-                String company = item.getString(TAG_COMPANY);
-                String team = item.getString(TAG_TEAM);
-                String position = item.getString(TAG_POSITION);
-                String coNum = item.getString(TAG_CONUM);
+                String birth = item.getString(TAG_BIRTH);
                 String num = item.getString(TAG_NUM);
                 String e_mail = item.getString(TAG_E_MAIL);
-                String faxNum = item.getString(TAG_FAXNUM);
-                String address = item.getString(TAG_ADDRESS);
 
+                et_id.setText(userID);
+                et_password.setText(password);
                 et_name.setText(name);
-                et_company.setText(company);
-                et_team.setText(team);
-                et_position.setText(position);
-                et_conumber.setText(coNum);
+                et_birth.setText(birth);
                 et_pnumber.setText(num);
                 et_email.setText(e_mail);
-                et_fnumber.setText(faxNum);
-                et_address.setText(address);
             }
 
         } catch (JSONException e) {

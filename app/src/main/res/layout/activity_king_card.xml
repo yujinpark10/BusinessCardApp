@@ -37,11 +37,10 @@
 
             <Button
                 android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="취소"
-                android:textSize="20dp" />
+                android:textSize="24dp" />
 
         </LinearLayout>
 

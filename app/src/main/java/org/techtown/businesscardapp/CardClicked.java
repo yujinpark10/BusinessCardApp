@@ -2,14 +2,17 @@ package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,9 +32,9 @@ import java.net.URL;
 
 public class CardClicked extends AppCompatActivity {
 
-    private String use_conumber, use_pnumber, use_address;
+    private String use_conumber, use_pnumber, use_address, use_email;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
-    private Button btn_modify, btn_delete, btn_cancel;
+    private Button btn_call, btn_modify, btn_delete, btn_cancel;
 
     private static final String TAG_JSON="response";
     private static final String TAG_CARDNUM = "cardNum";
@@ -79,8 +82,26 @@ public class CardClicked extends AppCompatActivity {
         inp_pnumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_pnumber));
-                startActivity(intent);
+                ShowCallDialog();
+            }
+        });
+
+        btn_call = (Button)findViewById(R.id.btn_call); // 이걸로 할꺼면 회사번호 폰번호 선택기능 등등 추가 해야함
+        btn_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowCallDialog();
+            }
+        });
+
+        // 이메일 보내기
+        inp_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{use_email});
+                email.setType("message/rfc822");
+                startActivity(email);
             }
         });
 
@@ -238,6 +259,7 @@ public class CardClicked extends AppCompatActivity {
 
                 use_pnumber=num;
                 use_conumber=coNum;
+                use_email=e_mail;
                 use_address=address;
             }
 
@@ -245,5 +267,49 @@ public class CardClicked extends AppCompatActivity {
 
         }
 
+    }
+
+    // 전화 번호 클릭시
+    private void ShowCallDialog(){
+        LayoutInflater callDialog = LayoutInflater.from(this);
+        final View callDialogLayout = callDialog.inflate(R.layout.calldialog, null);
+        final Dialog myCallDialog = new Dialog(this);
+
+        myCallDialog.setTitle("전화 걸기");
+        myCallDialog.setContentView(callDialogLayout);
+        myCallDialog.show();
+
+        Button btn_cancel = (Button)callDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_call = (Button)callDialogLayout.findViewById(R.id.btn_call);
+        Button btn_message = (Button)callDialogLayout.findViewById(R.id.btn_message);
+
+        btn_call.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_pnumber));
+                startActivity(intent);
+            }
+        });
+
+        btn_message.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+use_pnumber));
+                startActivity(intent);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myCallDialog.cancel();
+            }
+        });
     }
 }

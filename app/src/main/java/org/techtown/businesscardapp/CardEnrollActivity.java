@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -48,12 +50,19 @@ public class CardEnrollActivity extends AppCompatActivity {
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText)findViewById(R.id.et_address);
 
+        // 전화번호 형식으로 변환하기
+        et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
         btn_enrollCancel = (Button)findViewById(R.id.btn_enrollCancel);
         btn_enrollCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                TextView id123 = (TextView)findViewById(R.id.id123);
+                id123.setText(et_pnumber.getText().toString());
+                //finish();
             }
         });
 

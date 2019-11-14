@@ -3,12 +3,18 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,13 +23,18 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    private static  final String TAG = "RegisterAcitivity";
     private EditText et_id, et_password, et_name, et_birth, et_pnumber, et_email;
     private Button btn_register, btn_cancel;
     private AlertDialog dialog;
     private  boolean validate = false;
+
+    private int TodayYear, TodayMonth, TodayDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +48,32 @@ public class RegisterActivity extends AppCompatActivity {
         et_birth = (EditText)findViewById(R.id.et_birth);
         et_pnumber = (EditText)findViewById(R.id.et_pnumber);
         et_email = (EditText)findViewById(R.id.et_email);
+
+        // 전화번호 형식으로 변환하기
+        et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
+        // 생일 달력 생성 및 설정
+        final Calendar calendar = Calendar.getInstance();
+        TodayYear = calendar.get(Calendar.YEAR);
+        TodayMonth = calendar.get(Calendar.MONTH);
+        TodayDate = calendar.get(Calendar.DATE);
+
+        Button btn_calendar = (Button)findViewById(R.id.btn_calender);
+        btn_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                        et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+
+                        Toast.makeText(getApplicationContext(),"선택 날짜 : "+ year + "년 "+(month+1)+"월 "+dayOfMonth+"일", Toast.LENGTH_LONG).show();
+                    }
+                }, TodayYear, TodayMonth, TodayDate);
+
+                datePickerDialog.show();
+            }
+        });
 
         //회원가입시 아이디가 사용가능한지 검증하는 부분
         final Button validateButton = (Button)findViewById(R.id.btn_chkid);
@@ -56,6 +93,17 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.show();
                     return;
                 }
+
+                /*
+                if(et_id.getText().toString().length()<4) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    dialog = builder.setMessage("4자리 이상의 아이디만 사용하실 수 있습니다.")
+                            .setNegativeButton("획인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+                 */
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     // 서버에 접속한 뒤, 응답을 받는 부분

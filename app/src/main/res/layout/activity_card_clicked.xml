@@ -269,6 +269,14 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
+                // 연락하기로 수정 가능
+                <Button
+                    android:id="@+id/btn_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전화 걸기"
+                    android:textSize="24dp"/>
+
                 <Button
                     android:id="@+id/btn_modify"
                     android:layout_width="wrap_content"
@@ -281,8 +289,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="삭제"
-                    android:textSize="24dp"
-                    android:layout_marginRight="30dp"/>
+                    android:textSize="24dp" />
 
                 <Button
                     android:id="@+id/btn_cancel"

@@ -6,6 +6,10 @@
         android:id="@+id/logout" />
 
     <item
+        android:title="회원정보변경"
+        android:id="@+id/updateID"/>
+
+    <item
         android:title="회원탈퇴"
         android:id="@+id/dropID" />
 

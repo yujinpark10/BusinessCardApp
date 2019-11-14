@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CardModifyActivity"></activity>
+        <activity android:name=".MemberModifyActivity"></activity>
+        <activity android:name=".CardModifyActivity" />
         <activity android:name=".KingCardActivity" />
         <activity android:name=".myCardEnrollActivity" />
         <activity android:name=".myCardListActivity" />

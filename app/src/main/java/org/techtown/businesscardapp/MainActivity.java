@@ -2,7 +2,6 @@ package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -40,8 +38,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -100,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
                                 editor.commit();
                                 Toast.makeText(MainActivity.this, "로그아웃.", Toast.LENGTH_SHORT).show();
                                 finish();
+                                return true;
+
+                            case R.id.updateID:
+                                Intent modifyIntent = new Intent(MainActivity.this, MemberModifyActivity.class);
+                                modifyIntent.putExtra("userID", loginid);
+                                startActivity(modifyIntent);
                                 return true;
 
                             case R.id.dropID:

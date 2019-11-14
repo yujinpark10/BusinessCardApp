@@ -165,7 +165,7 @@
                         android:layout_height="wrap_content"
                         android:hint="회사번호"
                         android:gravity="center"
-                        android:inputType="number"
+                        android:inputType="phone"
                         android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:hint="전화번호"
                         android:gravity="center"
-                        android:inputType="number"
+                        android:inputType="phone"
                         android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
@@ -219,7 +219,7 @@
                         android:layout_height="wrap_content"
                         android:hint="이메일"
                         android:gravity="center"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:hint="팩스번호"
                         android:gravity="center"
-                        android:inputType="number"
+                        android:inputType="phone"
                         android:imeOptions="actionNext"
                         android:textSize="10pt"/>
 
