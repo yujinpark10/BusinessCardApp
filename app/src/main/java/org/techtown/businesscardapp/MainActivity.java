@@ -515,7 +515,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+                if(checkKing){
+                    Intent intent = new Intent(MainActivity.this, QRchange_page.class);
+                    intent.putExtra("userID", loginid);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),"대표 명함을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                    Intent kingintent = new Intent(MainActivity.this, myCardListActivity.class);
+                    kingintent.putExtra("userID", loginid);
+                    kingintent.putExtra("mine1",1);
+                    startActivity(kingintent);
+                }
             }
         });
 
