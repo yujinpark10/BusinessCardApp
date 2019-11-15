@@ -3,6 +3,7 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,6 +18,12 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +37,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CardClicked extends AppCompatActivity {
+public class CardClicked extends AppCompatActivity implements OnMapReadyCallback {
 
     private String use_conumber, use_pnumber, use_address, use_email;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
@@ -77,6 +84,11 @@ public class CardClicked extends AppCompatActivity {
 
         GetData task = new GetData();
         task.execute("http://yujinpark10.dothome.co.kr/cardClicked.php", Integer.toString(cardNum));//아이디값 받아온거  보내기
+
+        // 지도
+        FragmentManager fragmentManager = getFragmentManager();
+        MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         // 전화번호 누르면 전화 다이얼 연결
         inp_pnumber.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +279,21 @@ public class CardClicked extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        LatLng SEOUL = new LatLng(37.56, 126.97);
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(SEOUL);
+        markerOptions.title("서울");
+        markerOptions.snippet("한국의 수도");
+        map.addMarker(markerOptions);
+
+        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
+        map.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
     // 전화 번호 클릭시

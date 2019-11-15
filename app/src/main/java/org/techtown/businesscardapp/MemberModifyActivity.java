@@ -66,10 +66,10 @@ public class MemberModifyActivity extends AppCompatActivity {
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         // 생일 달력 생성 및 설정
-        final Calendar calendar = Calendar.getInstance();
-        TodayYear = calendar.get(Calendar.YEAR);
-        TodayMonth = calendar.get(Calendar.MONTH);
-        TodayDate = calendar.get(Calendar.DATE);
+        //final Calendar calendar = Calendar.getInstance();
+        //TodayYear = calendar.get(Calendar.YEAR);
+        //TodayMonth = calendar.get(Calendar.MONTH);
+        //TodayDate = calendar.get(Calendar.DATE);
 
         Button btn_calendar = (Button)findViewById(R.id.btn_calender);
         btn_calendar.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +78,19 @@ public class MemberModifyActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MemberModifyActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                        et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+                        if(month < 9){
+                            if(dayOfMonth < 10) {
+                                et_birth.setText(year + ". 0" + (month+1) + ". 0" + dayOfMonth);
+                            } else {
+                                et_birth.setText(year + ". 0" + (month+1) + ". " + dayOfMonth);
+                            }
+                        } else {
+                            if(dayOfMonth < 10) {
+                                et_birth.setText(year + ". " + (month+1) + ". 0" + dayOfMonth);
+                            } else {
+                                et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+                            }
+                        }
 
                         Toast.makeText(getApplicationContext(),"선택 날짜 : "+ year + "년 "+(month+1)+"월 "+dayOfMonth+"일", Toast.LENGTH_LONG).show();
                     }
@@ -267,6 +279,10 @@ public class MemberModifyActivity extends AppCompatActivity {
                 String birth = item.getString(TAG_BIRTH);
                 String num = item.getString(TAG_NUM);
                 String e_mail = item.getString(TAG_E_MAIL);
+
+                TodayYear = Integer.parseInt(birth.substring(0,4));
+                TodayMonth = Integer.parseInt(birth.substring(6,8))-1;
+                TodayDate = Integer.parseInt(birth.substring(10,12));
 
                 et_id.setText(userID);
                 et_password.setText(password);

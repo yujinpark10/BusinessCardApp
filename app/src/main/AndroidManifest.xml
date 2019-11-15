@@ -28,13 +28,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".CardEnrollActivity" />
-        <activity android:name=".MyInfoActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".nfcChangePage" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBpmA6VnXlaHE-_XQotg54Hm0a1KCzdVD4" />
 
         <meta-data
             android:name="android.nfc.disable_beam_default"

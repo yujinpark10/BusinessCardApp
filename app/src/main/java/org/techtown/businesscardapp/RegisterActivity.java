@@ -65,7 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                        et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+                        if(month < 9){
+                            if(dayOfMonth < 10) {
+                                et_birth.setText(year + ". 0" + (month+1) + ". 0" + dayOfMonth);
+                            } else {
+                                et_birth.setText(year + ". 0" + (month+1) + ". " + dayOfMonth);
+                            }
+                        } else {
+                            if(dayOfMonth < 10) {
+                                et_birth.setText(year + ". " + (month+1) + ". 0" + dayOfMonth);
+                            } else {
+                                et_birth.setText(year + ". " + (month+1) + ". " + dayOfMonth);
+                            }
+                        }
 
                         Toast.makeText(getApplicationContext(),"선택 날짜 : "+ year + "년 "+(month+1)+"월 "+dayOfMonth+"일", Toast.LENGTH_LONG).show();
                     }
