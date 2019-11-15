@@ -60,9 +60,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         btn_enrollCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView id123 = (TextView)findViewById(R.id.id123);
-                id123.setText(et_pnumber.getText().toString());
-                //finish();
+                finish();
             }
         });
 
