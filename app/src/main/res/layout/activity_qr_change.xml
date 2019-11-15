@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/QRtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="당신의 QR code입니다."
+        android:textSize="25dp"/>
+
+    <ImageView
+        android:id="@+id/QRimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/QRscanner"
+        android:layout_width="237dp"
+        android:layout_height="wrap_content"
+        android:text="상대방 QR코드 스캔하기" />
+
+    <Button
+        android:id="@+id/go_back2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="나가기" />
+
+</LinearLayout>
