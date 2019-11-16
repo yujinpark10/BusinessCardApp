@@ -71,12 +71,13 @@ public class searchAdapter extends BaseAdapter implements Filterable {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(int cardNum, String name, String company) {
+    public void addItem(int cardNum, String name, String company, String address) {
         cardListViewItem item = new cardListViewItem();
 
         item.setCardNum(cardNum);
         item.setName(name);
         item.setCompany(company);
+        item.setAddress(address);
 
         cardListViewItemList.add(item);
     }

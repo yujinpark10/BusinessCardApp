@@ -153,11 +153,19 @@
 
                     <TextView
                         android:id="@+id/inp_conumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:text="회사번호"
                         android:gravity="center"
                         android:textSize="10pt"/>
+
+                    <ImageView
+                        android:id="@+id/call_conumber"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/icon_call"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"/>
 
                 </LinearLayout>
 
@@ -178,11 +186,25 @@
 
                     <TextView
                         android:id="@+id/inp_pnumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:text="전화번호"
                         android:gravity="center"
                         android:textSize="10pt"/>
+
+                    <ImageView
+                        android:id="@+id/call_pnumber"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/icon_call"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"/>
+
+                    <ImageView
+                        android:id="@+id/message_pnumber"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/icon_message"/>
 
                 </LinearLayout>
 
@@ -203,11 +225,19 @@
 
                     <TextView
                         android:id="@+id/inp_email"
-                        android:layout_width="match_parent"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
                         android:text="이메일"
                         android:gravity="center"
                         android:textSize="10pt"/>
+
+                    <ImageView
+                        android:id="@+id/send_email"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/icon_email"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"/>
 
                 </LinearLayout>
 
@@ -265,12 +295,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="400dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mapText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mapText"
+                    android:textColor="#FF0000"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:textSize="20dp"/>
 
                 <fragment
                     android:id="@+id/map"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     class="com.google.android.gms.maps.MapFragment"/>
 
             </LinearLayout>
@@ -281,32 +323,27 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                // 연락하기로 수정 가능
-                <Button
-                    android:id="@+id/btn_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전화 걸기"
-                    android:textSize="24dp"/>
-
                 <Button
                     android:id="@+id/btn_modify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="수정"
                     android:textSize="24dp"/>
 
                 <Button
                     android:id="@+id/btn_delete"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="삭제"
                     android:textSize="24dp" />
 
                 <Button
                     android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="취소"
                     android:textSize="24dp"/>
 

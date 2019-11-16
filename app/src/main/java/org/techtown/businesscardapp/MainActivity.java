@@ -59,11 +59,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_ID="userID";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
+    private static final String TAG_ADDRESS ="address";
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
     String loginid;
     private int kingCardNum;
+    private String kingCardAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("userID", loginid);
                     intent.putExtra("cardNum", kingCardNum);
                     intent.putExtra("mine1",1);
+                    intent.putExtra("address", kingCardAddress);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(),"대표 명함을 선택해주세요.",Toast.LENGTH_SHORT).show();
@@ -187,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 cardListViewItem selected = (cardListViewItem) adapterView.getItemAtPosition(i);
                 intent.putExtra("cardNum", selected.getCardNum());
                 intent.putExtra("mine1",0);
+                intent.putExtra("address", selected.getAddress());
                 startActivity(intent);
             }
         });
@@ -346,10 +350,12 @@ public class MainActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String address = item.getString(TAG_ADDRESS);
 
                 kingCardNum = cardNum;
                 kingCardListName.setText(name);
                 kingCardListCompany.setText(company);
+                kingCardAddress = address;
             }
 
             if(checkKing){
@@ -465,8 +471,9 @@ public class MainActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String address = item.getString(TAG_ADDRESS);
 
-                searchAdapter.addItem(cardNum, name, company);
+                searchAdapter.addItem(cardNum, name, company, address);
             }
 
             searchAdapter.notifyDataSetChanged();

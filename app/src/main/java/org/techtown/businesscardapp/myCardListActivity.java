@@ -39,6 +39,7 @@ public class myCardListActivity extends AppCompatActivity {
     private static final String TAG_CARDNUM = "cardNum";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
+    private static final String TAG_ADDRESS ="address";
     ListView myCardList = null;
     private static myCardAdapter myCardAdapter;
     String mJsonString;
@@ -73,6 +74,7 @@ public class myCardListActivity extends AppCompatActivity {
                 cardListViewItem selected = (cardListViewItem) adapterView.getItemAtPosition(i);
                 intent.putExtra("cardNum", selected.getCardNum());
                 intent.putExtra("mine1",1);
+                intent.putExtra("address", selected.getAddress());
                 startActivity(intent);
             }
         });
@@ -204,8 +206,9 @@ public class myCardListActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String address = item.getString(TAG_ADDRESS);
 
-                myCardAdapter.addItem(cardNum, name, company);
+                myCardAdapter.addItem(cardNum, name, company, address);
             }
 
             myCardAdapter.notifyDataSetChanged();

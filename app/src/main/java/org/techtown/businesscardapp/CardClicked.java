@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -31,17 +36,20 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class CardClicked extends AppCompatActivity implements OnMapReadyCallback {
 
-    private String use_conumber, use_pnumber, use_address, use_email;
+    private String use_company, use_conumber, use_pnumber, use_email, use_address;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
-    private Button btn_call, btn_modify, btn_delete, btn_cancel;
+    private Button btn_modify, btn_delete, btn_cancel;
+    private ImageView call_conumber, call_pnumber, message_pnumber, send_email;
 
     private static final String TAG_JSON="response";
     private static final String TAG_CARDNUM = "cardNum";
@@ -58,6 +66,9 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
     String mJsonString;
+
+    private String mapResult;
+    private double getLat, getLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +89,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         final int mine1 = getIntent().getIntExtra("mine1",0);
         final String userID = getIntent().getStringExtra("userID");
         final int cardNum = getIntent().getIntExtra("cardNum", 0);
+        final String address = getIntent().getStringExtra("address");
 
         // 카드번호 넘기기 성공
         //inp_name.setText(Integer.toString(cardNum));
@@ -86,28 +98,70 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         task.execute("http://yujinpark10.dothome.co.kr/cardClicked.php", Integer.toString(cardNum));//아이디값 받아온거  보내기
 
         // 지도
+        final Geocoder geocoder = new Geocoder(this);
+
+        // 동아대학교 승학캠퍼스 위도 경도
+        getLat = 35.1162735;
+        getLng = 128.9682498;
+
+        final TextView mapText = (TextView)findViewById(R.id.mapText);
+        List<Address> mapList = null;
+
+        try{
+            mapList = geocoder.getFromLocationName(address, 10);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+        }
+
+        if(mapList != null) {
+            if(mapList.size()==0) {
+                //위치를 못찾을 경우 실패시 동아대학교 승학캠퍼스를 띄움
+                mapText.setText("해당되는 주소 정보는 없습니다.\n주소를 다시 한번 확인해주세요.");
+                mapText.setVisibility(View.VISIBLE);
+            } else {
+                mapResult = mapList.get(0).toString(); // 변환한 전체 정보 저장
+                getLat = mapList.get(0).getLatitude();
+                getLng = mapList.get(0).getLongitude();
+                mapText.setVisibility(View.GONE);
+            }
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // 전화번호 누르면 전화 다이얼 연결
-        inp_pnumber.setOnClickListener(new View.OnClickListener() {
+        // 전화 문자 이메일 연결 call_conumber, call_pnumber, message_pnumber, send_email
+        call_conumber = (ImageView)findViewById(R.id.call_conumber);
+        call_pnumber = (ImageView)findViewById(R.id.call_pnumber);
+        message_pnumber = (ImageView)findViewById(R.id.message_pnumber);
+        send_email = (ImageView)findViewById(R.id.send_email);
+
+        call_conumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowCallDialog();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_conumber));
+                startActivity(intent);
             }
         });
 
-        btn_call = (Button)findViewById(R.id.btn_call); // 이걸로 할꺼면 회사번호 폰번호 선택기능 등등 추가 해야함
-        btn_call.setOnClickListener(new View.OnClickListener() {
+        call_pnumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowCallDialog();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_pnumber));
+                startActivity(intent);
             }
         });
 
-        // 이메일 보내기
-        inp_email.setOnClickListener(new View.OnClickListener() {
+        message_pnumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+use_pnumber));
+                startActivity(intent);
+            }
+        });
+
+        send_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent email = new Intent(Intent.ACTION_SEND);
@@ -269,6 +323,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 inp_fnumber.setText(faxNum);
                 inp_address.setText(address);
 
+                use_company=company;
                 use_pnumber=num;
                 use_conumber=coNum;
                 use_email=e_mail;
@@ -284,59 +339,24 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap map) {
 
-        LatLng SEOUL = new LatLng(37.56, 126.97);
+        LatLng whereCompany = new LatLng(getLat, getLng);
 
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");
-        markerOptions.snippet("한국의 수도");
+        markerOptions.position(whereCompany);
+        markerOptions.title(use_company);
+        markerOptions.snippet(use_address);
         map.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        map.animateCamera(CameraUpdateFactory.zoomTo(10));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(whereCompany,16));
+
+        map.setOnInfoWindowClickListener(infoWindowClickListener);
     }
 
-    // 전화 번호 클릭시
-    private void ShowCallDialog(){
-        LayoutInflater callDialog = LayoutInflater.from(this);
-        final View callDialogLayout = callDialog.inflate(R.layout.calldialog, null);
-        final Dialog myCallDialog = new Dialog(this);
-
-        myCallDialog.setTitle("전화 걸기");
-        myCallDialog.setContentView(callDialogLayout);
-        myCallDialog.show();
-
-        Button btn_cancel = (Button)callDialogLayout.findViewById(R.id.btn_cancel);
-        Button btn_call = (Button)callDialogLayout.findViewById(R.id.btn_call);
-        Button btn_message = (Button)callDialogLayout.findViewById(R.id.btn_message);
-
-        btn_call.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+use_pnumber));
-                startActivity(intent);
-            }
-        });
-
-        btn_message.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+use_pnumber));
-                startActivity(intent);
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                myCallDialog.cancel();
-            }
-        });
-    }
+    GoogleMap.OnInfoWindowClickListener infoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q="+use_address));
+            startActivity(intent);
+        }
+    };
 }
