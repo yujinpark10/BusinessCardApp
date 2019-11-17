@@ -3,11 +3,14 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,7 +45,7 @@ public class MemberModifyActivity extends AppCompatActivity {
     private static final String TAG_E_MAIL="userEmail";
     String mJsonString;
 
-    private EditText et_id, et_password, et_name, et_birth, et_pnumber, et_email;
+    private ClearEditText et_id, et_password, et_chkpassword, et_name, et_birth, et_pnumber, et_email;
     private Button btn_modify, btn_cancel;
     private AlertDialog dialog;
     private int TodayYear, TodayMonth, TodayDate;
@@ -55,12 +58,13 @@ public class MemberModifyActivity extends AppCompatActivity {
 
         final String userID = getIntent().getStringExtra("userID");
 
-        et_id = (EditText)findViewById(R.id.et_id);
-        et_password = (EditText)findViewById(R.id.et_password);
-        et_name = (EditText)findViewById(R.id.et_name);
-        et_birth = (EditText)findViewById(R.id.et_birth);
-        et_pnumber = (EditText)findViewById(R.id.et_pnumber);
-        et_email = (EditText)findViewById(R.id.et_email);
+        et_id = (ClearEditText)findViewById(R.id.et_id);
+        et_password = (ClearEditText)findViewById(R.id.et_password);
+        et_chkpassword = (ClearEditText)findViewById(R.id.et_chkpassword);
+        et_name = (ClearEditText)findViewById(R.id.et_name);
+        et_birth = (ClearEditText)findViewById(R.id.et_birth);
+        et_pnumber = (ClearEditText)findViewById(R.id.et_pnumber);
+        et_email = (ClearEditText)findViewById(R.id.et_email);
 
         // 전화번호 형식으로 변환하기
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -121,6 +125,7 @@ public class MemberModifyActivity extends AppCompatActivity {
                 // EditText에 현재 입력되어있는 값을 get 해온다.
                 String userID = et_id.getText().toString();
                 String userPassword = et_password.getText().toString();
+                String checkPassword = et_chkpassword.getText().toString();
                 String userName = et_name.getText().toString();
                 String userBirth = et_birth.getText().toString();
                 String userNum = et_pnumber.getText().toString();
@@ -130,6 +135,15 @@ public class MemberModifyActivity extends AppCompatActivity {
                 if(userID.equals("") || userPassword.equals("") || userName.equals("") || userBirth.equals("") || userNum.equals("") || userEmail.equals("")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MemberModifyActivity.this);
                     dialog = builder.setMessage("빈칸없이 입력해주세요.")
+                            .setNegativeButton("획인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+
+                if(!userPassword.equals(checkPassword)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MemberModifyActivity.this);
+                    dialog = builder.setMessage("비밀번호가 일치하지 않습니다.\n비밀번호를 확인해주세요.")
                             .setNegativeButton("획인", null)
                             .create();
                     dialog.show();
@@ -168,8 +182,13 @@ public class MemberModifyActivity extends AppCompatActivity {
                 MemberModify memberModify = new MemberModify(userID, userPassword, userName, userBirth, userNum, userEmail, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(MemberModifyActivity.this);
                 queue.add(memberModify);
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor autologin = auto.edit();
+                autologin.putString("et_password", et_password.getText().toString());
+                autologin.commit();
                 Intent intent = new Intent(MemberModifyActivity.this, MainActivity.class);
                 startActivity(intent);
+                Toast.makeText(MemberModifyActivity.this, "회원정보 수정완료.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -286,6 +305,7 @@ public class MemberModifyActivity extends AppCompatActivity {
 
                 et_id.setText(userID);
                 et_password.setText(password);
+                et_chkpassword.setText(password);
                 et_name.setText(name);
                 et_birth.setText(birth);
                 et_pnumber.setText(num);

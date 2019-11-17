@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class myCardEnrollActivity extends AppCompatActivity {
 
     private static final String TAG = "CardEnrollActivity";
-    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
+    private ClearEditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
     private boolean validate = false;
@@ -36,15 +36,15 @@ public class myCardEnrollActivity extends AppCompatActivity {
         final String mine = String.valueOf(mine1);
 
         //EditText 추가
-        et_name = (EditText)findViewById(R.id.et_name);
-        et_company = (EditText)findViewById(R.id.et_company);
-        et_team = (EditText)findViewById(R.id.et_team);
-        et_position = (EditText)findViewById(R.id.et_position);
-        et_conumber = (EditText)findViewById(R.id.et_conumber);
-        et_pnumber = (EditText)findViewById(R.id.et_pnumber);
-        et_email = (EditText)findViewById(R.id.et_email);
-        et_fnumber = (EditText)findViewById(R.id.et_fnumber);
-        et_address = (EditText)findViewById(R.id.et_address);
+        et_name = (ClearEditText)findViewById(R.id.et_name);
+        et_company = (ClearEditText)findViewById(R.id.et_company);
+        et_team = (ClearEditText)findViewById(R.id.et_team);
+        et_position = (ClearEditText)findViewById(R.id.et_position);
+        et_conumber = (ClearEditText)findViewById(R.id.et_conumber);
+        et_pnumber = (ClearEditText)findViewById(R.id.et_pnumber);
+        et_email = (ClearEditText)findViewById(R.id.et_email);
+        et_fnumber = (ClearEditText)findViewById(R.id.et_fnumber);
+        et_address = (ClearEditText)findViewById(R.id.et_address);
 
         //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
         btn_enrollCancel = (Button)findViewById(R.id.btn_enrollCancel);

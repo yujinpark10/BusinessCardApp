@@ -65,7 +65,12 @@ public class Loading extends AppCompatActivity {
                             startActivity(intent);
                         } else { // 로그인에 실패한 경우
                             Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                            return;
+                            Intent logoutIntent = new Intent(Loading.this, LoginActivity.class);
+                            startActivity(logoutIntent);
+                            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = auto.edit();
+                            editor.clear();
+                            editor.commit();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

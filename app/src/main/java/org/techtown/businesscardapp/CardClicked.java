@@ -2,9 +2,11 @@ package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -51,6 +53,9 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private Button btn_modify, btn_delete, btn_cancel;
     private ImageView call_conumber, call_pnumber, message_pnumber, send_email;
 
+    private String userID, address;
+    private int mine1, cardNum;
+
     private static final String TAG_JSON="response";
     private static final String TAG_CARDNUM = "cardNum";
     private static final String TAG_NAME = "name";
@@ -86,10 +91,10 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         inp_fnumber = (TextView)findViewById(R.id.inp_fnumber);
         inp_address = (TextView)findViewById(R.id.inp_address);
 
-        final int mine1 = getIntent().getIntExtra("mine1",0);
-        final String userID = getIntent().getStringExtra("userID");
-        final int cardNum = getIntent().getIntExtra("cardNum", 0);
-        final String address = getIntent().getStringExtra("address");
+        mine1 = getIntent().getIntExtra("mine1",0);
+        userID = getIntent().getStringExtra("userID");
+        cardNum = getIntent().getIntExtra("cardNum", 0);
+        address = getIntent().getStringExtra("address");
 
         // 카드번호 넘기기 성공
         //inp_name.setText(Integer.toString(cardNum));
@@ -188,18 +193,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                };
-
-                CardDelete CardDelete = new CardDelete(Integer.toString(cardNum), userID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(CardClicked.this);
-                queue.add(CardDelete);
-                Intent intent = new Intent(CardClicked.this, MainActivity.class);
-                startActivity(intent);
+                ShowCardDeleteDialog();
             }
         });
 
@@ -359,4 +353,47 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             startActivity(intent);
         }
     };
+
+    // 카드 삭제 확인 다이어로그
+    private void ShowCardDeleteDialog(){
+        LayoutInflater deleteDialog = LayoutInflater.from(this);
+        final View deleteDialogLayout = deleteDialog.inflate(R.layout.deletecard, null);
+        final Dialog myDeleteDialog = new Dialog(this);
+
+        myDeleteDialog.setTitle("카드삭제");
+        myDeleteDialog.setContentView(deleteDialogLayout);
+        myDeleteDialog.show();
+
+        Button btn_cancel = (Button)deleteDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_check = (Button)deleteDialogLayout.findViewById(R.id.btn_check);
+
+        btn_check.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                };
+
+                CardDelete CardDelete = new CardDelete(Integer.toString(cardNum), userID, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(CardClicked.this);
+                queue.add(CardDelete);
+                Intent intent = new Intent(CardClicked.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myDeleteDialog.cancel();
+            }
+        });
+    }
 }

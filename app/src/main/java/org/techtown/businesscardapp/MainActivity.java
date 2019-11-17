@@ -1,5 +1,6 @@
 package org.techtown.businesscardapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -38,6 +40,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
-    String loginid;
+    String loginid, loginpassword;
     private int kingCardNum;
     private String kingCardAddress;
 
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //아이디값 저장 변수
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         loginid = auto.getString("et_id",null);
+        loginpassword = auto.getString("et_password", null);
 
         // 설정 버튼 클릭시
         btn_setting = (Button)findViewById(R.id.btn_setting);
@@ -101,12 +105,16 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.updateID:
+                                /*
                                 Intent modifyIntent = new Intent(MainActivity.this, MemberModifyActivity.class);
                                 modifyIntent.putExtra("userID", loginid);
                                 startActivity(modifyIntent);
+                                 */
+                                ShowMemberModifyDialog();
                                 return true;
 
                             case R.id.dropID:
+                                /*
                                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -127,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
                                 dropeditor.commit();
                                 Toast.makeText(MainActivity.this, "회원탈퇴.", Toast.LENGTH_SHORT).show();
                                 finish();
+                                 */
+                                ShowMemberDeleteDialog();
                                 return true;
 
                             default:
@@ -216,6 +226,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
+        clearSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString() ;
+
+                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
+            }
+        });
+
         // 내 명함 버튼
         btn_myCard = (Button)findViewById(R.id.btn_myCard);
         btn_myCard.setOnClickListener(new View.OnClickListener() {
@@ -248,7 +278,106 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ShowChangeDialog();
-                searchAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    // 회원 정보 수정 다이어로그
+    private void ShowMemberModifyDialog(){
+        LayoutInflater modifyDialog = LayoutInflater.from(this);
+        final View modifyDialogLayout = modifyDialog.inflate(R.layout.modifydialog, null);
+        final Dialog myModifyDialog = new Dialog(this);
+
+        myModifyDialog.setTitle("비밀번호 확인");
+        myModifyDialog.setContentView(modifyDialogLayout);
+        myModifyDialog.show();
+
+        final EditText check = (EditText)modifyDialogLayout.findViewById(R.id.check);
+        Button btn_cancel = (Button)modifyDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_check = (Button)modifyDialogLayout.findViewById(R.id.btn_check);
+
+        btn_check.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String checkpass = check.getText().toString();
+                String checklogin = loginpassword;
+
+                if(!checkpass.equals(checklogin)) {
+                    Toast.makeText(getApplicationContext(),"비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent modifyIntent = new Intent(MainActivity.this, MemberModifyActivity.class);
+                    modifyIntent.putExtra("userID", loginid);
+                    startActivity(modifyIntent);
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myModifyDialog.cancel();
+            }
+        });
+    }
+
+    // 회원 탈퇴 다이어로그
+    private void ShowMemberDeleteDialog(){
+        LayoutInflater deleteDialog = LayoutInflater.from(this);
+        final View deleteDialogLayout = deleteDialog.inflate(R.layout.deletedialog, null);
+        final Dialog myDeleteDialog = new Dialog(this);
+
+        myDeleteDialog.setTitle("비밀번호 확인");
+        myDeleteDialog.setContentView(deleteDialogLayout);
+        myDeleteDialog.show();
+
+        final EditText check = (EditText)myDeleteDialog.findViewById(R.id.check);
+        Button btn_cancel = (Button)deleteDialogLayout.findViewById(R.id.btn_cancel);
+        Button btn_check = (Button)deleteDialogLayout.findViewById(R.id.btn_check);
+
+        btn_check.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String checkpass = check.getText().toString();
+                String checklogin = loginpassword;
+
+                if(!checkpass.equals(checklogin)) {
+                    Toast.makeText(getApplicationContext(),"비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                        }
+                    };
+
+                    MemberDelete MemberDelete = new MemberDelete(loginid, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                    queue.add(MemberDelete);
+
+                    Toast.makeText(getApplicationContext(), "drop", Toast.LENGTH_SHORT);
+                    Intent dropIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(dropIntent);
+                    SharedPreferences dropauto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor dropeditor = dropauto.edit();
+                    dropeditor.clear();
+                    dropeditor.commit();
+                    Toast.makeText(MainActivity.this, "회원탈퇴.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                myDeleteDialog.cancel();
             }
         });
     }
