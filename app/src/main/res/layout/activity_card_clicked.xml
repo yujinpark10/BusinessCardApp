@@ -294,9 +294,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/mapTextLayout"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/mapText"
@@ -307,6 +307,14 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:textSize="20dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mapLayout"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical">
 
                 <fragment
                     android:id="@+id/map"

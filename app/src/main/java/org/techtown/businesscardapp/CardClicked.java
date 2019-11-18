@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,6 +111,8 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         getLng = 128.9682498;
 
         final TextView mapText = (TextView)findViewById(R.id.mapText);
+        final LinearLayout mapTextLayout = (LinearLayout)findViewById(R.id.mapTextLayout);
+        final LinearLayout mapLayout = (LinearLayout)findViewById(R.id.mapLayout);
         List<Address> mapList = null;
 
         try{
@@ -121,14 +124,15 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
 
         if(mapList != null) {
             if(mapList.size()==0) {
-                //위치를 못찾을 경우 실패시 동아대학교 승학캠퍼스를 띄움
                 mapText.setText("해당되는 주소 정보는 없습니다.\n주소를 다시 한번 확인해주세요.");
-                mapText.setVisibility(View.VISIBLE);
+                mapTextLayout.setVisibility(View.VISIBLE);
+                mapLayout.setVisibility(View.GONE);
             } else {
                 mapResult = mapList.get(0).toString(); // 변환한 전체 정보 저장
                 getLat = mapList.get(0).getLatitude();
                 getLng = mapList.get(0).getLongitude();
-                mapText.setVisibility(View.GONE);
+                mapTextLayout.setVisibility(View.GONE);
+                mapLayout.setVisibility(View.VISIBLE);
             }
         }
 
