@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/load_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="그림 가져오기" />
+
+    <TextView
+        android:id="@+id/source_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/change_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="넣고싶은 글자" />
+
+    <Button
+        android:id="@+id/change_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="변환버튼" />
+
+    <ImageView
+        android:id="@+id/changed_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private int kingCardNum;
     private String kingCardAddress;
 
+    //nfc 장치 사용 가능 확인 변수
+    NfcAdapter nfcAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         loginid = auto.getString("et_id",null);
         loginpassword = auto.getString("et_password", null);
+
+        //nfc 장치 사용 하기전에 부름
+         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         // 설정 버튼 클릭시
         btn_setting = (Button)findViewById(R.id.btn_setting);
@@ -626,6 +633,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_cancel = (Button)changeDialogLayout.findViewById(R.id.btn_cancel);
         Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendgetNFC);
         Button btn_QRCode = (Button)changeDialogLayout.findViewById(R.id.btn_QRCode);
+        Button btn_image = (Button)changeDialogLayout.findViewById(R.id.btn_image);
 
         btn_sendNFC.setOnClickListener(new View.OnClickListener()
         {
@@ -633,9 +641,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 if(checkKing){
-                    Intent intent = new Intent(MainActivity.this, nfcChangePage.class);
-                    intent.putExtra("userID", loginid);
-                    startActivity(intent);
+
+                    if(nfcAdapter!=null && nfcAdapter.isEnabled()){
+                        Intent intent = new Intent(MainActivity.this, nfcChangePage.class);
+                        intent.putExtra("userID", loginid);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(),"NFC가 꺼져있습니다.\n설정에서 NFC를 활성화 시켜주세요.",Toast.LENGTH_LONG).show();
+
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(),"대표 명함을 선택해주세요.",Toast.LENGTH_SHORT).show();
                     Intent kingintent = new Intent(MainActivity.this, myCardListActivity.class);
@@ -662,6 +676,16 @@ public class MainActivity extends AppCompatActivity {
                     kingintent.putExtra("mine1",1);
                     startActivity(kingintent);
                 }
+            }
+        });
+
+        btn_image.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                    Intent intent = new Intent(MainActivity.this, ImageChangeTest.class);
+                    startActivity(intent);
             }
         });
 

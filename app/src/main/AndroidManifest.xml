@@ -34,6 +34,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".nfcChangePage" />
         <activity android:name=".QRchange_page"/>
+        <activity android:name=".ImageChangeTest"/>
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />

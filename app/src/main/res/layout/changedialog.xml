@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:text="QR Code" />
 
+        <Button
+            android:id="@+id/btn_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명함만들어보기" />
+
     </LinearLayout>
 
     <Button

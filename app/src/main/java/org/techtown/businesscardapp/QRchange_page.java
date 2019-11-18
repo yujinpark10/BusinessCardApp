@@ -119,7 +119,7 @@ public class QRchange_page extends AppCompatActivity {
                 CardExchange cardExchange = new CardExchange(userID, yourID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(QRchange_page.this);
                 queue.add(cardExchange);
-                
+
                 Toast.makeText(this,"아이디 스캔 완료 되었습니다.",Toast.LENGTH_LONG).show();
             }
         }else{
