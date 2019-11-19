@@ -10,24 +10,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/clearSearch"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:gravity="center"
                 android:hint="검색"
@@ -37,7 +38,7 @@
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="설정"
                 android:textSize="20dp" />
@@ -54,7 +55,7 @@
             android:layout_weight="2"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:background="#444444"
+            android:background="#AABACC"
             android:layout_margin="20dp"
             android:gravity="center"
             android:id="@+id/kingLayout">
@@ -120,7 +121,7 @@
                 android:textFilterEnabled="true"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:background="#444444"
+                android:background="#AABACC"
                 android:gravity="center"
                 android:padding="5dp" />
 
