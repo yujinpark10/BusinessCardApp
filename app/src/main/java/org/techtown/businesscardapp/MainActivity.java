@@ -48,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkKing;
 
     private LinearLayout kingLayout;
-    private Button btn_setting;
-    private Button btn_myCard;
-    private Button btn_cardEnroll;
-    private Button btn_cardChange;
+    private ImageView img_setting;
+    private ImageView img_myCard;
+    private ImageView img_cardEnroll;
+    private ImageView img_cardChange;
+    //private Button btn_cardEnroll;
+    //private Button btn_cardChange;
     private ImageView kingCardImage;
     private TextView kingCardListName;
     private TextView kingCardListCompany;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private int kingCardNum;
     private String kingCardAddress;
 
+
     //nfc 장치 사용 가능 확인 변수
     NfcAdapter nfcAdapter;
 
@@ -89,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
          nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         // 설정 버튼 클릭시
-        btn_setting = (Button)findViewById(R.id.btn_setting);
-        btn_setting.setOnClickListener(new View.OnClickListener() {
+        img_setting = (ImageView)findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu p = new PopupMenu(getApplicationContext(), view);
@@ -234,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 내 명함 버튼
-        btn_myCard = (Button)findViewById(R.id.btn_myCard);
-        btn_myCard.setOnClickListener(new View.OnClickListener() {
+        img_myCard = (ImageView)findViewById(R.id.img_myCard);
+        img_myCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, myCardListActivity.class);
@@ -246,8 +249,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 명함등록 버튼
-        btn_cardEnroll = (Button)findViewById(R.id.btn_cardEnroll);
-        btn_cardEnroll.setOnClickListener(new View.OnClickListener()
+        img_cardEnroll = (ImageView) findViewById(R.id.img_cardEnroll);
+        img_cardEnroll.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -260,8 +263,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 명함교환 버튼
-        btn_cardChange = (Button)findViewById(R.id.btn_cardChange);
-        btn_cardChange.setOnClickListener(new View.OnClickListener() {
+        img_cardChange = (ImageView) findViewById(R.id.img_cardChange);
+        img_cardChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ShowChangeDialog();
