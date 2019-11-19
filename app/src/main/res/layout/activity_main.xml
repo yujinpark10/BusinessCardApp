@@ -19,19 +19,16 @@
             android:orientation="horizontal"
             android:gravity="end">
 
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/clearSearch"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="검색"
-                android:imeOptions="actionDone"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/editSearch"
-                android:layout_width="2dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
                 android:gravity="center"
                 android:hint="검색"
                 android:imeOptions="actionDone"
@@ -39,8 +36,9 @@
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="설정"
                 android:textSize="20dp" />
         </LinearLayout>
