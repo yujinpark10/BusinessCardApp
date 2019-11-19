@@ -1,16 +1,30 @@
 package org.techtown.businesscardapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +32,14 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class CardEnrollActivity extends AppCompatActivity {
 
@@ -28,11 +50,18 @@ public class CardEnrollActivity extends AppCompatActivity {
     private boolean validate = false;
     private ImageView image;
 
+    //카메라 변수 설정
+    private static final int CAMERA_CODE = 10;
+    private String mCurrentPhotoPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_enroll);
         getSupportActionBar().hide();
+
+        //카메라 권한 요청
+        requirePermission();
 
         Intent intent = new Intent(this.getIntent());
         final int mine1 = intent.getIntExtra("mine1",0);
@@ -49,6 +78,24 @@ public class CardEnrollActivity extends AppCompatActivity {
         et_email = (ClearEditText)findViewById(R.id.et_email);
         et_fnumber = (ClearEditText)findViewById(R.id.et_fnumber);
         et_address = (ClearEditText) findViewById(R.id.et_address);
+
+        //카메라 버튼 클릭
+        Button button = (Button) findViewById(R.id.camera);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean camera = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                boolean write = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                if (camera && write) {
+                    //사진찍은 인텐트 코드 넣기
+                    takePicture();
+                } else {
+                    Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -135,4 +182,72 @@ public class CardEnrollActivity extends AppCompatActivity {
             dialog = null;
         }
     }
+
+    //카메라 권한 요청
+    void requirePermission() {
+        String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        ArrayList<String> listPermissionsNeeded = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
+                //권한이 허가가 안됬을 경우 요청할 권한을 모집하는 부분
+                listPermissionsNeeded.add(permission);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            //권한 요청 하는 부분
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 1);
+        }
+    }
+
+    //카메라 불러오기
+    void takePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            File photoFile = createImageFile();
+            Uri photoUri = FileProvider.getUriForFile(this, "org.techtown.cam.fileprovider", photoFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(intent, CAMERA_CODE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //사진 파일 만들기
+    private File createImageFile() throws IOException {
+        // Create an image file namΩe
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CAMERA_CODE){
+            ImageView imageView = (ImageView)findViewById(R.id.card);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+        }
+    }
+
+    public void BitMapToString(Bitmap photoUri){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        photoUri.compress(Bitmap.CompressFormat.PNG,100, baos);    //bitmap compress
+        byte [] arr=baos.toByteArray();
+        String image= Base64.encodeToString(arr, Base64.DEFAULT);
+        String temp="";
+        try{
+            temp="&imagedevice="+ URLEncoder.encode(image,"utf-8");
+        }catch (Exception e){
+            Log.e("exception",e.toString());
+        }
+    }
+
 }
