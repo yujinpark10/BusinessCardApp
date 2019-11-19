@@ -213,26 +213,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 리스트뷰 검색
-        final EditText editSearch = (EditText)findViewById(R.id.editSearch);
-        editSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString() ;
-
-                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
-            }
-        });
-
         final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
         clearSearch.addTextChangedListener(new TextWatcher() {
             @Override

@@ -45,8 +45,10 @@
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="이름"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -54,10 +56,10 @@
 
                     <TextView
                         android:id="@+id/inp_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="회사"
-                        android:gravity="center"
+                        android:layout_weight="9"
+                        android:text="이름"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -70,8 +72,10 @@
 
                     <TextView
                         android:id="@+id/company"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="회사명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -79,10 +83,10 @@
 
                     <TextView
                         android:id="@+id/inp_company"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="회사"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -95,8 +99,10 @@
 
                     <TextView
                         android:id="@+id/team"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="팀명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -104,10 +110,10 @@
 
                     <TextView
                         android:id="@+id/inp_team"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="팀명"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -120,8 +126,10 @@
 
                     <TextView
                         android:id="@+id/position"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="직책"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -129,10 +137,10 @@
 
                     <TextView
                         android:id="@+id/inp_position"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="직책"
-                        android:gravity="center"
                         android:textSize="10pt"/>
                 </LinearLayout>
 
@@ -144,8 +152,10 @@
 
                     <TextView
                         android:id="@+id/coNumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="회사번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -153,19 +163,19 @@
 
                     <TextView
                         android:id="@+id/inp_conumber"
-                        android:layout_width="220dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="8"
                         android:text="회사번호"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                     <ImageView
                         android:id="@+id/call_conumber"
-                        android:layout_width="30dp"
+                        android:layout_width="0dp"
                         android:layout_height="30dp"
+                        android:layout_weight="1"
                         android:background="@drawable/icon_call"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"/>
+                        android:layout_marginLeft="15dp" />
 
                 </LinearLayout>
 
@@ -177,8 +187,10 @@
 
                     <TextView
                         android:id="@+id/phone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="전화번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -186,24 +198,25 @@
 
                     <TextView
                         android:id="@+id/inp_pnumber"
-                        android:layout_width="200dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="7"
                         android:text="전화번호"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                     <ImageView
                         android:id="@+id/call_pnumber"
-                        android:layout_width="30dp"
+                        android:layout_width="0dp"
                         android:layout_height="30dp"
+                        android:layout_weight="1"
                         android:background="@drawable/icon_call"
-                        android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"/>
 
                     <ImageView
                         android:id="@+id/message_pnumber"
-                        android:layout_width="30dp"
+                        android:layout_width="0dp"
                         android:layout_height="30dp"
+                        android:layout_weight="1"
                         android:background="@drawable/icon_message"/>
 
                 </LinearLayout>
@@ -216,8 +229,10 @@
 
                     <TextView
                         android:id="@+id/mail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="이메일"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -225,19 +240,19 @@
 
                     <TextView
                         android:id="@+id/inp_email"
-                        android:layout_width="240dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="이메일"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                     <ImageView
                         android:id="@+id/send_email"
-                        android:layout_width="30dp"
+                        android:layout_width="0dp"
                         android:layout_height="30dp"
+                        android:layout_weight="1"
                         android:background="@drawable/icon_email"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"/>
+                        android:layout_marginLeft="15dp" />
 
                 </LinearLayout>
 
@@ -249,8 +264,10 @@
 
                     <TextView
                         android:id="@+id/fax"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="팩스번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -258,10 +275,10 @@
 
                     <TextView
                         android:id="@+id/inp_fnumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="팩스번호"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -274,8 +291,10 @@
 
                     <TextView
                         android:id="@+id/address"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="주소"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -283,10 +302,10 @@
 
                     <TextView
                         android:id="@+id/inp_address"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:text="주소"
-                        android:gravity="center"
                         android:textSize="10pt"/>
 
                 </LinearLayout>
@@ -296,7 +315,8 @@
             <LinearLayout
                 android:id="@+id/mapTextLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/mapText"
