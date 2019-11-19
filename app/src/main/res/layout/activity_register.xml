@@ -20,8 +20,9 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="I    D"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -30,8 +31,9 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_id"
-                android:layout_width="180dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="6"
                 android:hint="아이디"
                 android:inputType="text"
                 android:layout_marginRight="10dp"
@@ -40,10 +42,12 @@
 
             <Button
                 android:id="@+id/btn_chkid"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:layout_marginLeft="10dp"
                 android:text="중복체크"
+                android:layout_marginRight="10dp"
                 android:textSize="15sp"/>
 
         </LinearLayout>
@@ -56,8 +60,9 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="Password"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -66,10 +71,13 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_password"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="비밀번호"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:layout_marginRight="10dp"
+                android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTVUWXYZ,abcdefghijklmnopqrstuvwxyz"/>
 
         </LinearLayout>
 
@@ -81,8 +89,9 @@
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
@@ -91,10 +100,13 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_chkpassword"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="비밀번호 확인"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:layout_marginRight="10dp"
+                android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTVUWXYZ,abcdefghijklmnopqrstuvwxyz"/>
 
         </LinearLayout>
 
@@ -106,8 +118,9 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="NAME"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -116,9 +129,11 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_name"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="이름"
+                android:layout_marginRight="10dp"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
@@ -131,8 +146,9 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="Birth"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -141,20 +157,23 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_birth"
-                android:layout_width="180dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="7"
                 android:hint="생년월일"
                 android:inputType="date"
+                android:layout_marginRight="10dp"
                 android:focusable="false"
                 android:clickable="false"
                 android:enabled="false"/>
 
             <Button
                 android:id="@+id/btn_calender"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
                 android:text="달력"
+                android:layout_marginRight="10dp"
                 android:textSize="15sp"/>
 
         </LinearLayout>
@@ -167,8 +186,9 @@
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="Phone"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -177,9 +197,11 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_pnumber"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="전화번호"
+                android:layout_marginRight="10dp"
                 android:inputType="phone" />
 
         </LinearLayout>
@@ -192,8 +214,9 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="E-mail"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -202,9 +225,11 @@
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/et_email"
-                android:layout_width="250dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="이메일"
+                android:layout_marginRight="10dp"
                 android:inputType="textEmailAddress" />
 
         </LinearLayout>

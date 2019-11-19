@@ -24,10 +24,17 @@
                 android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
 
                 <ImageView
+                    android:id="@+id/card"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="159dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
+                    android:layout_marginRight="30dp" />
+
+                <Button
+                    android:id="@+id/camera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="카메라" />
 
             </LinearLayout>
 
@@ -44,8 +51,10 @@
 
                     <TextView
                         android:id="@+id/name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="이름"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -53,8 +62,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="이름"
                         android:gravity="center"
                         android:inputType="text"
@@ -71,8 +81,10 @@
 
                     <TextView
                         android:id="@+id/company"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="회사명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -80,8 +92,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_company"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="회사명"
                         android:gravity="center"
                         android:inputType="text"
@@ -98,8 +111,10 @@
 
                     <TextView
                         android:id="@+id/team"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="팀명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -107,8 +122,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_team"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="팀명"
                         android:gravity="center"
                         android:inputType="text"
@@ -125,8 +141,10 @@
 
                     <TextView
                         android:id="@+id/position"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="직책"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -134,8 +152,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_position"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="직책"
                         android:gravity="center"
                         android:inputType="text"
@@ -152,8 +171,10 @@
 
                     <TextView
                         android:id="@+id/coNumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="회사번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -161,8 +182,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_conumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="회사번호"
                         android:gravity="center"
                         android:inputType="phone"
@@ -179,8 +201,10 @@
 
                     <TextView
                         android:id="@+id/phone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="전화번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -188,8 +212,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_pnumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="전화번호"
                         android:gravity="center"
                         android:inputType="phone"
@@ -206,8 +231,10 @@
 
                     <TextView
                         android:id="@+id/mail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="이메일"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -215,8 +242,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_email"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="이메일"
                         android:gravity="center"
                         android:inputType="textEmailAddress"
@@ -233,8 +261,10 @@
 
                     <TextView
                         android:id="@+id/fax"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="팩스번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -242,8 +272,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_fnumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="팩스번호"
                         android:gravity="center"
                         android:inputType="phone"
@@ -260,8 +291,10 @@
 
                     <TextView
                         android:id="@+id/address"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
                         android:text="주소"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
@@ -269,8 +302,9 @@
 
                     <org.techtown.businesscardapp.ClearEditText
                         android:id="@+id/et_address"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="9"
                         android:hint="주소"
                         android:gravity="center"
                         android:inputType="text"

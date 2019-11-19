@@ -143,7 +143,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
                 queue.add(CardModify);
-                Intent intent = new Intent(CardModifyActivity.this, MainActivity.class);
+                Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
                 startActivity(intent);
             }
         });
