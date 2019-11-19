@@ -58,6 +58,7 @@ public class ImageChangeTest extends AppCompatActivity {
         load_image = (Button)findViewById(R.id.load_image);
         change_text = (EditText)findViewById(R.id.change_text);
 
+        //읽기 버튼
         load_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,10 +67,11 @@ public class ImageChangeTest extends AppCompatActivity {
             }
         });
 
+        //변환 버튼
         change_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(source1 != null){
+                if(source1 != null || true){
                     Bitmap processedBitmap = ProcessingBitmap();
                     if(processedBitmap != null){
                         changed_image.setImageBitmap(processedBitmap);
@@ -78,7 +80,7 @@ public class ImageChangeTest extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"문제가 발생했네요.",Toast.LENGTH_LONG).show();
                     }
                 }else{
-                    Toast.makeText(getApplicationContext(),"같은 이미지입니다.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"이미지를 불러오지 않았습니다.",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -103,8 +105,9 @@ public class ImageChangeTest extends AppCompatActivity {
     private Bitmap ProcessingBitmap(){
         Bitmap bm1 = null;
         Bitmap newBitmap = null;
-        try{
-            bm1 = BitmapFactory.decodeStream(getContentResolver().openInputStream(source1));
+        //try{
+            bm1 = BitmapFactory.decodeResource(getResources(),R.drawable.namecard_basic4);
+            //bm1 = BitmapFactory.decodeStream(getContentResolver().openInputStream(source1));
             Bitmap.Config config = bm1.getConfig();
             if(config == null){
                 config = Bitmap.Config.ARGB_8888;
@@ -118,26 +121,57 @@ public class ImageChangeTest extends AppCompatActivity {
             String captionString = change_text.getText().toString();
 
             if(captionString != null){
+                /*
                 Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
-                paintText.setColor(Color.BLUE);
-                paintText.setTextSize(200);
+                paintText.setColor(Color.BLACK);
+                paintText.setTextSize(350);
                 paintText.setStyle(Paint.Style.FILL);
-                paintText.setShadowLayer(10f,10f,10f,Color.BLACK);
-
+                */
+                //paintText.setShadowLayer(10f,10f,10f,Color.BLACK);
+                Paint paintText1 = setTextsize(350);
+                Paint paintText2 = setTextsize(200);
+                Paint paintText3 = setTextsize(300);
+                Paint paintText4 = setTextsize(150);
+                Paint paintText5 = setTextsize(200);
+                Paint paintText6 = setTextsize(200);
+                Paint paintText7 = setTextsize(150);
                 Rect rectText = new Rect();
-                paintText.getTextBounds(captionString,0,captionString.length(),rectText);
+                paintText1.getTextBounds("김철수",0,"김철수".length(),rectText);
+                newCanvas.drawText("김철수",150,rectText.height()+150,paintText1);
+                paintText2.getTextBounds("작전과장",0,"작전과장".length(),rectText);
+                newCanvas.drawText("돌격대장",170,rectText.height()+550,paintText2);
+                paintText3.getTextBounds("동아컴퍼니",0,"동아컴퍼니".length(),rectText);
+                newCanvas.drawText("동아컴퍼니",150,rectText.height()+1600,paintText3);
+                paintText4.getTextBounds("부산광역시 사하구 낙동대로 550번길 37",0,"부산광역시 사하구 낙동대로 550번길 37".length(),rectText);
+                newCanvas.drawText("부산광역시 사하구 낙동대로 550번길 37",150,rectText.height()+1930,paintText4);
+                paintText5.getTextBounds("010 1234 5678",0,"010 1234 5678".length(),rectText);
+                newCanvas.drawText("010 1234 5678",2380,rectText.height()+450,paintText5);
+                paintText6.getTextBounds("051 1234 5678",0,"051 1234 5678".length(),rectText);
+                newCanvas.drawText("051 1234 5678",2380,rectText.height()+720,paintText6);
+                paintText7.getTextBounds("nancheonjaeya@naver.com",0,"nancheonjaeya@naver.com".length(),rectText);
+                newCanvas.drawText("nancheonjaeya@naver.com",2380,rectText.height()+970,paintText7);
 
-                newCanvas.drawText(captionString,0,rectText.height(),paintText);
 
                 Toast.makeText(getApplicationContext(),"drawText: " + captionString,Toast.LENGTH_LONG).show();
             } else{
                 Toast.makeText(getApplicationContext(),"캡션이 비어있음!", Toast.LENGTH_LONG).show();
             }
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
+        //}catch(FileNotFoundException e){
+         //   e.printStackTrace();
 
-        }
+        //}
+
+
         return newBitmap;
+    }
+
+    private Paint setTextsize(int textsize){
+        Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintText.setColor(Color.BLACK);
+        paintText.setTextSize(textsize);
+        paintText.setStyle(Paint.Style.FILL);
+
+        return paintText;
     }
 
     //백버튼

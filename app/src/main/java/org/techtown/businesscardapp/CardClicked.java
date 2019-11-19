@@ -7,6 +7,12 @@ import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -49,10 +55,12 @@ import java.util.List;
 
 public class CardClicked extends AppCompatActivity implements OnMapReadyCallback {
 
-    private String use_company, use_conumber, use_pnumber, use_email, use_address;
+    private String use_company, use_conumber, use_pnumber, use_email, use_address, use_name, use_position;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
     private Button btn_modify, btn_delete, btn_cancel;
-    private ImageView call_conumber, call_pnumber, message_pnumber, send_email;
+    private ImageView call_conumber, call_pnumber, message_pnumber, send_email,cardimage;
+    Uri cardsource = null;
+
 
     private String userID, address;
     private int mine1, cardNum;
@@ -140,6 +148,8 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         MapFragment mapFragment = (MapFragment)fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
         // 전화 문자 이메일 연결 call_conumber, call_pnumber, message_pnumber, send_email
         call_conumber = (ImageView)findViewById(R.id.call_conumber);
         call_pnumber = (ImageView)findViewById(R.id.call_pnumber);
@@ -210,6 +220,59 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
+
+    // 명함을 그리는 비트맵 함수
+    private Bitmap ProcessingBitmap(){
+        Bitmap bm1 = null;
+        Bitmap newBitmap = null;
+        //try{
+        bm1 = BitmapFactory.decodeResource(getResources(),R.drawable.namecard_basic4);
+        Bitmap.Config config = bm1.getConfig();
+        if(config == null){
+            config = Bitmap.Config.ARGB_8888;
+        }
+
+        newBitmap = Bitmap.createBitmap(bm1.getWidth(),bm1.getHeight(),config);
+        Canvas newCanvas = new Canvas(newBitmap);
+
+        newCanvas.drawBitmap(bm1,0,0,null);
+            Paint paintText1 = setTextsize(350);
+            Paint paintText2 = setTextsize(200);
+            Paint paintText3 = setTextsize(300);
+            Paint paintText4 = setTextsize(150);
+            Paint paintText5 = setTextsize(200);
+            Paint paintText6 = setTextsize(200);
+            Paint paintText7 = setTextsize(150);
+            Rect rectText = new Rect();
+            paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
+            newCanvas.drawText(use_name,150,rectText.height()+150,paintText1);
+            paintText2.getTextBounds(use_position,0,use_position.length(),rectText);
+            newCanvas.drawText(use_position,170,rectText.height()+550,paintText2);
+            paintText3.getTextBounds(use_company,0,use_company.length(),rectText);
+            newCanvas.drawText(use_company,150,rectText.height()+1600,paintText3);
+            paintText4.getTextBounds(use_address,0,use_address.length(),rectText);
+            newCanvas.drawText(use_address,150,rectText.height()+1930,paintText4);
+            paintText5.getTextBounds(use_pnumber,0,use_pnumber.length(),rectText);
+            newCanvas.drawText(use_pnumber,2380,rectText.height()+450,paintText5);
+            paintText6.getTextBounds(use_conumber,0,use_conumber.length(),rectText);
+            newCanvas.drawText(use_conumber,2380,rectText.height()+720,paintText6);
+            paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
+            newCanvas.drawText(use_email,2380,rectText.height()+970,paintText7);
+
+        return newBitmap;
+    }
+
+    private Paint setTextsize(int textsize){
+        Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintText.setColor(Color.BLACK);
+        paintText.setTextSize(textsize);
+        paintText.setStyle(Paint.Style.FILL);
+
+        return paintText;
+    }
+
+
+
 
     // 내 명함 리스트뷰
     private class GetData extends AsyncTask<String, Void, String> {
@@ -326,6 +389,22 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 use_conumber=coNum;
                 use_email=e_mail;
                 use_address=address;
+                use_name=name;
+                use_position=position;
+
+                // 명함 이미지
+                cardimage = (ImageView)findViewById(R.id.cardimage);
+
+                if(cardsource == null){
+                    Bitmap processedBitmap = ProcessingBitmap();
+                    if(processedBitmap != null){
+                        cardimage.setImageBitmap(processedBitmap);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "명함 이미지를 부르는데 문제가 발생했습니다.", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    // 여기에 가져온 명함 이미지를 가져오면 됩니다.
+                }
             }
 
         } catch (JSONException e) {
