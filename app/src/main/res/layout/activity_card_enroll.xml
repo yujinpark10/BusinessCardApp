@@ -60,7 +60,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_company"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_team"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_position"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_conumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_pnumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_email"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_fnumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -300,7 +300,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"/>
 
-                    <org.techtown.businesscardapp.ClearEditText
+                    <EditText
                         android:id="@+id/et_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

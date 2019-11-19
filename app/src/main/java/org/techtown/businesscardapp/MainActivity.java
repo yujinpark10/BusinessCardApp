@@ -613,7 +613,6 @@ public class MainActivity extends AppCompatActivity {
         Button btn_cancel = (Button)changeDialogLayout.findViewById(R.id.btn_cancel);
         Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendgetNFC);
         Button btn_QRCode = (Button)changeDialogLayout.findViewById(R.id.btn_QRCode);
-        Button btn_image = (Button)changeDialogLayout.findViewById(R.id.btn_image);
 
         btn_sendNFC.setOnClickListener(new View.OnClickListener()
         {
@@ -659,6 +658,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Button btn_image = (Button)changeDialogLayout.findViewById(R.id.btn_image);
+        /*
+        test용 버튼입니다.
         btn_image.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -668,6 +670,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
             }
         });
+        */
 
         btn_cancel.setOnClickListener(new View.OnClickListener()
         {

@@ -43,7 +43,7 @@ public class CardModifyActivity extends AppCompatActivity {
     private static final String TAG_ID="userID";
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
-    private ClearEditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
+    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_modifySave, btn_modifyCancel;
     private AlertDialog dialog;
     private boolean validate = false;
@@ -58,16 +58,17 @@ public class CardModifyActivity extends AppCompatActivity {
         Intent intent = new Intent(this.getIntent());
         final int cardNum = intent.getIntExtra("cardNum", 0);
         final String userID = getIntent().getStringExtra("userID");
+        final String address = getIntent().getStringExtra("address");
 
-        et_name = (ClearEditText)findViewById(R.id.et_name);
-        et_company = (ClearEditText)findViewById(R.id.et_company);
-        et_team = (ClearEditText)findViewById(R.id.et_team);
-        et_position = (ClearEditText)findViewById(R.id.et_position);
-        et_conumber = (ClearEditText)findViewById(R.id.et_conumber);
-        et_pnumber = (ClearEditText)findViewById(R.id.et_pnumber);
-        et_email = (ClearEditText)findViewById(R.id.et_email);
-        et_fnumber = (ClearEditText)findViewById(R.id.et_fnumber);
-        et_address = (ClearEditText)findViewById(R.id.et_address);
+        et_name = (EditText)findViewById(R.id.et_name);
+        et_company = (EditText)findViewById(R.id.et_company);
+        et_team = (EditText)findViewById(R.id.et_team);
+        et_position = (EditText)findViewById(R.id.et_position);
+        et_conumber = (EditText)findViewById(R.id.et_conumber);
+        et_pnumber = (EditText)findViewById(R.id.et_pnumber);
+        et_email = (EditText)findViewById(R.id.et_email);
+        et_fnumber = (EditText)findViewById(R.id.et_fnumber);
+        et_address = (EditText)findViewById(R.id.et_address);
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -82,6 +83,11 @@ public class CardModifyActivity extends AppCompatActivity {
         btn_modifyCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("cardNum", cardNum);
+                intent.putExtra("address", address);
+                startActivity(intent);
                 finish();
             }
         });
@@ -144,7 +150,11 @@ public class CardModifyActivity extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
                 queue.add(CardModify);
                 Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("cardNum", cardNum);
+                intent.putExtra("address", address);
                 startActivity(intent);
+                finish();
             }
         });
     }

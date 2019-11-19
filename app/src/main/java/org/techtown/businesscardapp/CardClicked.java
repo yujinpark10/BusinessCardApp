@@ -1,6 +1,7 @@
 package org.techtown.businesscardapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -63,7 +64,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
 
 
     private String userID, address;
-    private int mine1, cardNum;
+    private int cardNum;
 
     private static final String TAG_JSON="response";
     private static final String TAG_CARDNUM = "cardNum";
@@ -100,7 +101,6 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         inp_fnumber = (TextView)findViewById(R.id.inp_fnumber);
         inp_address = (TextView)findViewById(R.id.inp_address);
 
-        mine1 = getIntent().getIntExtra("mine1",0);
         userID = getIntent().getStringExtra("userID");
         cardNum = getIntent().getIntExtra("cardNum", 0);
         address = getIntent().getStringExtra("address");
@@ -198,7 +198,9 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 Intent intent = new Intent(CardClicked.this, CardModifyActivity.class);
                 intent.putExtra("userID", userID);
                 intent.putExtra("cardNum", cardNum);
+                intent.putExtra("address", address);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -424,7 +426,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         markerOptions.snippet(use_address);
         map.addMarker(markerOptions);
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(whereCompany,16));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(whereCompany,15));
 
         map.setOnInfoWindowClickListener(infoWindowClickListener);
     }

@@ -29,7 +29,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 android:text="Password Check"
                 android:textSize="13sp" />
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_chkpassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_birth"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_pnumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
-            <org.techtown.businesscardapp.ClearEditText
+            <EditText
                 android:id="@+id/et_email"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"

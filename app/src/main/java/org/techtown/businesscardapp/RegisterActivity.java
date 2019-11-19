@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private ClearEditText et_id, et_password, et_chkpassword, et_name, et_birth, et_pnumber, et_email;
+    private EditText et_id, et_password, et_chkpassword, et_name, et_birth, et_pnumber, et_email;
     private Button btn_register, btn_cancel;
     private AlertDialog dialog;
     private  boolean validate = false;
@@ -42,13 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
-        et_id = (ClearEditText)findViewById(R.id.et_id);
-        et_password = (ClearEditText)findViewById(R.id.et_password);
-        et_chkpassword = (ClearEditText)findViewById(R.id.et_chkpassword);
-        et_name = (ClearEditText)findViewById(R.id.et_name);
-        et_birth = (ClearEditText)findViewById(R.id.et_birth);
-        et_pnumber = (ClearEditText)findViewById(R.id.et_pnumber);
-        et_email = (ClearEditText)findViewById(R.id.et_email);
+        et_id = (EditText)findViewById(R.id.et_id);
+        et_password = (EditText)findViewById(R.id.et_password);
+        et_chkpassword = (EditText)findViewById(R.id.et_chkpassword);
+        et_name = (EditText)findViewById(R.id.et_name);
+        et_birth = (EditText)findViewById(R.id.et_birth);
+        et_pnumber = (EditText)findViewById(R.id.et_pnumber);
+        et_email = (EditText)findViewById(R.id.et_email);
 
         // 전화번호 형식으로 변환하기
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());

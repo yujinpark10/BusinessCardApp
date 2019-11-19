@@ -1,3 +1,8 @@
+
+//이 페이지는 테스트용 및 코드 보존 페이지 입니다.
+//문제가 되는 경우 VVin에게 연락주세요.
+//연결된 코드가 없으므로 무시하셔도 됩니다.
+
 package org.techtown.businesscardapp;
 
 import android.app.Activity;
