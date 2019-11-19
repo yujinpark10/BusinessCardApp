@@ -233,8 +233,27 @@ public class CardEnrollActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CAMERA_CODE){
             ImageView imageView = (ImageView)findViewById(R.id.card);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+            String a = getBase64String(bitmap1);
+
+            byte[] decodedByteArray = Base64.decode(a, Base64.NO_WRAP);
+            Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+
+            imageView.setImageBitmap(bitmap2);
         }
+
+    }
+
+    public String getBase64String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream);
+
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
 
     public void BitMapToString(Bitmap photoUri){
