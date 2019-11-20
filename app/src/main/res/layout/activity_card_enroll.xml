@@ -28,7 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="159dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp" />
+                    android:layout_marginRight="30dp"
+                    android:scaleType="centerCrop"/>
 
                 <Button
                     android:id="@+id/camera"
