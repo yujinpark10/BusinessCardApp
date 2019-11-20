@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Base64;
@@ -52,6 +53,7 @@ public class CardEnrollActivity extends AppCompatActivity {
 
     //카메라 변수 설정
     private static final int CAMERA_CODE = 10;
+    private static final int GALLERY_CODE = 20;
     private String mCurrentPhotoPath;
     private String cardImage = "null";
 
@@ -95,6 +97,16 @@ public class CardEnrollActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //갤러리 버튼 클릭
+        Button button1 = (Button)findViewById(R.id.gallery);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,GALLERY_CODE);
             }
         });
 
@@ -169,8 +181,16 @@ public class CardEnrollActivity extends AppCompatActivity {
                 CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
                 queue.add(cardEnroll);
-                Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
-                startActivity(intent);
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }, 1500);
             }
         });
     }
@@ -236,9 +256,8 @@ public class CardEnrollActivity extends AppCompatActivity {
 
             //이미지 비트맵
            ImageView imageView = (ImageView)findViewById(R.id.card);
-           imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
-
-           Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+           imageView.setImageBitmap(bitmap1);
 
             //비율 설정
             int width = bitmap1.getWidth();
@@ -276,6 +295,56 @@ public class CardEnrollActivity extends AppCompatActivity {
             try {
                 cardImage = URLEncoder.encode(bitmap2, "utf-8");
             } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(requestCode == GALLERY_CODE)
+        {
+            Uri source = data.getData();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
+                ImageView imageView = (ImageView)findViewById(R.id.card);
+                imageView.setImageBitmap(bitmap);
+
+                //비율 설정
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                int newWidth = width;
+                int newHeight = height;
+                float rate = 0.0f;
+                int maxResolution = 700;
+
+                if(width > height)
+                {
+                    if(maxResolution < width)
+                    {
+                        rate = maxResolution / (float) width;
+                        newHeight = (int) (height * rate);
+                        newWidth = maxResolution;
+                    }
+                }
+                else
+                {
+                    if(maxResolution < height)
+                    {
+                        rate = maxResolution / (float) height;
+                        newWidth = (int) (width * rate);
+                        newHeight = maxResolution;
+                    }
+                }
+                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+
+                //비트맵 -> 바이트 배열
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+                try {
+                    cardImage = URLEncoder.encode(bitmap2, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }catch (FileNotFoundException e){
                 e.printStackTrace();
             }
         }
