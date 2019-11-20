@@ -8,12 +8,20 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +42,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
     //private Button btn_cardEnroll;
     //private Button btn_cardChange;
     private ImageView kingCardImage;
-    private TextView kingCardListName;
-    private TextView kingCardListCompany;
-    private TextView leftgalho, rightgalho;
+    private TextView kingText;
 
     private static final String TAG_ME_JSON="responseme";
     private static final String TAG_JSON="responseyou";
@@ -78,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private static searchAdapter searchAdapter;
     String loginid, loginpassword;
     private int kingCardNum;
-    private String kingCardAddress;
+    private String kingCardName, kingCardCompay, kingCardTeam, kingCardPosition, kingCardCoNum, kingCardNumStr, kingCardE_mail, kingCardFaxNum, kingCardAddress, kingCardImageStr;
 
 
     //nfc 장치 사용 가능 확인 변수
@@ -170,10 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 대표 명함
         kingCardImage = (ImageView)findViewById(R.id.kingCardImage);
-        kingCardListName = (TextView)findViewById(R.id.kingCardListName);
-        kingCardListCompany = (TextView)findViewById(R.id.kingCardListCompany);
-        leftgalho = (TextView)findViewById(R.id.leftgalho);
-        rightgalho = (TextView)findViewById(R.id.rightgalho);
+        kingText = (TextView)findViewById(R.id.kingText);
 
         GetKing taskKing = new GetKing();
         taskKing.execute("http://yujinpark10.dothome.co.kr/kingCard.php", userID);
@@ -476,32 +482,111 @@ public class MainActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String team = item.getString(TAG_TEAM);
+                String position = item.getString(TAG_POSITION);
+                String coNum = item.getString(TAG_CONUM);
+                String num = item.getString(TAG_NUM);
+                String e_mail = item.getString(TAG_E_MAIL);
+                String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
+                String cardimage = item.getString(TAG_CARDIMAGE);
 
                 kingCardNum = cardNum;
-                kingCardListName.setText(name);
-                kingCardListCompany.setText(company);
                 kingCardAddress = address;
+
+                kingCardName = name;
+                kingCardCompay = company;
+                kingCardTeam = team;
+                kingCardPosition = position;
+                kingCardCoNum = coNum;
+                kingCardNumStr = num;
+                kingCardE_mail = e_mail;
+                kingCardFaxNum = faxNum;
+                kingCardAddress = address;
+                kingCardImageStr = cardimage;
+
+                if(kingCardImageStr.equals("null")){
+                    Bitmap processedBitmap = ProcessingBitmap();
+                    if(processedBitmap != null){
+                        kingCardImage.setImageBitmap(processedBitmap);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "명함 이미지를 부르는데 문제가 발생했습니다.", Toast.LENGTH_LONG).show();
+                    }
+                }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
+
+                    try {
+                        String bitmap1 = URLDecoder.decode(kingCardImageStr, "utf-8");
+                        byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
+                        Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
+                        kingCardImage.setImageBitmap(bitmap2);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             if(checkKing){
                 kingCardImage.setVisibility(View.VISIBLE);
-                kingCardListName.setVisibility(View.VISIBLE);
-                kingCardListCompany.setVisibility(View.VISIBLE);
-                leftgalho.setVisibility(View.VISIBLE);
-                rightgalho.setVisibility(View.VISIBLE);
             } else {
                 kingCardImage.setVisibility(View.GONE);
-                kingCardListName.setText("내 명함에서\n대표 명함을 설정해주세요.");
-                kingCardListCompany.setVisibility(View.GONE);
-                leftgalho.setVisibility(View.GONE);
-                rightgalho.setVisibility(View.GONE);
+                kingText.setText("내 명함에서\n대표 명함을 설정해주세요.");
             }
 
         } catch (JSONException e) {
 
         }
 
+    }
+
+    // 명함을 그리는 비트맵 함수
+    private Bitmap ProcessingBitmap(){
+        Bitmap bm1 = null;
+        Bitmap newBitmap = null;
+
+        bm1 = BitmapFactory.decodeResource(getResources(),R.drawable.namecard_basic4);
+        Bitmap.Config config = bm1.getConfig();
+        if(config == null){
+            config = Bitmap.Config.ARGB_8888;
+        }
+
+
+        newBitmap = Bitmap.createBitmap(bm1.getWidth(),bm1.getHeight(),config);
+        Canvas newCanvas = new Canvas(newBitmap);
+
+        newCanvas.drawBitmap(bm1,0,0,null);
+        Paint paintText1 = setTextsize(140);
+        Paint paintText2 = setTextsize(80);
+        Paint paintText3 = setTextsize(120);
+        Paint paintText4 = setTextsize(60);
+        Paint paintText5 = setTextsize(80);
+        Paint paintText6 = setTextsize(80);
+        Paint paintText7 = setTextsize(60);
+        Rect rectText = new Rect();
+        paintText1.getTextBounds(kingCardName,0,kingCardName.length(),rectText);
+        newCanvas.drawText(kingCardName,50,rectText.height()+50,paintText1);
+        paintText2.getTextBounds(kingCardPosition,0,kingCardPosition.length(),rectText);
+        newCanvas.drawText(kingCardPosition,70,rectText.height()+450,paintText2);
+        paintText3.getTextBounds(kingCardCompay,0,kingCardCompay.length(),rectText);
+        newCanvas.drawText(kingCardCompay,50,rectText.height()+1400,paintText3);
+        paintText4.getTextBounds(kingCardAddress,0,kingCardAddress.length(),rectText);
+        newCanvas.drawText(kingCardAddress,50,rectText.height()+1730,paintText4);
+        paintText5.getTextBounds(kingCardNumStr,0,kingCardNumStr.length(),rectText);
+        newCanvas.drawText(kingCardNumStr,2080,rectText.height()+410,paintText5);
+        paintText6.getTextBounds(kingCardCoNum,0,kingCardCoNum.length(),rectText);
+        newCanvas.drawText(kingCardCoNum,2080,rectText.height()+640,paintText6);
+        paintText7.getTextBounds(kingCardE_mail,0,kingCardE_mail.length(),rectText);
+        newCanvas.drawText(kingCardE_mail,2080,rectText.height()+850,paintText7);
+
+        return newBitmap;
+    }
+
+    private Paint setTextsize(int textsize){
+        Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintText.setColor(Color.BLACK);
+        paintText.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,textsize,getResources().getDisplayMetrics()));
+        paintText.setStyle(Paint.Style.FILL);
+
+        return paintText;
     }
 
     // 상대 명함 리스트뷰

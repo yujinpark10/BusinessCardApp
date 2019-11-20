@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="10dp"
+                android:scaleType="fitXY"
                 android:background="@drawable/icon"/>
 
             <org.techtown.businesscardapp.ClearEditText
@@ -56,7 +57,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="14"
             android:orientation="horizontal"
             android:padding="5dp"
             android:background="#CFE5FA"
@@ -66,44 +67,18 @@
 
             // 메인 화면에 대표 목록
             <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/kingCardImage"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/kingCardImage"
+                android:layout_margin="3dp"/>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="이름"
-                android:id="@+id/kingCardListName"
-                android:textSize="28dp"
-                android:textColor="#000000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/kingText"
+                android:text="text"
+                android:textSize="30dp"
                 android:gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="("
-                android:textSize="28dp"
-                android:id="@+id/leftgalho"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="회사"
-                android:id="@+id/kingCardListCompany"
-                android:textSize="28dp"
-                android:textColor="#000000"
-                android:gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=")"
-                android:textSize="28dp"
-                android:id="@+id/rightgalho"/>
 
         </LinearLayout>
 
@@ -115,7 +90,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="32"
+            android:layout_weight="28"
             android:orientation="vertical">
 
             // 명함 목록 띄울 리스트 뷰

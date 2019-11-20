@@ -37,9 +37,17 @@ public class myCardListActivity extends AppCompatActivity {
 
     private static final String TAG_JSON="responseme";
     private static final String TAG_CARDNUM = "cardNum";
+    private static final String TAG_ID="userID";
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
     private static final String TAG_ADDRESS ="address";
+    private static final String TAG_TEAM="team";
+    private static final String TAG_POSITION="position";
+    private static final String TAG_CONUM="coNum";
+    private static final String TAG_NUM="num";
+    private static final String TAG_E_MAIL="e_mail";
+    private static final String TAG_FAXNUM="faxNum";
+    private static final String TAG_CARDIMAGE="cardimage";
     ListView myCardList = null;
     private static myCardAdapter myCardAdapter;
     String mJsonString;
@@ -96,7 +104,7 @@ public class myCardListActivity extends AppCompatActivity {
         btn_cardEnroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(myCardListActivity.this, myCardEnrollActivity.class);
+                Intent intent = new Intent(myCardListActivity.this, CardEnrollActivity.class);
                 intent.putExtra("userID", loginid);
                 intent.putExtra("mine1",1);
                 startActivity(intent);
@@ -206,9 +214,16 @@ public class myCardListActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String team = item.getString(TAG_TEAM);
+                String position = item.getString(TAG_POSITION);
+                String coNum = item.getString(TAG_CONUM);
+                String num = item.getString(TAG_NUM);
+                String e_mail = item.getString(TAG_E_MAIL);
+                String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
+                String cardimage = item.getString(TAG_CARDIMAGE);
 
-                myCardAdapter.addItem(cardNum, name, company, address);
+                myCardAdapter.addItem(cardNum, name, company, team, position, coNum, num, e_mail, faxNum, address, cardimage);
             }
 
             myCardAdapter.notifyDataSetChanged();

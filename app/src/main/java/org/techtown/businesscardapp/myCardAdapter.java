@@ -1,14 +1,26 @@
 package org.techtown.businesscardapp;
 
-        import android.content.Context;
+import android.content.Context;
         import android.content.Intent;
-        import android.view.LayoutInflater;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.Base64;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.BaseAdapter;
-        import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 
 public class myCardAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -40,17 +52,29 @@ public class myCardAdapter extends BaseAdapter{
         }
 
         // 화면에 표시될 View로부터 위젯에 대한 참조 획득
-        TextView cardNum = (TextView) convertView.findViewById(R.id.cardNum);
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.cardListName) ;
-        TextView companyTextView = (TextView) convertView.findViewById(R.id.cardListCompany) ;
+        ImageView cardview = (ImageView) convertView.findViewById(R.id.cardListImage) ;
 
         // Data set(filteredItemList)에서 position에 위치한 데이터 참조 획득
         cardListViewItem cardListViewItem = filteredItemList.get(position);
 
-        // 아이템 내 각 위젯에 대한 반영
-        //cardNum.setText(cardListViewItem.getCardNum()); // 여기 정수를 문자로 해야할듯
-        nameTextView.setText(cardListViewItem.getName());
-        companyTextView.setText(cardListViewItem.getCompany());
+        String cardimage = cardListViewItem.getCardImage();
+
+        if(cardimage.equals("null")){
+//            Bitmap processedBitmap = ProcessingBitmap();
+//            if(processedBitmap != null){
+//                cardview.setImageBitmap(processedBitmap);
+//            }
+        }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
+
+            try {
+                String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
+                byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
+                Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
+                cardview.setImageBitmap(bitmap2);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         return convertView;
     }
@@ -68,14 +92,76 @@ public class myCardAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(int cardNum, String name, String company, String address) {
+    public void addItem(int cardNum, String name, String company, String team, String position, String coNum, String num, String e_mail, String faxNum, String address, String cardimage) {
         cardListViewItem item = new cardListViewItem();
 
         item.setCardNum(cardNum);
         item.setName(name);
         item.setCompany(company);
+        item.setTeam(team);
+        item.setPosition(position);
+        item.setCoNum(coNum);
+        item.setNum(num);
+        item.setFaxNum(faxNum);
+        item.setEmail(e_mail);
         item.setAddress(address);
+        item.setCardImage(cardimage);
 
         myCardItem.add(item);
+    }
+
+    // 명함을 그리는 비트맵 함수
+    private Bitmap ProcessingBitmap(){
+        Bitmap bm1 = null;
+        Bitmap newBitmap = null;
+
+        bm1 = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.namecard_basic4);
+        Bitmap.Config config = bm1.getConfig();
+        if(config == null){
+            config = Bitmap.Config.ARGB_8888;
+        }
+
+
+        newBitmap = Bitmap.createBitmap(bm1.getWidth(),bm1.getHeight(),config);
+        Canvas newCanvas = new Canvas(newBitmap);
+
+        newCanvas.drawBitmap(bm1,0,0,null);
+        Paint paintText1 = setTextsize(140);
+        Paint paintText2 = setTextsize(80);
+        Paint paintText3 = setTextsize(120);
+        Paint paintText4 = setTextsize(60);
+        Paint paintText5 = setTextsize(80);
+        Paint paintText6 = setTextsize(80);
+        Paint paintText7 = setTextsize(60);
+        Rect rectText = new Rect();
+        paintText1.getTextBounds("1",0,"1".length(),rectText);
+        newCanvas.drawText("1",50,rectText.height()+50,paintText1);
+        paintText2.getTextBounds("2222222222222222222222",0,"2222222222222222222222".length(),rectText);
+        newCanvas.drawText("2222222222222222222222",50,rectText.height()+50,paintText2);
+//        paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
+//        newCanvas.drawText(use_name,50,rectText.height()+50,paintText1);
+//        paintText2.getTextBounds(use_position,0,use_position.length(),rectText);
+//        newCanvas.drawText(use_position,70,rectText.height()+450,paintText2);
+//        paintText3.getTextBounds(use_company,0,use_company.length(),rectText);
+//        newCanvas.drawText(use_company,50,rectText.height()+1400,paintText3);
+//        paintText4.getTextBounds(use_address,0,use_address.length(),rectText);
+//        newCanvas.drawText(use_address,50,rectText.height()+1730,paintText4);
+//        paintText5.getTextBounds(use_pnumber,0,use_pnumber.length(),rectText);
+//        newCanvas.drawText(use_pnumber,2080,rectText.height()+410,paintText5);
+//        paintText6.getTextBounds(use_conumber,0,use_conumber.length(),rectText);
+//        newCanvas.drawText(use_conumber,2080,rectText.height()+640,paintText6);
+//        paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
+//        newCanvas.drawText(use_email,2080,rectText.height()+850,paintText7);
+
+        return newBitmap;
+    }
+
+    private Paint setTextsize(int textsize){
+        Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintText.setColor(Color.BLACK);
+        paintText.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,textsize,Resources.getSystem().getDisplayMetrics()));
+        paintText.setStyle(Paint.Style.FILL);
+
+        return paintText;
     }
 }
