@@ -25,7 +25,7 @@
                 android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
 
                 <ImageView
-                    android:id="@+id/cardimage"
+                    android:id="@+id/cardview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"

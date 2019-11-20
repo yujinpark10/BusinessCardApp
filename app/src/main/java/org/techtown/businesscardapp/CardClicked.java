@@ -19,6 +19,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,17 +51,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.List;
 
 public class CardClicked extends AppCompatActivity implements OnMapReadyCallback {
 
+    private boolean checkimage;
+
     private String use_company, use_conumber, use_pnumber, use_email, use_address, use_name, use_position;
     private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
     private Button btn_modify, btn_delete, btn_cancel;
-    private ImageView call_conumber, call_pnumber, message_pnumber, send_email,cardimage;
-    Uri cardsource = null;
+    private ImageView call_conumber, call_pnumber, message_pnumber, send_email,cardview;
 
 
     private String userID, address;
@@ -80,6 +84,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG_ID="userID";
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
+    private static final String TAG_CARDIMAGE="cardimage";
     String mJsonString;
 
     private String mapResult;
@@ -90,6 +95,8 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_clicked);
         getSupportActionBar().hide();
+
+        checkimage = false;
 
         inp_name = (TextView)findViewById(R.id.inp_name);
         inp_company = (TextView)findViewById(R.id.inp_company);
@@ -234,6 +241,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             config = Bitmap.Config.ARGB_8888;
         }
 
+
         newBitmap = Bitmap.createBitmap(bm1.getWidth(),bm1.getHeight(),config);
         Canvas newCanvas = new Canvas(newBitmap);
 
@@ -375,6 +383,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 String e_mail = item.getString(TAG_E_MAIL);
                 String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
+                String cardimage = item.getString(TAG_CARDIMAGE);
 
                 inp_name.setText(name);
                 inp_company.setText(company);
@@ -395,17 +404,25 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 use_position=position;
 
                 // 명함 이미지
-                cardimage = (ImageView)findViewById(R.id.cardimage);
+                cardview = (ImageView)findViewById(R.id.cardview);
 
-                if(cardsource == null){
+                if(cardimage.equals("null")){
                     Bitmap processedBitmap = ProcessingBitmap();
                     if(processedBitmap != null){
-                        cardimage.setImageBitmap(processedBitmap);
+                        cardview.setImageBitmap(processedBitmap);
                     }else {
                         Toast.makeText(getApplicationContext(), "명함 이미지를 부르는데 문제가 발생했습니다.", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    // 여기에 가져온 명함 이미지를 가져오면 됩니다.
+                }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
+
+                    try {
+                        String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
+                        byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
+                        Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
+                        cardview.setImageBitmap(bitmap2);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

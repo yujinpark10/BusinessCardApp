@@ -239,7 +239,6 @@ public class CardEnrollActivity extends AppCompatActivity {
            imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
 
            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-           /////////////
 
             //비율 설정
           int width = bitmap1.getWidth();
@@ -251,7 +250,7 @@ public class CardEnrollActivity extends AppCompatActivity {
               height = resizedbitmap.getHeight();
               width = resizedbitmap.getWidth();
           }
-           ///////////////
+
             //비트맵 -> 바이트 배열
            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
            resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -264,7 +263,6 @@ public class CardEnrollActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 
