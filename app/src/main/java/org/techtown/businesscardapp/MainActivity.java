@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         //명함 목록을 위한 리스트뷰
         cardList = (ListView)findViewById(R.id.cardList);
 
-        searchAdapter = new searchAdapter();
+        searchAdapter = new searchAdapter(this);
         cardList.setAdapter(searchAdapter);
 
         GetData task = new GetData();
