@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:background="#AABACC"
+                android:background="#E7F2F8"
                 android:gravity="center"
                 android:padding="5dp"
                 android:choiceMode="singleChoice"/>

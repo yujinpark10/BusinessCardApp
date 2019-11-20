@@ -29,25 +29,27 @@
                 android:id="@+id/clearSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="6"
                 android:gravity="center"
                 android:hint="검색"
                 android:imeOptions="actionDone"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/btn_setting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/img_setting"
+                android:layout_width="5dp"
+                android:layout_height="33dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="설정"
-                android:textSize="20dp" />
+                android:background="@drawable/settings" />
+
+
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#444444"/>
+            android:background="#FFFFFF"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +57,7 @@
             android:layout_weight="2"
             android:orientation="horizontal"
             android:padding="5dp"
-            android:background="#AABACC"
+            android:background="#CFE5FA"
             android:layout_margin="20dp"
             android:gravity="center"
             android:id="@+id/kingLayout">
@@ -106,7 +108,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#444444"/>
+            android:background="#E5E5E6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +123,7 @@
                 android:textFilterEnabled="true"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:background="#AABACC"
+                android:background="#E7F2F8"
                 android:gravity="center"
                 android:padding="5dp" />
 
@@ -130,7 +132,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#444444"/>
+            android:background="#E5E5E6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,29 +141,30 @@
             android:gravity="center"
             android:layout_margin="5dp">
 
-            <Button
-                android:id="@+id/btn_myCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="내 명함"
-                android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/btn_cardEnroll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="명함등록"
-                android:textSize="20dp" />
+            <ImageView
+                android:id="@+id/img_myCard"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/mycard" />
 
-            <Button
-                android:id="@+id/btn_cardChange"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="명함교환"
-                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/img_cardEnroll"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/cardenroll" />
+
+
+            <ImageView
+                android:id="@+id/img_cardChange"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/cardchange" />
+
 
         </LinearLayout>
 
