@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -234,7 +236,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private Bitmap ProcessingBitmap(){
         Bitmap bm1 = null;
         Bitmap newBitmap = null;
-        //try{
+
         bm1 = BitmapFactory.decodeResource(getResources(),R.drawable.namecard_basic4);
         Bitmap.Config config = bm1.getConfig();
         if(config == null){
@@ -246,28 +248,28 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         Canvas newCanvas = new Canvas(newBitmap);
 
         newCanvas.drawBitmap(bm1,0,0,null);
-            Paint paintText1 = setTextsize(350);
-            Paint paintText2 = setTextsize(200);
-            Paint paintText3 = setTextsize(300);
-            Paint paintText4 = setTextsize(150);
-            Paint paintText5 = setTextsize(200);
-            Paint paintText6 = setTextsize(200);
-            Paint paintText7 = setTextsize(150);
+            Paint paintText1 = setTextsize(140);
+            Paint paintText2 = setTextsize(80);
+            Paint paintText3 = setTextsize(120);
+            Paint paintText4 = setTextsize(60);
+            Paint paintText5 = setTextsize(80);
+            Paint paintText6 = setTextsize(80);
+            Paint paintText7 = setTextsize(60);
             Rect rectText = new Rect();
             paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
-            newCanvas.drawText(use_name,150,rectText.height()+150,paintText1);
+            newCanvas.drawText(use_name,50,rectText.height()+50,paintText1);
             paintText2.getTextBounds(use_position,0,use_position.length(),rectText);
-            newCanvas.drawText(use_position,170,rectText.height()+550,paintText2);
+            newCanvas.drawText(use_position,70,rectText.height()+450,paintText2);
             paintText3.getTextBounds(use_company,0,use_company.length(),rectText);
-            newCanvas.drawText(use_company,150,rectText.height()+1600,paintText3);
+            newCanvas.drawText(use_company,50,rectText.height()+1400,paintText3);
             paintText4.getTextBounds(use_address,0,use_address.length(),rectText);
-            newCanvas.drawText(use_address,150,rectText.height()+1930,paintText4);
+            newCanvas.drawText(use_address,50,rectText.height()+1730,paintText4);
             paintText5.getTextBounds(use_pnumber,0,use_pnumber.length(),rectText);
-            newCanvas.drawText(use_pnumber,2380,rectText.height()+450,paintText5);
+            newCanvas.drawText(use_pnumber,2080,rectText.height()+410,paintText5);
             paintText6.getTextBounds(use_conumber,0,use_conumber.length(),rectText);
-            newCanvas.drawText(use_conumber,2380,rectText.height()+720,paintText6);
+            newCanvas.drawText(use_conumber,2080,rectText.height()+640,paintText6);
             paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
-            newCanvas.drawText(use_email,2380,rectText.height()+970,paintText7);
+            newCanvas.drawText(use_email,2080,rectText.height()+850,paintText7);
 
         return newBitmap;
     }
@@ -275,7 +277,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private Paint setTextsize(int textsize){
         Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintText.setColor(Color.BLACK);
-        paintText.setTextSize(textsize);
+        paintText.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,textsize,getResources().getDisplayMetrics()));
         paintText.setStyle(Paint.Style.FILL);
 
         return paintText;
