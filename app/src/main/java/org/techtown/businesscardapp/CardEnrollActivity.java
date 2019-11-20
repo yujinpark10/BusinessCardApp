@@ -53,7 +53,7 @@ public class CardEnrollActivity extends AppCompatActivity {
     //카메라 변수 설정
     private static final int CAMERA_CODE = 10;
     private String mCurrentPhotoPath;
-    private String cardImage;
+    private String cardImage = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
