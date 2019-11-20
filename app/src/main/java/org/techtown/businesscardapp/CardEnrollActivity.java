@@ -35,7 +35,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,12 +49,11 @@ public class CardEnrollActivity extends AppCompatActivity {
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
-    private boolean validate = false;
-    private ImageView image;
 
     //카메라 변수 설정
     private static final int CAMERA_CODE = 10;
     private String mCurrentPhotoPath;
+    private String cardImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +166,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, responseListener);
+                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
                 queue.add(cardEnroll);
                 Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
@@ -232,41 +233,41 @@ public class CardEnrollActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CAMERA_CODE){
-            ImageView imageView = (ImageView)findViewById(R.id.card);
-            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
-            String a = getBase64String(bitmap1);
+            //이미지 비트맵
+           ImageView imageView = (ImageView)findViewById(R.id.card);
+           imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
 
-            byte[] decodedByteArray = Base64.decode(a, Base64.NO_WRAP);
-            Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+           Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+           /////////////
 
-            imageView.setImageBitmap(bitmap2);
-        }
+            //비율 설정
+          int width = bitmap1.getWidth();
+          int height = bitmap1.getWidth();
 
-    }
-
-    public String getBase64String(Bitmap bitmap)
-    {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream);
-
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-
-        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-    }
-
-    public void BitMapToString(Bitmap photoUri){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        photoUri.compress(Bitmap.CompressFormat.PNG,100, baos);    //bitmap compress
-        byte [] arr=baos.toByteArray();
-        String image= Base64.encodeToString(arr, Base64.DEFAULT);
-        String temp="";
-        try{
-            temp="&imagedevice="+ URLEncoder.encode(image,"utf-8");
-        }catch (Exception e){
-            Log.e("exception",e.toString());
+          Bitmap resizedbitmap = null;
+          while(height >118){
+              resizedbitmap = Bitmap.createScaledBitmap(bitmap1, (width *118)/ height, 118, true);
+              height = resizedbitmap.getHeight();
+              width = resizedbitmap.getWidth();
+          }
+           ///////////////
+            //비트맵 -> 바이트 배열
+           ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+           resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+           byte[] imageBytes = byteArrayOutputStream.toByteArray();
+           String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+            try {
+                cardImage = URLEncoder.encode(bitmap2, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+
+
+
+
 
 }

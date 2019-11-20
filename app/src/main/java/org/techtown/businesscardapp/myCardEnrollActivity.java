@@ -22,7 +22,7 @@ public class myCardEnrollActivity extends AppCompatActivity {
     private ClearEditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
-    private boolean validate = false;
+    private String cardimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class myCardEnrollActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, responseListener);
+                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardimage, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(myCardEnrollActivity.this);
                 queue.add(cardEnroll);
                 Intent intent = new Intent(myCardEnrollActivity.this, myCardListActivity.class);
