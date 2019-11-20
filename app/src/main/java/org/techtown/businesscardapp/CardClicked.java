@@ -283,9 +283,6 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         return paintText;
     }
 
-
-
-
     // 내 명함 리스트뷰
     private class GetData extends AsyncTask<String, Void, String> {
         String errorString = null;

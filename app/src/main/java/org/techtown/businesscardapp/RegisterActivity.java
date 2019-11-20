@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         TodayMonth = calendar.get(Calendar.MONTH);
         TodayDate = calendar.get(Calendar.DATE);
 
-        Button btn_calendar = (Button)findViewById(R.id.btn_calender);
+        ImageView btn_calendar = (ImageView)findViewById(R.id.img_calender);
         btn_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

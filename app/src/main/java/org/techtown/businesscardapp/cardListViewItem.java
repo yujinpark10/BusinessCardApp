@@ -6,16 +6,17 @@ public class cardListViewItem {
     private String companyStr;
     private String addressStr;
 
-    public void setCardNum(int cardNumStr) {
-        this.cardNumStr = cardNumStr;
+    public void setCardNum(int cardNum) {
+        cardNumStr = cardNum;
     }
     public void setName(String name) {
-        nameStr = name;   }
+        nameStr = name;
+    }
     public void setCompany(String company) {
         companyStr = company;
     }
-    public void setAddress(String addressStr) {
-        this.addressStr = addressStr;
+    public void setAddress(String address) {
+        addressStr = address;
     }
 
     public int getCardNum() {

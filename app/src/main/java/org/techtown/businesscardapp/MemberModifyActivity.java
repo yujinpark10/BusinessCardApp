@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,8 +77,8 @@ public class MemberModifyActivity extends AppCompatActivity {
         //TodayMonth = calendar.get(Calendar.MONTH);
         //TodayDate = calendar.get(Calendar.DATE);
 
-        Button btn_calendar = (Button)findViewById(R.id.btn_calender);
-        btn_calendar.setOnClickListener(new View.OnClickListener() {
+        ImageView img_calendar = (ImageView)findViewById(R.id.img_calender);
+        img_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MemberModifyActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -117,7 +119,7 @@ public class MemberModifyActivity extends AppCompatActivity {
             }
         });
 
-        // 회원가입 버튼 클릭 시 수행
+        // 수정 버튼 클릭 시 수행
         btn_modify = (Button)findViewById(R.id.btn_modify);
         btn_modify.setOnClickListener(new View.OnClickListener() {
             @Override

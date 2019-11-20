@@ -160,14 +160,14 @@
                 android:clickable="false"
                 android:enabled="false"/>
 
-            <Button
-                android:id="@+id/btn_calender"
+            <ImageView
+                android:id="@+id/img_calender"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="2"
-                android:text="달력"
+                android:layout_gravity="center"
                 android:layout_marginRight="10dp"
-                android:textSize="15sp"/>
+                android:background="@drawable/baseline_today_black_48dp"/>
 
         </LinearLayout>
 

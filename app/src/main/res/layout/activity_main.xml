@@ -16,14 +16,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:orientation="horizontal"
             android:gravity="center">
 
+            //
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:background="@drawable/icon"/>
 
             <org.techtown.businesscardapp.ClearEditText
                 android:id="@+id/clearSearch"
@@ -37,11 +40,11 @@
 
             <ImageView
                 android:id="@+id/img_setting"
-                android:layout_width="5dp"
-                android:layout_height="33dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/settings" />
+                android:background="@drawable/baseline_reorder_black_48dp" />
 
 
         </LinearLayout>
@@ -49,12 +52,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#FFFFFF"/>
+            android:background="#E5E5E6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="10"
             android:orientation="horizontal"
             android:padding="5dp"
             android:background="#CFE5FA"
@@ -113,7 +116,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_weight="32"
             android:orientation="vertical">
 
             // 명함 목록 띄울 리스트 뷰
@@ -137,33 +140,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:gravity="center"
             android:layout_margin="5dp">
 
 
             <ImageView
                 android:id="@+id/img_myCard"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="30dp"
-                android:background="@drawable/mycard" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_margin="10dp"
+                android:background="@drawable/baseline_work_black_48dp" />
 
 
             <ImageView
                 android:id="@+id/img_cardEnroll"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="30dp"
-                android:background="@drawable/cardenroll" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_margin="10dp"
+                android:background="@drawable/baseline_person_add_black_48dp" />
 
 
             <ImageView
                 android:id="@+id/img_cardChange"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="30dp"
-                android:background="@drawable/cardchange" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_margin="10dp"
+                android:background="@drawable/baseline_loop_black_48dp" />
 
 
         </LinearLayout>
