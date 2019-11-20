@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_NAME = "name";
     private static final String TAG_COMPANY ="company";
     private static final String TAG_ADDRESS ="address";
+    private static final String TAG_TEAM="team";
+    private static final String TAG_POSITION="position";
+    private static final String TAG_CONUM="coNum";
+    private static final String TAG_NUM="num";
+    private static final String TAG_E_MAIL="e_mail";
+    private static final String TAG_FAXNUM="faxNum";
+    private static final String TAG_CARDIMAGE="cardimage";
     ListView cardList = null;
     String mJsonString;
     private static searchAdapter searchAdapter;
@@ -590,9 +597,16 @@ public class MainActivity extends AppCompatActivity {
                 int cardNum = item.getInt(TAG_CARDNUM);
                 String name = item.getString(TAG_NAME);
                 String company = item.getString(TAG_COMPANY);
+                String team = item.getString(TAG_TEAM);
+                String position = item.getString(TAG_POSITION);
+                String coNum = item.getString(TAG_CONUM);
+                String num = item.getString(TAG_NUM);
+                String e_mail = item.getString(TAG_E_MAIL);
+                String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
+                String cardimage = item.getString(TAG_CARDIMAGE);
 
-                searchAdapter.addItem(cardNum, name, company, address);
+                searchAdapter.addItem(cardNum, name, company, team, position, coNum, num, e_mail, faxNum, address, cardimage);
             }
 
             searchAdapter.notifyDataSetChanged();
