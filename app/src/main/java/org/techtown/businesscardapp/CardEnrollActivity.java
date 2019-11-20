@@ -241,19 +241,36 @@ public class CardEnrollActivity extends AppCompatActivity {
            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
             //비율 설정
-          int width = bitmap1.getWidth();
-          int height = bitmap1.getWidth();
+            int width = bitmap1.getWidth();
+            int height = bitmap1.getHeight();
+            int newWidth = width;
+            int newHeight = height;
+            float rate = 0.0f;
+            int maxResolution = 700;
 
-          Bitmap resizedbitmap = null;
-          while(height >118){
-              resizedbitmap = Bitmap.createScaledBitmap(bitmap1, (width *118)/ height, 118, true);
-              height = resizedbitmap.getHeight();
-              width = resizedbitmap.getWidth();
-          }
+            if(width > height)
+            {
+                if(maxResolution < width)
+                {
+                    rate = maxResolution / (float) width;
+                    newHeight = (int) (height * rate);
+                    newWidth = maxResolution;
+                }
+            }
+            else
+            {
+                if(maxResolution < height)
+                {
+                    rate = maxResolution / (float) height;
+                    newWidth = (int) (width * rate);
+                    newHeight = maxResolution;
+                }
+            }
+           Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap1, newWidth, newHeight, true);
 
             //비트맵 -> 바이트 배열
            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-           resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
            byte[] imageBytes = byteArrayOutputStream.toByteArray();
            String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
             try {
