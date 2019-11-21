@@ -10,14 +10,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#1B1B1B">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:background="@drawable/loading"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@drawable/icon"
             android:orientation="horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CusinessCardApp"
+            android:textSize="40dp"
+            android:textColor="#ffffff"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
