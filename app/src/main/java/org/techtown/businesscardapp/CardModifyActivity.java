@@ -45,6 +45,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,10 +67,10 @@ public class CardModifyActivity extends AppCompatActivity {
     private static final String TAG_ID="userID";
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
+    private static final String TAG_CARDIMAGE="cardimage";
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_modifySave, btn_modifyCancel;
     private AlertDialog dialog;
-    private boolean validate = false;
     String mJsonString;
 
     private static final int CAMERA_CODE = 10;
@@ -88,9 +89,14 @@ public class CardModifyActivity extends AppCompatActivity {
         final String userID = getIntent().getStringExtra("userID");
         final String address = getIntent().getStringExtra("address");
 
+        //php 연동 회원 정보 받아오기
+        GetData task = new GetData();
+        task.execute("http://yujinpark10.dothome.co.kr/cardModify_select.php", Integer.toString(cardNum));
+
         //카메라 권한 요청
         requirePermission();
 
+        //기본값 등록
         et_name = (EditText)findViewById(R.id.et_name);
         et_company = (EditText)findViewById(R.id.et_company);
         et_team = (EditText)findViewById(R.id.et_team);
@@ -106,8 +112,6 @@ public class CardModifyActivity extends AppCompatActivity {
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        GetData task = new GetData();
-        task.execute("http://yujinpark10.dothome.co.kr/cardModify_select.php", Integer.toString(cardNum));
 
         //카메라 버튼 클릭
         Button button = (Button) findViewById(R.id.camera2);
@@ -137,12 +141,12 @@ public class CardModifyActivity extends AppCompatActivity {
             }
         });
 
-        //이미지 삭체 버튼 클릭
+        //이미지 삭제 버튼 클릭
         Button button3 = (Button)findViewById(R.id.imagedelete2);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView)findViewById(R.id.card);
+                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 cardImage = "null";
                 imageView.setImageResource(android.R.color.transparent);
             }
@@ -216,7 +220,7 @@ public class CardModifyActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, responseListener);
+                CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, cardImage, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
                 queue.add(CardModify);
                 Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
@@ -241,19 +245,15 @@ public class CardModifyActivity extends AppCompatActivity {
     // 내 명함 리스트뷰
     private class GetData extends AsyncTask<String, Void, String> {
         String errorString = null;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             if (result == null){
-
             }
             else {
                 mJsonString = result;
@@ -291,7 +291,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 else{
                     inputStream = httpURLConnection.getErrorStream();
                 }
-
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -301,20 +300,13 @@ public class CardModifyActivity extends AppCompatActivity {
                 while((line = bufferedReader.readLine()) != null){
                     sb.append(line);
                 }
-
-
                 bufferedReader.close();
 
-
                 return sb.toString().trim();
-
-
             } catch (Exception e) {
                 errorString = e.toString();
-
                 return null;
             }
-
         }
     }
 
@@ -485,7 +477,9 @@ public class CardModifyActivity extends AppCompatActivity {
                 String e_mail = item.getString(TAG_E_MAIL);
                 String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
+                String cardimage = item.getString(TAG_CARDIMAGE);
 
+                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 et_name.setText(name);
                 et_company.setText(company);
                 et_team.setText(team);
@@ -495,6 +489,23 @@ public class CardModifyActivity extends AppCompatActivity {
                 et_email.setText(e_mail);
                 et_fnumber.setText(faxNum);
                 et_address.setText(address);
+
+                //이미지 변환
+
+                if(cardimage.equals("null")){
+                    imageView.setImageResource(android.R.color.transparent);
+                }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
+
+                    try {
+                        String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
+                        byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
+                        Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
+                        imageView.setImageBitmap(bitmap2);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
         } catch (JSONException e) {
