@@ -11,13 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#FFFFFF">
+        android:background="#000000">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
             android:orientation="horizontal"
+            android:background="#000000"
             android:gravity="center">
 
             <ImageView
@@ -35,8 +36,15 @@
                 android:layout_weight="5"
                 android:gravity="center"
                 android:hint="검색"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:imeOptions="actionDone"
-                android:inputType="text" />
+                android:textColor="#FFFFFF"
+                android:textColorHint="#7E7E7E"
+                android:inputType="text"
+                android:cursorVisible="false"
+                android:theme="@style/EditTheme"/>
+
 
             <ImageView
                 android:id="@+id/img_setting"
@@ -44,24 +52,33 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/baseline_reorder_black_48dp" />
+                android:background="@drawable/main_setting" />
 
 
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E5E5E6"/>
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 명함"
+                android:textSize="15dp"
+                android:textColor="#AEAEAE"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="12"
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="#CFE5FA"
-            android:layout_margin="20dp"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:id="@+id/kingLayout">
 
@@ -82,10 +99,21 @@
 
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E5E5E6"/>
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="명함 목록"
+                android:textSize="15dp"
+                android:textColor="#AEAEAE"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,17 +127,15 @@
                 android:layout_width="match_parent"
                 android:textFilterEnabled="true"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:background="#E7F2F8"
-                android:gravity="center"
-                android:padding="5dp" />
+                android:background="#FFFFFF"
+                android:gravity="center" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#E5E5E6"/>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:background="#E5E5E6"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,7 +150,7 @@
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
                 android:layout_marginRight="50dp"
-                android:background="@drawable/baseline_work_black_48dp" />
+                android:background="@drawable/main_mycard" />
 
 
             <ImageView
@@ -133,7 +159,7 @@
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
                 android:layout_marginRight="50dp"
-                android:background="@drawable/baseline_person_add_black_48dp" />
+                android:background="@drawable/main_enroll" />
 
 
             <ImageView
@@ -141,7 +167,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
-                android:background="@drawable/baseline_swap_horizontal_circle_black_48dp" />
+                android:background="@drawable/main_change" />
 
 
         </LinearLayout>
