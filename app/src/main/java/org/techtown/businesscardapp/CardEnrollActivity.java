@@ -338,6 +338,7 @@ public class CardEnrollActivity extends AppCompatActivity {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(intent, CAMERA_CODE);
         } catch (IOException e) {
+
             e.printStackTrace();
         }
     }
@@ -368,16 +369,14 @@ public class CardEnrollActivity extends AppCompatActivity {
                 checkImage = true;
 
                 // 텍스트 or 이미지 뷰 선택
-                if (checkImage) {
-                    imageText.setVisibility(View.GONE);
-                    imageView.setVisibility(View.VISIBLE);
-                } else {
-                    imageText.setVisibility(View.VISIBLE);
-//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
-                    imageView.setVisibility(View.GONE);
-                }
+                imageText.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
 
                 //이미지 비트맵
+                imageText.setText(mCurrentPhotoPath);
+                if(true){
+                    return;
+                }
                 Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
                 imageView.setImageBitmap(bitmap1);
 
