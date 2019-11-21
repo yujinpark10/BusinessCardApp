@@ -14,7 +14,7 @@ public class CardModify extends StringRequest {
     final static private String URL = "http://yujinpark10.dothome.co.kr/cardModify_update.php";
     private Map<String, String> map;
 
-    public CardModify(String cardNum, String name, String company, String team, String position, String coNum, String num, String e_mail, String faxNum, String address, String userID, Response.Listener<String> listener) {
+    public CardModify(String cardNum, String name, String company, String team, String position, String coNum, String num, String e_mail, String faxNum, String address, String userID, String cardimage, Response.Listener<String> listener) {
         super(Request.Method.POST, URL, listener, null);
 
         map = new HashMap<>();
@@ -29,6 +29,7 @@ public class CardModify extends StringRequest {
         map.put("faxNum", faxNum);
         map.put("address", address);
         map.put("userID",userID);
+        map.put("cardimage",cardimage);
 
     }
 
