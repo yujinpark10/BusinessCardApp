@@ -79,6 +79,8 @@ public class CardModifyActivity extends AppCompatActivity {
     private static final int GALLERY_CODE = 20;
     private String mCurrentPhotoPath;
     private String cardImage = "null";
+    private boolean checkImage = false;
+    private TextView imageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,7 @@ public class CardModifyActivity extends AppCompatActivity {
         et_email = (EditText)findViewById(R.id.et_email);
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText)findViewById(R.id.et_address);
+        imageText = (TextView) findViewById(R.id.imageText);
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -155,8 +158,8 @@ public class CardModifyActivity extends AppCompatActivity {
 //        });
 
         //다이얼 로그 버튼 클릭
-        Button btn_dialog = (Button)findViewById(R.id.btn_addimage);
-        btn_dialog.setOnClickListener(new View.OnClickListener() {
+        ImageView img_dialog = (ImageView)findViewById(R.id.btn_addimage);
+        img_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShowimageDialog();
@@ -370,6 +373,16 @@ public class CardModifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImageView imageView = (ImageView)findViewById(R.id.card2);
+                checkImage = false;
+                // 텍스트 or 이미지 뷰 선택
+                if(checkImage) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
+//                    imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                    imageView.setVisibility(View.GONE);
+                }
                 cardImage = "null";
                 imageView.setImageResource(android.R.color.transparent);
                 Image_Dialog.cancel();
@@ -425,6 +438,8 @@ public class CardModifyActivity extends AppCompatActivity {
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
             ImageView imageView = (ImageView)findViewById(R.id.card2);
+            imageText.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(bitmap1);
 
             //비율 설정
@@ -473,10 +488,13 @@ public class CardModifyActivity extends AppCompatActivity {
                 return;
             }
 
+
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
                 ImageView imageView = (ImageView)findViewById(R.id.card2);
+                imageText.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
                 imageView.setImageBitmap(bitmap);
 
                 //비율 설정
@@ -573,9 +591,16 @@ public class CardModifyActivity extends AppCompatActivity {
 
                 //이미지 변환
 
-                if(cardimage.equals("null")){
-                    imageView.setImageResource(android.R.color.transparent);
-                }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
+
+                // 텍스트 or 이미지 뷰 선택
+                if (!cardimage.equals("null")) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
+//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                    imageView.setVisibility(View.GONE);
+                }
 
                     try {
                         String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
@@ -587,9 +612,9 @@ public class CardModifyActivity extends AppCompatActivity {
                     }
                 }
 
-            }
+            }catch (JSONException e) {
 
-        } catch (JSONException e) {
+
 
         }
 
