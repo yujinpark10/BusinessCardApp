@@ -560,22 +560,22 @@ public class MainActivity extends AppCompatActivity {
         Paint paintText4 = setTextsize(60);
         Paint paintText5 = setTextsize(80);
         Paint paintText6 = setTextsize(80);
-        Paint paintText7 = setTextsize(45);
+        Paint paintText7 = setTextsize(55);
         Rect rectText = new Rect();
         paintText1.getTextBounds(kingCardName,0,kingCardName.length(),rectText);
-        newCanvas.drawText(kingCardName,50,rectText.height()+50,paintText1);
+        newCanvas.drawText(kingCardName,200,rectText.height()+200,paintText1);
         paintText2.getTextBounds(kingCardPosition,0,kingCardPosition.length(),rectText);
-        newCanvas.drawText(kingCardPosition,70,rectText.height()+450,paintText2);
+        newCanvas.drawText(kingCardPosition,220,rectText.height()+600,paintText2);
         paintText3.getTextBounds(kingCardCompay,0,kingCardCompay.length(),rectText);
-        newCanvas.drawText(kingCardCompay,50,rectText.height()+1400,paintText3);
+        newCanvas.drawText(kingCardCompay,150,rectText.height()+1400,paintText3);
         paintText4.getTextBounds(kingCardAddress,0,kingCardAddress.length(),rectText);
-        newCanvas.drawText(kingCardAddress,50,rectText.height()+1730,paintText4);
+        newCanvas.drawText(kingCardAddress,100,rectText.height()+1730,paintText4);
         paintText5.getTextBounds(kingCardNumStr,0,kingCardNumStr.length(),rectText);
-        newCanvas.drawText(kingCardNumStr,1780,rectText.height()+410,paintText5);
+        newCanvas.drawText(kingCardNumStr,1830,rectText.height()+370,paintText5);
         paintText6.getTextBounds(kingCardCoNum,0,kingCardCoNum.length(),rectText);
-        newCanvas.drawText(kingCardCoNum,1780,rectText.height()+640,paintText6);
+        newCanvas.drawText(kingCardCoNum,1830,rectText.height()+600,paintText6);
         paintText7.getTextBounds(kingCardE_mail,0,kingCardE_mail.length(),rectText);
-        newCanvas.drawText(kingCardE_mail,1780,rectText.height()+850,paintText7);
+        newCanvas.drawText(kingCardE_mail,1830,rectText.height()+830,paintText7);
 
         return newBitmap;
     }
