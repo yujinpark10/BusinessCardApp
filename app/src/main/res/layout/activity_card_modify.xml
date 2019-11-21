@@ -38,11 +38,19 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"/>
 
-                <Button
+<!--                <Button-->
+<!--                    android:id="@+id/btn_addimage"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="사진 등록" />-->
+
+                <ImageView
                     android:id="@+id/btn_addimage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="사진 등록" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/baseline_add_box_black_48dp" />
+
 
 
             </LinearLayout>
