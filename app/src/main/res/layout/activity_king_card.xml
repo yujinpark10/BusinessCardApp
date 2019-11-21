@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="#2B2B2B">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,9 +21,11 @@
                 android:id="@+id/myCardList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="#FFFFFF"
-                android:divider="#FF000000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#2B2B2B"
+                android:divider="#2B2B2B"
                 android:dividerHeight="2dp"
                 android:gravity="center"
                 android:choiceMode="singleChoice"/>
@@ -42,7 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="취소"
-                android:textSize="24dp" />
+                android:textSize="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="2.5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="#ffffff"
+                android:background="@drawable/custon_button_ver_9"/>
 
         </LinearLayout>
 

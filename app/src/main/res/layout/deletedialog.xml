@@ -6,11 +6,14 @@
     android:gravity="center">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비밀번호 확인"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="#2B2B2B"
+        android:textSize="30dp"
+        android:layout_margin="5dp"/>
 
     <EditText
         android:id="@+id/check"
@@ -30,16 +33,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="확인"
-            android:textColor="#FA71CD"
-            android:background="@drawable/custom_button_no"/>
-
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="2.5dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/custon_button_ver_9"/>
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
-            android:textColor="#FA71CD"
-            android:background="@drawable/custom_button_no"/>
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/custon_button_ver_9"/>
 
     </LinearLayout>
 

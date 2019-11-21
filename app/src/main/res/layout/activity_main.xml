@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#000000">
+        android:background="#2B2B2B">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
             android:orientation="horizontal"
-            android:background="#000000"
+            android:background="#2B2B2B"
             android:gravity="center">
 
             <ImageView
@@ -60,7 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000">
+            android:background="#2B2B2B">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             android:layout_height="0dp"
             android:layout_weight="15"
             android:orientation="horizontal"
-            android:background="#000000"
+            android:background="#2B2B2B"
             android:gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -104,7 +104,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000000">
+            android:background="#2B2B2B">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#000000">
+            android:background="#2B2B2B">
 
             // 명함 목록 띄울 리스트 뷰
             <ListView
@@ -132,7 +132,7 @@
                 android:textFilterEnabled="true"
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
-                android:divider="#FF000000"
+                android:divider="#2B2B2B"
                 android:dividerHeight="2dp"
                 android:gravity="center" />
 
