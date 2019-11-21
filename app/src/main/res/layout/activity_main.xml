@@ -42,6 +42,7 @@
                 android:textColor="#FFFFFF"
                 android:textColorHint="#7E7E7E"
                 android:inputType="text"
+                android:cursorVisible="false"
                 android:theme="@style/EditTheme"/>
 
 

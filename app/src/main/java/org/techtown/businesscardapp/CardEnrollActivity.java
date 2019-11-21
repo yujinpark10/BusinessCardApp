@@ -362,109 +362,47 @@ public class CardEnrollActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CAMERA_CODE){
 
-            checkImage = true;
+            if (requestCode == CAMERA_CODE) {
 
-            // 텍스트 or 이미지 뷰 선택
-            if(checkImage) {
-                imageText.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-            } else {
-                imageText.setVisibility(View.VISIBLE);
+                checkImage = true;
+
+                // 텍스트 or 이미지 뷰 선택
+                if (checkImage) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
 //                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
-                imageView.setVisibility(View.GONE);
-            }
-
-            //이미지 비트맵
-            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-           imageView.setImageBitmap(bitmap1);
-
-            //비율 설정
-            int width = bitmap1.getWidth();
-            int height = bitmap1.getHeight();
-            int newWidth = width;
-            int newHeight = height;
-            float rate = 0.0f;
-            int maxResolution = 700;
-
-            if(width > height)
-            {
-                if(maxResolution < width)
-                {
-                    rate = maxResolution / (float) width;
-                    newHeight = (int) (height * rate);
-                    newWidth = maxResolution;
+                    imageView.setVisibility(View.GONE);
                 }
-            }
-            else
-            {
-                if(maxResolution < height)
-                {
-                    rate = maxResolution / (float) height;
-                    newWidth = (int) (width * rate);
-                    newHeight = maxResolution;
-                }
-            }
-           Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap1, newWidth, newHeight, true);
 
-            //비트맵 -> 바이트 배열
-           ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-           byte[] imageBytes = byteArrayOutputStream.toByteArray();
-           String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
-            try {
-                cardImage = URLEncoder.encode(bitmap2, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(requestCode == GALLERY_CODE)
-        {
-            checkImage = true;
-
-            // 텍스트 or 이미지 뷰 선택
-            if(checkImage) {
-                imageText.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-            } else {
-                imageText.setVisibility(View.VISIBLE);
-//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
-                imageView.setVisibility(View.GONE);
-            }
-
-            Uri source = data.getData();
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                imageView.setImageBitmap(bitmap);
+                //이미지 비트맵
+                Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+                imageView.setImageBitmap(bitmap1);
 
                 //비율 설정
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
+                int width = bitmap1.getWidth();
+                int height = bitmap1.getHeight();
                 int newWidth = width;
                 int newHeight = height;
                 float rate = 0.0f;
                 int maxResolution = 700;
 
-                if(width > height)
-                {
-                    if(maxResolution < width)
-                    {
+                if (width > height) {
+                    if (maxResolution < width) {
                         rate = maxResolution / (float) width;
                         newHeight = (int) (height * rate);
                         newWidth = maxResolution;
                     }
-                }
-                else
-                {
-                    if(maxResolution < height)
-                    {
+                } else {
+                    if (maxResolution < height) {
                         rate = maxResolution / (float) height;
                         newWidth = (int) (width * rate);
                         newHeight = maxResolution;
                     }
                 }
-                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap1, newWidth, newHeight, true);
 
                 //비트맵 -> 바이트 배열
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -476,9 +414,64 @@ public class CardEnrollActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
+            } else if (requestCode == GALLERY_CODE) {
+                if(data == null) {
+                    return;
+                }
+                checkImage = true;
+
+                // 텍스트 or 이미지 뷰 선택
+                if (checkImage) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
+//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                    imageView.setVisibility(View.GONE);
+                }
+
+                Uri source = data.getData();
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
+                    imageView.setImageBitmap(bitmap);
+
+                    //비율 설정
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    int newWidth = width;
+                    int newHeight = height;
+                    float rate = 0.0f;
+                    int maxResolution = 700;
+
+                    if (width > height) {
+                        if (maxResolution < width) {
+                            rate = maxResolution / (float) width;
+                            newHeight = (int) (height * rate);
+                            newWidth = maxResolution;
+                        }
+                    } else {
+                        if (maxResolution < height) {
+                            rate = maxResolution / (float) height;
+                            newWidth = (int) (width * rate);
+                            newHeight = maxResolution;
+                        }
+                    }
+                    Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+
+                    //비트맵 -> 바이트 배열
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                    String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+                    try {
+                        cardImage = URLEncoder.encode(bitmap2, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+
     }
 }

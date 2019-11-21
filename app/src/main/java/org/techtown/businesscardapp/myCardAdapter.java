@@ -150,7 +150,7 @@ public class myCardAdapter extends BaseAdapter{
         Paint paintText4 = setTextsize(60);
         Paint paintText5 = setTextsize(80);
         Paint paintText6 = setTextsize(80);
-        Paint paintText7 = setTextsize(60);
+        Paint paintText7 = setTextsize(45);
         Rect rectText = new Rect();
         paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
         newCanvas.drawText(use_name,50,rectText.height()+50,paintText1);
