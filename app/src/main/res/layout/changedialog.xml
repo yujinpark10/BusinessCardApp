@@ -17,17 +17,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_sendgetNFC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="send/get with NFC" />
+        <ImageView
+            android:id="@+id/img_sendgetNFC"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/baseline_tap_and_play_black_48dp" />
 
-        <Button
-            android:id="@+id/btn_QRCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="QR Code" />
+        <ImageView
+            android:id="@+id/img_QRCode"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/icon_qrcode"/>
 
         <!--
         <Button

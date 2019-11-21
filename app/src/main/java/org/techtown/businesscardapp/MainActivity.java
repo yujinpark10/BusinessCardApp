@@ -713,10 +713,10 @@ public class MainActivity extends AppCompatActivity {
         myEnrollDialog.show();
 
         Button btn_cancel = (Button)changeDialogLayout.findViewById(R.id.btn_cancel);
-        Button btn_sendNFC = (Button)changeDialogLayout.findViewById(R.id.btn_sendgetNFC);
-        Button btn_QRCode = (Button)changeDialogLayout.findViewById(R.id.btn_QRCode);
+        ImageView img_sendNFC = (ImageView)changeDialogLayout.findViewById(R.id.img_sendgetNFC);
+        ImageView img_QRCode = (ImageView)changeDialogLayout.findViewById(R.id.img_QRCode);
 
-        btn_sendNFC.setOnClickListener(new View.OnClickListener()
+        img_sendNFC.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -741,7 +741,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_QRCode.setOnClickListener(new View.OnClickListener()
+        img_QRCode.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)

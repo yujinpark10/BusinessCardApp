@@ -264,13 +264,13 @@ public class CardEnrollActivity extends AppCompatActivity {
         Image_Dialog.setContentView(imageDialogLayout);
         Image_Dialog.show();
 
-        Button btn_camera = (Button)imageDialogLayout.findViewById(R.id.btn_camara);
-        Button btn_gallery = (Button)imageDialogLayout.findViewById(R.id.btn_gallery);
-        Button btn_delete = (Button)imageDialogLayout.findViewById(R.id.btn_delete);
+        ImageView img_camera = (ImageView)imageDialogLayout.findViewById(R.id.img_camara);
+        ImageView img_gallery = (ImageView)imageDialogLayout.findViewById(R.id.img_gallery);
+        ImageView img_delete = (ImageView)imageDialogLayout.findViewById(R.id.img_delete);
         Button btn_cancel = (Button)imageDialogLayout.findViewById(R.id.btn_cancel);
 
         //카메라 클릭시
-        btn_camera.setOnClickListener(new View.OnClickListener() {
+        img_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean camera = ContextCompat.checkSelfPermission
@@ -288,7 +288,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         });
 
         //갤러리 클릭시
-        btn_gallery.setOnClickListener(new View.OnClickListener() {
+        img_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -298,7 +298,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         });
 
         //삭제 클릭시
-        btn_delete.setOnClickListener(new View.OnClickListener() {
+        img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkImage = false;
