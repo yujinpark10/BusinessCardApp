@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,7 +53,7 @@ public class CardEnrollActivity extends AppCompatActivity {
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
-  //  private ImageView imageView = (ImageView)findViewById(R.id.card);
+    private ImageView imageView;
 
     //카메라 변수 설정
     private static final int CAMERA_CODE = 10;
@@ -60,6 +61,9 @@ public class CardEnrollActivity extends AppCompatActivity {
     private static final int IMAGEDELETE_CODE = 30;
     private String mCurrentPhotoPath;
     private String cardImage = "null";
+
+    private boolean checkImage;
+    private TextView imageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,12 @@ public class CardEnrollActivity extends AppCompatActivity {
         et_email = (EditText)findViewById(R.id.et_email);
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText) findViewById(R.id.et_address);
+
+        // 이미지 띄어주는 부분 선언
+        imageView = (ImageView)findViewById(R.id.card);
+        imageText = (TextView)findViewById(R.id.imageText);
+
+
 
         //다이얼 로그 버튼 클릭
         Button btn_dialog = (Button)findViewById(R.id.button2);
@@ -291,7 +301,16 @@ public class CardEnrollActivity extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView)findViewById(R.id.card);
+                checkImage = false;
+                // 텍스트 or 이미지 뷰 선택
+                if(checkImage) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
+//                    imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                    imageView.setVisibility(View.GONE);
+                }
                 cardImage = "null";
                 imageView.setImageResource(android.R.color.transparent);
                 Image_Dialog.cancel();
@@ -343,12 +362,22 @@ public class CardEnrollActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if(requestCode == CAMERA_CODE){
+
+            checkImage = true;
+
+            // 텍스트 or 이미지 뷰 선택
+            if(checkImage) {
+                imageText.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            } else {
+                imageText.setVisibility(View.VISIBLE);
+//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                imageView.setVisibility(View.GONE);
+            }
 
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-            ImageView imageView = (ImageView)findViewById(R.id.card);
            imageView.setImageBitmap(bitmap1);
 
             //비율 설정
@@ -392,10 +421,21 @@ public class CardEnrollActivity extends AppCompatActivity {
         }
         else if(requestCode == GALLERY_CODE)
         {
+            checkImage = true;
+
+            // 텍스트 or 이미지 뷰 선택
+            if(checkImage) {
+                imageText.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            } else {
+                imageText.setVisibility(View.VISIBLE);
+//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                imageView.setVisibility(View.GONE);
+            }
+
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                ImageView imageView = (ImageView)findViewById(R.id.card);
                 imageView.setImageBitmap(bitmap);
 
                 //비율 설정
@@ -441,8 +481,4 @@ public class CardEnrollActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
-
 }
