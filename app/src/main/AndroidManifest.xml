@@ -32,7 +32,6 @@
         <activity android:name=".MemberModifyActivity"></activity>
         <activity android:name=".CardModifyActivity" />
         <activity android:name=".KingCardActivity" />
-        <activity android:name=".myCardEnrollActivity" />
         <activity android:name=".myCardListActivity" />
         <activity android:name=".CardClicked" />
         <activity android:name=".Loading">
@@ -50,7 +49,7 @@
         <activity android:name=".ImageChangeTest"/>
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
