@@ -420,7 +420,6 @@ public class CardModifyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if(requestCode == CAMERA_CODE){
 
             //이미지 비트맵
@@ -469,6 +468,11 @@ public class CardModifyActivity extends AppCompatActivity {
         }
         else if(requestCode == GALLERY_CODE)
         {
+            if(data == null)
+            {
+                return;
+            }
+
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));

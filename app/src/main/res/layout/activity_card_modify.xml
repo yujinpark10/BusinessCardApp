@@ -23,6 +23,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:id="@+id/imageText"
+                    android:text="사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요."
+                    android:textSize="24dp"/>
+
                 <ImageView
                     android:id="@+id/card2"
                     android:layout_width="match_parent"
