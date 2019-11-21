@@ -34,52 +34,58 @@ public class Loading extends AppCompatActivity {
         // 세션에 값이 있을 경우
         if(loginid!=null && loginpw!=null)
         {
-            String userID = loginid;
-            String userPassword = loginpw;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String userID = loginid;
+                                        String userPassword = loginpw;
 
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        boolean success = jsonObject.getBoolean("success");
-                        if (success) { // 로그인에 성공한 경우
-                            String userID = jsonObject.getString("userID");
-                            String userPassword = jsonObject.getString("userPassword");
-                            String userName = jsonObject.getString("userName");
-                            String userBirth = jsonObject.getString("userBirth");
-                            String userNum = jsonObject.getString("userNum");
-                            String userEmail = jsonObject.getString("userEmail");
-                            // String cardNum = jsonObject.getString("cardNum");
+                                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                try {
+                                                    JSONObject jsonObject = new JSONObject(response);
+                                                    boolean success = jsonObject.getBoolean("success");
+                                                    if (success) { // 로그인에 성공한 경우
+                                                        String userID = jsonObject.getString("userID");
+                                                        String userPassword = jsonObject.getString("userPassword");
+                                                        String userName = jsonObject.getString("userName");
+                                                        String userBirth = jsonObject.getString("userBirth");
+                                                        String userNum = jsonObject.getString("userNum");
+                                                        String userEmail = jsonObject.getString("userEmail");
+                                                        // String cardNum = jsonObject.getString("cardNum");
 
-                            Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Loading.this, MainActivity.class);
-                            intent.putExtra("userID", userID);
-                            intent.putExtra("userPassword", userPassword);
-                            intent.putExtra("userName", userName);
-                            intent.putExtra("userBirth", userBirth);
-                            intent.putExtra("userNum", userNum);
-                            intent.putExtra("userEmail", userEmail);
-                            //intent.putExtra("cardNum", cardNum);
-                           // intent.putExtra("userID", userID);
-                            startActivity(intent);
-                        } else { // 로그인에 실패한 경우
-                            Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                            Intent logoutIntent = new Intent(Loading.this, LoginActivity.class);
-                            startActivity(logoutIntent);
-                            SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = auto.edit();
-                            editor.clear();
-                            editor.commit();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(Loading.this);
-            queue.add(loginRequest);
+                                                        Toast.makeText(getApplicationContext(), "로그인에 성공하였습니다.", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(Loading.this, MainActivity.class);
+                                                        intent.putExtra("userID", userID);
+                                                        intent.putExtra("userPassword", userPassword);
+                                                        intent.putExtra("userName", userName);
+                                                        intent.putExtra("userBirth", userBirth);
+                                                        intent.putExtra("userNum", userNum);
+                                                        intent.putExtra("userEmail", userEmail);
+                                                        //intent.putExtra("cardNum", cardNum);
+                                                        // intent.putExtra("userID", userID);
+                                                        startActivity(intent);
+                                                    } else { // 로그인에 실패한 경우
+                                                        Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                                                        Intent logoutIntent = new Intent(Loading.this, LoginActivity.class);
+                                                        startActivity(logoutIntent);
+                                                        SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = auto.edit();
+                                                        editor.clear();
+                                                        editor.commit();
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
+                                        RequestQueue queue = Volley.newRequestQueue(Loading.this);
+                                        queue.add(loginRequest);
+                                    }
+                                }, 0);
         }
 
         // 세션에 값이 없을 경우

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,44 +86,53 @@ public class CardEnrollActivity extends AppCompatActivity {
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText) findViewById(R.id.et_address);
 
-        //카메라 버튼 클릭
-        Button button = (Button) findViewById(R.id.camera);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean camera = ContextCompat.checkSelfPermission
-                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-                boolean write = ContextCompat.checkSelfPermission
-                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-                if (camera && write) {
-                    //사진찍은 인텐트 코드 넣기
-                    takePicture();
-                } else {
-                    Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        //갤러리 버튼 클릭
-        Button button1 = (Button)findViewById(R.id.gallery);
-        button1.setOnClickListener(new View.OnClickListener() {
+        //다이얼 로그 버튼 클릭
+        Button btn_dialog = (Button)findViewById(R.id.button2);
+        btn_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,GALLERY_CODE);
+                ShowimageDialog();
             }
         });
-
-        //이미지 삭체 버튼 클릭
-        Button button3 = (Button)findViewById(R.id.imagedelete);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView imageView = (ImageView)findViewById(R.id.card);
-                cardImage = "null";
-                imageView.setImageResource(android.R.color.transparent);
-            }
-        });
+//
+//        //카메라 버튼 클릭
+//        Button button = (Button) findViewById(R.id.camera);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                boolean camera = ContextCompat.checkSelfPermission
+//                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+//                boolean write = ContextCompat.checkSelfPermission
+//                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+//                if (camera && write) {
+//                    //사진찍은 인텐트 코드 넣기
+//                    takePicture();
+//                } else {
+//                    Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//        //갤러리 버튼 클릭
+//        Button button1 = (Button)findViewById(R.id.gallery);
+//        button1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(intent,GALLERY_CODE);
+//                }
+//        });
+//
+//        //이미지 삭체 버튼 클릭
+//        Button button3 = (Button)findViewById(R.id.imagedelete);
+//        button3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ImageView imageView = (ImageView)findViewById(R.id.card);
+//                cardImage = "null";
+//                imageView.setImageResource(android.R.color.transparent);
+//            }
+//        });
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -232,6 +243,72 @@ public class CardEnrollActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 1);
         }
     }
+
+    //카메라 겔러리 사진삭제 다이얼로그 불러오기
+    private void ShowimageDialog(){
+        LayoutInflater imageDialog = LayoutInflater.from(this);
+        final View imageDialogLayout = imageDialog.inflate(R.layout.image_change_dialog, null);
+        final Dialog Image_Dialog = new Dialog(this);
+
+        Image_Dialog.setTitle("사진 등록");
+        Image_Dialog.setContentView(imageDialogLayout);
+        Image_Dialog.show();
+
+        Button btn_camera = (Button)imageDialogLayout.findViewById(R.id.btn_camara);
+        Button btn_gallery = (Button)imageDialogLayout.findViewById(R.id.btn_gallery);
+        Button btn_delete = (Button)imageDialogLayout.findViewById(R.id.btn_delete);
+        Button btn_cancel = (Button)imageDialogLayout.findViewById(R.id.btn_cancel);
+
+        //카메라 클릭시
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean camera = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                boolean write = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                if (camera && write) {
+                    //사진찍은 인텐트 코드 넣기
+                    takePicture();
+                    Image_Dialog.cancel();
+                } else {
+                    Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //갤러리 클릭시
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,GALLERY_CODE);
+                Image_Dialog.cancel();
+            }
+        });
+
+        //삭제 클릭시
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = (ImageView)findViewById(R.id.card);
+                cardImage = "null";
+                imageView.setImageResource(android.R.color.transparent);
+                Image_Dialog.cancel();
+            }
+        });
+
+        //취소 클릭시
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Image_Dialog.cancel();
+            }
+        });
+    }
+
 
     //카메라 불러오기
     void takePicture() {
@@ -364,7 +441,6 @@ public class CardEnrollActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 
