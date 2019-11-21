@@ -560,7 +560,7 @@ public class MainActivity extends AppCompatActivity {
         Paint paintText4 = setTextsize(60);
         Paint paintText5 = setTextsize(80);
         Paint paintText6 = setTextsize(80);
-        Paint paintText7 = setTextsize(60);
+        Paint paintText7 = setTextsize(45);
         Rect rectText = new Rect();
         paintText1.getTextBounds(kingCardName,0,kingCardName.length(),rectText);
         newCanvas.drawText(kingCardName,50,rectText.height()+50,paintText1);
