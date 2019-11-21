@@ -41,7 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CardEnrollActivity" />
+        <activity android:name=".CardEnrollActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".nfcChangePage" />

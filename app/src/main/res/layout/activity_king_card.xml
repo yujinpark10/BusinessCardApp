@@ -41,16 +41,16 @@
 
             <Button
                 android:id="@+id/btn_cancel"
-                android:layout_width="wrap_content"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="취소"
-                android:textSize="20dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="2.5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custon_button_ver_9"
+                android:text="취소"
                 android:textColor="#ffffff"
-                android:background="@drawable/custon_button_ver_9"/>
+                android:textSize="20dp" />
 
         </LinearLayout>
 
