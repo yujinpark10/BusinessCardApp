@@ -17,22 +17,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_camara"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_camara"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="카메라" />
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/baseline_add_a_photo_black_48dp" />
 
-        <Button
-            android:id="@+id/btn_gallery"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/img_gallery"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="갤러리" />
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/baseline_add_photo_alternate_black_48dp"/>
+
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=" 삭 제 "/>
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/baseline_delete_black_48dp"/>
 
     </LinearLayout>
     <Button
