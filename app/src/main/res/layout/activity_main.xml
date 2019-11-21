@@ -110,8 +110,7 @@
                 android:text="명함 목록"
                 android:textSize="15dp"
                 android:textColor="#AEAEAE"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_margin="5dp"/>
 
         </LinearLayout>
 
