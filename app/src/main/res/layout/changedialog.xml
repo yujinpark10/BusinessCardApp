@@ -5,12 +5,15 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="명함 교환"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 명함 교환 "
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            android:textSize="30dp"
+            android:layout_margin="10dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,14 +24,17 @@
             android:id="@+id/img_sendgetNFC"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/baseline_tap_and_play_black_48dp" />
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/baseline_tap_and_play_black_48dp"/>
 
         <ImageView
             android:id="@+id/img_QRCode"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/icon_qrcode"/>
+            android:background="@drawable/icon_qrcode"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <!--
         <Button
@@ -44,6 +50,10 @@
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="취소" />
+        android:text="취소"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/custon_button_ver_9"/>
 
 </LinearLayout>
