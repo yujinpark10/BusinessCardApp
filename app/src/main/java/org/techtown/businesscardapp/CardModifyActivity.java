@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,9 +80,6 @@ public class CardModifyActivity extends AppCompatActivity {
     private String mCurrentPhotoPath;
     private String cardImage = "null";
 
-    private ImageView imageView;
-    private TextView imageText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,49 +114,55 @@ public class CardModifyActivity extends AppCompatActivity {
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        imageView = (ImageView)findViewById(R.id.card);
-        imageText = (TextView)findViewById(R.id.imageText);
 
-        //카메라 버튼 클릭
-        Button button = (Button) findViewById(R.id.camera2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean camera = ContextCompat.checkSelfPermission
-                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-                boolean write = ContextCompat.checkSelfPermission
-                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-                if (camera && write) {
-                    //사진찍은 인텐트 코드 넣기
-                    takePicture();
-                } else {
-                    Toast.makeText(CardModifyActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        //카메라 버튼 클릭
+//        Button button = (Button) findViewById(R.id.camera2);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                boolean camera = ContextCompat.checkSelfPermission
+//                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+//                boolean write = ContextCompat.checkSelfPermission
+//                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+//                if (camera && write) {
+//                    //사진찍은 인텐트 코드 넣기
+//                    takePicture();
+//                } else {
+//                    Toast.makeText(CardModifyActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//
+//        //갤러리 버튼 클릭
+//        Button button1 = (Button)findViewById(R.id.gallery2);
+//        button1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent,GALLERY_CODE);
+//            }
+//        });
+//
+//        //이미지 삭제 버튼 클릭
+//        Button button3 = (Button)findViewById(R.id.imagedelete2);
+//        button3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ImageView imageView = (ImageView)findViewById(R.id.card2);
+//                cardImage = "null";
+//                imageView.setImageResource(android.R.color.transparent);
+//            }
+//        });
 
-        //갤러리 버튼 클릭
-        Button button1 = (Button)findViewById(R.id.gallery2);
-        button1.setOnClickListener(new View.OnClickListener() {
+        //다이얼 로그 버튼 클릭
+        Button btn_dialog = (Button)findViewById(R.id.btn_addimage);
+        btn_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,GALLERY_CODE);
+                ShowimageDialog();
             }
         });
 
-        //이미지 삭제 버튼 클릭
-        Button button3 = (Button)findViewById(R.id.imagedelete2);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageText.setVisibility(View.VISIBLE);
-//                    imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
-                imageView.setVisibility(View.GONE);
-                cardImage = "null";
-                imageView.setImageResource(android.R.color.transparent);
-            }
-        });
 
         //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
         btn_modifyCancel = (Button)findViewById(R.id.btn_modifyCancel);
@@ -317,6 +322,71 @@ public class CardModifyActivity extends AppCompatActivity {
         }
     }
 
+    //카메라 겔러리 사진삭제 다이얼로그 불러오기
+    private void ShowimageDialog() {
+        LayoutInflater imageDialog = LayoutInflater.from(this);
+        final View imageDialogLayout = imageDialog.inflate(R.layout.image_change_dialog, null);
+        final Dialog Image_Dialog = new Dialog(this);
+
+        Image_Dialog.setTitle("사진 등록");
+        Image_Dialog.setContentView(imageDialogLayout);
+        Image_Dialog.show();
+
+        Button btn_camera = (Button) imageDialogLayout.findViewById(R.id.btn_camara);
+        Button btn_gallery = (Button) imageDialogLayout.findViewById(R.id.btn_gallery);
+        Button btn_delete = (Button) imageDialogLayout.findViewById(R.id.btn_delete);
+        Button btn_cancel = (Button) imageDialogLayout.findViewById(R.id.btn_cancel);
+
+        //카메라 클릭시
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean camera = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                boolean write = ContextCompat.checkSelfPermission
+                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                if (camera && write) {
+                    //사진찍은 인텐트 코드 넣기
+                    takePicture();
+                    Image_Dialog.cancel();
+                } else {
+                    Toast.makeText(CardModifyActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //갤러리 클릭시
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,GALLERY_CODE);
+                Image_Dialog.cancel();
+            }
+        });
+
+        //삭제 클릭시
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = (ImageView)findViewById(R.id.card2);
+                cardImage = "null";
+                imageView.setImageResource(android.R.color.transparent);
+                Image_Dialog.cancel();
+            }
+        });
+
+        //취소 클릭시
+        btn_cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Image_Dialog.cancel();
+            }
+        });
+    }
+
     //카메라 권한 요청
     void requirePermission() {
         String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -353,11 +423,9 @@ public class CardModifyActivity extends AppCompatActivity {
 
         if(requestCode == CAMERA_CODE){
 
-            imageText.setVisibility(View.GONE);
-            imageView.setVisibility(View.VISIBLE);
-
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            ImageView imageView = (ImageView)findViewById(R.id.card2);
             imageView.setImageBitmap(bitmap1);
 
             //비율 설정
@@ -401,12 +469,10 @@ public class CardModifyActivity extends AppCompatActivity {
         }
         else if(requestCode == GALLERY_CODE)
         {
-            imageText.setVisibility(View.GONE);
-            imageView.setVisibility(View.VISIBLE);
-
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
+                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 imageView.setImageBitmap(bitmap);
 
                 //비율 설정
@@ -490,6 +556,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 String address = item.getString(TAG_ADDRESS);
                 String cardimage = item.getString(TAG_CARDIMAGE);
 
+                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 et_name.setText(name);
                 et_company.setText(company);
                 et_team.setText(team);
@@ -504,13 +571,9 @@ public class CardModifyActivity extends AppCompatActivity {
 
                 if(cardimage.equals("null")){
                     imageView.setImageResource(android.R.color.transparent);
-                    imageText.setVisibility(View.VISIBLE);
-                    imageView.setVisibility(View.GONE);
                 }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
 
                     try {
-                        imageText.setVisibility(View.GONE);
-                        imageView.setVisibility(View.VISIBLE);
                         String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
                         byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
                         Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
