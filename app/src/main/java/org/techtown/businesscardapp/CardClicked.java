@@ -254,22 +254,22 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             Paint paintText4 = setTextsize(60);
             Paint paintText5 = setTextsize(80);
             Paint paintText6 = setTextsize(80);
-            Paint paintText7 = setTextsize(45);
+            Paint paintText7 = setTextsize(55);
             Rect rectText = new Rect();
             paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
-            newCanvas.drawText(use_name,50,rectText.height()+50,paintText1);
+            newCanvas.drawText(use_name,200,rectText.height()+200,paintText1);
             paintText2.getTextBounds(use_position,0,use_position.length(),rectText);
-            newCanvas.drawText(use_position,70,rectText.height()+450,paintText2);
+            newCanvas.drawText(use_position,220,rectText.height()+600,paintText2);
             paintText3.getTextBounds(use_company,0,use_company.length(),rectText);
-            newCanvas.drawText(use_company,50,rectText.height()+1400,paintText3);
+            newCanvas.drawText(use_company,150,rectText.height()+1400,paintText3);
             paintText4.getTextBounds(use_address,0,use_address.length(),rectText);
-            newCanvas.drawText(use_address,50,rectText.height()+1730,paintText4);
+            newCanvas.drawText(use_address,100,rectText.height()+1730,paintText4);
             paintText5.getTextBounds(use_pnumber,0,use_pnumber.length(),rectText);
-            newCanvas.drawText(use_pnumber,2080,rectText.height()+410,paintText5);
+            newCanvas.drawText(use_pnumber,1830,rectText.height()+370,paintText5);
             paintText6.getTextBounds(use_conumber,0,use_conumber.length(),rectText);
-            newCanvas.drawText(use_conumber,2080,rectText.height()+640,paintText6);
+            newCanvas.drawText(use_conumber,1830,rectText.height()+600,paintText6);
             paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
-            newCanvas.drawText(use_email,2080,rectText.height()+850,paintText7);
+            newCanvas.drawText(use_email,1830,rectText.height()+830,paintText7);
 
         return newBitmap;
     }
