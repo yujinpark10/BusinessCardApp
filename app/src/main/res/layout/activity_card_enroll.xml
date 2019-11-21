@@ -20,8 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
+                android:layout_marginTop="10dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,11 +56,12 @@
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:text="사진삭제" />-->
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                <ImageView
+                    android:id="@+id/getImage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/baseline_add_box_black_48dp" />
 
             </LinearLayout>
 

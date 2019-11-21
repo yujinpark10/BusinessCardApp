@@ -97,7 +97,7 @@ public class CardEnrollActivity extends AppCompatActivity {
 
 
         //다이얼 로그 버튼 클릭
-        Button btn_dialog = (Button)findViewById(R.id.button2);
+        ImageView btn_dialog = (ImageView)findViewById(R.id.getImage);
         btn_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

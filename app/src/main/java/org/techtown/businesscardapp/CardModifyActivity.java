@@ -78,6 +78,9 @@ public class CardModifyActivity extends AppCompatActivity {
     private String mCurrentPhotoPath;
     private String cardImage = "null";
 
+    private ImageView imageView;
+    private TextView imageText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +115,8 @@ public class CardModifyActivity extends AppCompatActivity {
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
+        imageView = (ImageView)findViewById(R.id.card);
+        imageText = (TextView)findViewById(R.id.imageText);
 
         //카메라 버튼 클릭
         Button button = (Button) findViewById(R.id.camera2);
@@ -146,7 +151,9 @@ public class CardModifyActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
+                imageText.setVisibility(View.VISIBLE);
+//                    imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
+                imageView.setVisibility(View.GONE);
                 cardImage = "null";
                 imageView.setImageResource(android.R.color.transparent);
             }
@@ -346,9 +353,11 @@ public class CardModifyActivity extends AppCompatActivity {
 
         if(requestCode == CAMERA_CODE){
 
+            imageText.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-            ImageView imageView = (ImageView)findViewById(R.id.card2);
             imageView.setImageBitmap(bitmap1);
 
             //비율 설정
@@ -392,10 +401,12 @@ public class CardModifyActivity extends AppCompatActivity {
         }
         else if(requestCode == GALLERY_CODE)
         {
+            imageText.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
+
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 imageView.setImageBitmap(bitmap);
 
                 //비율 설정
@@ -479,7 +490,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 String address = item.getString(TAG_ADDRESS);
                 String cardimage = item.getString(TAG_CARDIMAGE);
 
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
                 et_name.setText(name);
                 et_company.setText(company);
                 et_team.setText(team);
@@ -494,9 +504,13 @@ public class CardModifyActivity extends AppCompatActivity {
 
                 if(cardimage.equals("null")){
                     imageView.setImageResource(android.R.color.transparent);
+                    imageText.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.GONE);
                 }else{// 여기에 가져온 명함 이미지를 가져오면 됩니다.
 
                     try {
+                        imageText.setVisibility(View.GONE);
+                        imageView.setVisibility(View.VISIBLE);
                         String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
                         byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
                         Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
