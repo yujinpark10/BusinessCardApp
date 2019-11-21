@@ -571,11 +571,11 @@ public class MainActivity extends AppCompatActivity {
         paintText4.getTextBounds(kingCardAddress,0,kingCardAddress.length(),rectText);
         newCanvas.drawText(kingCardAddress,50,rectText.height()+1730,paintText4);
         paintText5.getTextBounds(kingCardNumStr,0,kingCardNumStr.length(),rectText);
-        newCanvas.drawText(kingCardNumStr,2080,rectText.height()+410,paintText5);
+        newCanvas.drawText(kingCardNumStr,1780,rectText.height()+410,paintText5);
         paintText6.getTextBounds(kingCardCoNum,0,kingCardCoNum.length(),rectText);
-        newCanvas.drawText(kingCardCoNum,2080,rectText.height()+640,paintText6);
+        newCanvas.drawText(kingCardCoNum,1780,rectText.height()+640,paintText6);
         paintText7.getTextBounds(kingCardE_mail,0,kingCardE_mail.length(),rectText);
-        newCanvas.drawText(kingCardE_mail,2080,rectText.height()+850,paintText7);
+        newCanvas.drawText(kingCardE_mail,1780,rectText.height()+850,paintText7);
 
         return newBitmap;
     }

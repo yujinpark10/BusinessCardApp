@@ -78,7 +78,7 @@
             android:layout_height="0dp"
             android:layout_weight="12"
             android:orientation="horizontal"
-            android:background="#FFFFFF"
+            android:background="#000000"
             android:gravity="center"
             android:id="@+id/kingLayout">
 
@@ -95,6 +95,7 @@
                 android:id="@+id/kingText"
                 android:text="text"
                 android:textSize="30dp"
+                android:textColor="#FFFFFF"
                 android:gravity="center"/>
 
         </LinearLayout>
