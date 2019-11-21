@@ -29,13 +29,17 @@
             android:id="@+id/btn_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인" />
+            android:text="확인"
+            android:textColor="#FA71CD"
+            android:background="@drawable/custom_button_no"/>
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소" />
+            android:text="취소"
+            android:textColor="#FA71CD"
+            android:background="@drawable/custom_button_no"/>
 
     </LinearLayout>
 
