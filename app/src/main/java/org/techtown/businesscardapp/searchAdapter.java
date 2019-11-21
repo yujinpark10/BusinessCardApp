@@ -92,7 +92,6 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         use_pnumber = cardlistViewItem.getNum();
         use_position = cardlistViewItem.getPosition();
 
-
         String cardimage = cardlistViewItem.getCardImage();
 
         if(cardimage.equals("null")){

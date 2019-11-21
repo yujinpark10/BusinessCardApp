@@ -61,7 +61,7 @@ public class KingCardActivity extends AppCompatActivity {
         //명함 목록을 위한 리스트뷰
         myCardList = (ListView)findViewById(R.id.myCardList);
 
-        myCardAdapter = new myCardAdapter();
+        myCardAdapter = new myCardAdapter(this);
         myCardList.setAdapter(myCardAdapter);
 
         GetData task = new GetData();
