@@ -24,19 +24,18 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:text="이름"
             android:id="@+id/cardListName"
-            android:textSize="24dp"
+            android:textSize="32dp"
             android:textColor="#FFFFFF"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginBottom="5dp"/>
 
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="회사"
             android:id="@+id/cardListCompany"
             android:textSize="18dp"
