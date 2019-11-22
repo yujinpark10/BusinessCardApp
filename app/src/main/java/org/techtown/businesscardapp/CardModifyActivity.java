@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -433,7 +434,7 @@ public class CardModifyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CAMERA_CODE){
+        if(requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK){
 
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);

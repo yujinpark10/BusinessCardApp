@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -345,7 +347,7 @@ public class CardEnrollActivity extends AppCompatActivity {
 
     //사진 파일 만들기
     private File createImageFile() throws IOException {
-        // Create an image file namΩe
+        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
@@ -364,19 +366,14 @@ public class CardEnrollActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-            if (requestCode == CAMERA_CODE) {
+            if (requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK) {
 
                 checkImage = true;
 
                 // 텍스트 or 이미지 뷰 선택
-                imageText.setVisibility(View.VISIBLE);
+                imageText.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
 
-                //이미지 비트맵
-                imageText.setText(mCurrentPhotoPath);
-                if(true){
-                    return;
-                }
                 Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
                 imageView.setImageBitmap(bitmap1);
 
@@ -470,6 +467,8 @@ public class CardEnrollActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+            } else {
+
             }
 
     }
