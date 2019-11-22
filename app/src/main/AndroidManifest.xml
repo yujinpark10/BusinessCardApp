@@ -13,8 +13,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
-        android:label="@string/app_name"
+        android:icon="@drawable/testicon"
+        android:label="BusinessCard"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"

@@ -68,14 +68,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .enableAutoManage(this,this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
-        SignInButton button = (SignInButton) findViewById((R.id.btn_signin));
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
+
+//        SignInButton button = (SignInButton) findViewById((R.id.btn_signin));
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view){
+//                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                startActivityForResult(signInIntent, RC_SIGN_IN);
+//            }
+//        });
     }
 
     //버튼 클릭시 발생 이벤트 모음
