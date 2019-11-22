@@ -79,7 +79,7 @@ public class CardModifyActivity extends AppCompatActivity {
     private static final int CAMERA_CODE = 10;
     private static final int GALLERY_CODE = 20;
     private String mCurrentPhotoPath;
-    private String cardImage = "null";
+    private String cardImage;
     private boolean checkImage = false;
     private TextView imageText;
 
@@ -589,6 +589,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 et_email.setText(e_mail);
                 et_fnumber.setText(faxNum);
                 et_address.setText(address);
+                cardImage = cardimage;
 
                 //이미지 변환
 
