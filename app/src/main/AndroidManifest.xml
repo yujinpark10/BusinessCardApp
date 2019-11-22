@@ -45,7 +45,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListViewSearch" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".MemberModifyActivity" android:windowSoftInputMode="stateHidden|adjustResize"  />
         <activity android:name=".CardModifyActivity" />
         <activity android:name=".KingCardActivity" />
