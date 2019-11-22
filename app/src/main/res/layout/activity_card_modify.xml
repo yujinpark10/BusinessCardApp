@@ -6,22 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".CardModifyActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#2B2B2B">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:background="#2B2B2B">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:background="#2B2B2B">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
+                android:layout_marginBottom="30dp"
+                android:background="#2B2B2B">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -29,20 +39,13 @@
                     android:gravity="center"
                     android:id="@+id/imageText"
                     android:text="사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요."
-                    android:textSize="24dp"/>
+                    android:textSize="24dp"
+                    android:textColor="#ffffff"/>
 
                 <ImageView
                     android:id="@+id/card2"
                     android:layout_width="match_parent"
-                    android:layout_height="159dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_addimage"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="사진 등록" />-->
+                    android:layout_height="200dp"/>
 
                 <ImageView
                     android:id="@+id/btn_addimage"
@@ -58,7 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="#2B2B2B">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,7 +79,8 @@
                         android:text="이름"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_name"
@@ -86,7 +91,9 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -105,7 +112,8 @@
                         android:text="회사명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_company"
@@ -116,7 +124,9 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -135,7 +145,8 @@
                         android:text="팀명"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_team"
@@ -146,7 +157,9 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -165,7 +178,8 @@
                         android:text="직책"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_position"
@@ -176,7 +190,9 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -195,7 +211,8 @@
                         android:text="회사번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_conumber"
@@ -206,7 +223,9 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -225,7 +244,8 @@
                         android:text="전화번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_pnumber"
@@ -236,7 +256,9 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -255,7 +277,8 @@
                         android:text="이메일"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_email"
@@ -266,7 +289,9 @@
                         android:gravity="center"
                         android:inputType="textEmailAddress"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -285,7 +310,8 @@
                         android:text="팩스번호"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_fnumber"
@@ -296,7 +322,9 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -315,7 +343,8 @@
                         android:text="주소"
                         android:textSize="10pt"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:textColor="#ffffff"/>
 
                     <EditText
                         android:id="@+id/et_address"
@@ -326,37 +355,47 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionDone"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btn_modifySave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="수정"
-                    android:textSize="24dp"
-                    android:layout_marginRight="30dp"/>
-
-                <Button
-                    android:id="@+id/btn_modifyCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="취소"
-                    android:textSize="24dp"/>
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
 
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:background="#2B2B2B">
+
+            <Button
+                android:id="@+id/btn_modifySave"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="수정"
+                android:textSize="24dp"
+                android:layout_marginRight="30dp"
+                android:textColor="#ffffff"
+                android:background="@drawable/custon_button_ver_9"/>
+
+            <Button
+                android:id="@+id/btn_modifyCancel"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                android:textSize="24dp"
+                android:textColor="#ffffff"
+                android:background="@drawable/custon_button_ver_9"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

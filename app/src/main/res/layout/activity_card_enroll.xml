@@ -20,7 +20,6 @@
             android:orientation="horizontal"
             android:background="#2B2B2B">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -385,7 +384,7 @@
                 android:background="@drawable/custon_button_ver_9"
                 android:text="저장"
                 android:textSize="24dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"/>
 
             <Button
                 android:id="@+id/btn_enrollCancel"

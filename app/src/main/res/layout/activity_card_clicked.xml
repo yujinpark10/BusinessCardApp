@@ -7,9 +7,18 @@
     android:orientation="vertical"
     tools:context=".CardClicked">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#2B2B2B">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal"
+        android:background="#2B2B2B">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,15 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"> // height 나중에 사진 크기 정해지면 바꾸거나 맞추기
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/cardview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
+                    android:layout_height="match_parent"/>
 
             </LinearLayout>
 
@@ -42,7 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/name"
@@ -52,8 +59,7 @@
                         android:gravity="center"
                         android:text="이름"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_name"
@@ -61,7 +67,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="이름"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -69,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/company"
@@ -79,8 +87,7 @@
                         android:gravity="center"
                         android:text="회사명"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_company"
@@ -88,7 +95,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="회사"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -96,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/team"
@@ -106,8 +115,7 @@
                         android:gravity="center"
                         android:text="팀명"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_team"
@@ -115,7 +123,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="팀명"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -123,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/position"
@@ -133,8 +143,7 @@
                         android:gravity="center"
                         android:text="직책"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_position"
@@ -142,25 +151,26 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="직책"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/coNumber"
-                        android:layout_width="0dp"
+                        android:layout_width="7dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="회사번호"
-                        android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
 
                     <TextView
                         android:id="@+id/inp_conumber"
@@ -168,14 +178,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="8"
                         android:text="회사번호"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                     <ImageView
                         android:id="@+id/call_conumber"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/icon_call"
+                        android:background="@drawable/baseline_call_white_18dp"
                         android:layout_marginLeft="15dp" />
 
                 </LinearLayout>
@@ -184,18 +196,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/phone"
-                        android:layout_width="0dp"
+                        android:layout_width="10dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="전화번호"
-                        android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
 
                     <TextView
                         android:id="@+id/inp_pnumber"
@@ -203,14 +214,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
                         android:text="전화번호"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                     <ImageView
                         android:id="@+id/call_pnumber"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/icon_call"
+                        android:background="@drawable/baseline_call_white_18dp"
                         android:layout_marginRight="15dp"/>
 
                     <ImageView
@@ -218,7 +231,7 @@
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/icon_message"/>
+                        android:background="@drawable/baseline_chat_white_18dp"/>
 
                 </LinearLayout>
 
@@ -226,18 +239,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/mail"
-                        android:layout_width="0dp"
+                        android:layout_width="16dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="이메일"
-                        android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
 
                     <TextView
                         android:id="@+id/inp_email"
@@ -245,14 +257,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="이메일"
-                        android:textSize="10pt"/>
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"
+                        android:textSize="10pt" />
 
                     <ImageView
                         android:id="@+id/send_email"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/icon_email"
+                        android:background="@drawable/baseline_email_white_18dp"
                         android:layout_marginLeft="15dp" />
 
                 </LinearLayout>
@@ -261,7 +275,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/fax"
@@ -271,8 +285,7 @@
                         android:gravity="center"
                         android:text="팩스번호"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_fnumber"
@@ -280,7 +293,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="팩스번호"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -288,7 +303,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:id="@+id/address"
@@ -298,8 +313,7 @@
                         android:gravity="center"
                         android:text="주소"
                         android:textSize="10pt"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/inp_address"
@@ -307,7 +321,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="주소"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:textColor="#AEAEAE"
+                        android:textColorHint="#AEAEAE"/>
 
                 </LinearLayout>
 
@@ -341,45 +357,60 @@
                     android:id="@+id/map"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
                     class="com.google.android.gms.maps.MapFragment"/>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
 
-                <Button
-                    android:id="@+id/btn_modify"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="수정"
-                    android:textSize="24dp"/>
-
-                <Button
-                    android:id="@+id/btn_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="삭제"
-                    android:textSize="24dp" />
-
-                <Button
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="취소"
-                    android:textSize="24dp"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:background="#2B2B2B">
+
+            <Button
+                android:id="@+id/btn_modify"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="수정"
+                android:textSize="24dp"
+                android:textColor="#ffffff"
+                android:layout_margin="5dp"
+                android:background="@drawable/custon_button_ver_9"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="삭제"
+                android:textSize="24dp"
+                android:textColor="#ffffff"
+                android:layout_margin="5dp"
+                android:background="@drawable/custon_button_ver_9" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="취소"
+                android:textSize="24dp"
+                android:textColor="#ffffff"
+                android:layout_margin="5dp"
+                android:background="@drawable/custon_button_ver_9"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
