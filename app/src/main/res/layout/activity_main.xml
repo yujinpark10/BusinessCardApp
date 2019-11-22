@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="7dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/icon"
                 android:scaleType="fitXY" />
 
@@ -60,25 +60,25 @@
                 android:id="@+id/img_trash1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:visibility="invisible"/>
             <ImageView
                 android:id="@+id/img_trash2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:visibility="invisible"/>
             <ImageView
                 android:id="@+id/img_trash3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:visibility="invisible"/>
             <ImageView
                 android:id="@+id/img_trash4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:visibility="invisible"/>
 
             <ImageView
@@ -86,7 +86,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/baseline_search_white_48dp"/>
 
             <ImageView
@@ -94,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/main_setting" />
 
         </LinearLayout>
