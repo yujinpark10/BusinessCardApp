@@ -2,30 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#2B2B2B">
 
     <TextView
         android:id="@+id/QRtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="당신의 QR code입니다."
-        android:textSize="25dp"/>
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"/>
 
     <ImageView
         android:id="@+id/QRimage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/QRscanner"
-        android:layout_width="237dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="상대방 QR코드 스캔하기" />
+        android:text="    상대방 QR코드 스캔하기    "
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="5dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/custon_button_ver_9"/>
 
     <Button
         android:id="@+id/go_back2"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="나가기" />
+        android:text="나가기"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/custon_button_ver_9"/>
 
 </LinearLayout>

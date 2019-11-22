@@ -340,7 +340,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="mapText"
-                    android:textColor="#FF0000"
+                    android:textColor="#FFFFFF"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:textSize="20dp"/>

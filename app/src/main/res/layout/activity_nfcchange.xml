@@ -2,19 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#2B2B2B">
 
     <TextView
         android:id="@+id/Text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="교환할 디바이스와 접촉하여 주세요. 교환이 끝나면 나가기를 해주세요."
-        android:textSize="25dp"/>
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"/>
 
     <Button
         android:id="@+id/go_back"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="나가기" />
+        android:text="나가기"
+        android:textSize="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/custon_button_ver_9"/>
 
 </LinearLayout>
