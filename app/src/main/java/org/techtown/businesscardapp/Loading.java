@@ -85,7 +85,7 @@ public class Loading extends AppCompatActivity {
                                         RequestQueue queue = Volley.newRequestQueue(Loading.this);
                                         queue.add(loginRequest);
                                     }
-                                }, 0);
+                                }, 1000);
         }
 
         // 세션에 값이 없을 경우
@@ -98,7 +98,7 @@ public class Loading extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
-                }, 1500);
+                }, 1000);
 
              }
         }
