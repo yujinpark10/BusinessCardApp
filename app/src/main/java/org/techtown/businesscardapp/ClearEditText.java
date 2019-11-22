@@ -69,7 +69,7 @@ public class ClearEditText extends AppCompatEditText implements TextWatcher, Vie
     @Override
     public boolean onTouch(final View view, final MotionEvent motionEvent) {
         final int x = (int) motionEvent.getX();
-        if(clearDrawable.isVisible() && x > getWidth() - getPaddingRight() - clearDrawable.getIntrinsicWidth()) {
+        if(clearDrawable.isVisible() && x > getWidth() - getPaddingRight() - 50) {
             if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 setError(null);
                 setText(null);

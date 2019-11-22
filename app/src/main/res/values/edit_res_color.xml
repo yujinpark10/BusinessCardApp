@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="EditTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorAccent">#7E7E7E</item>
-        <item name="colorControlNormal">#7E7E7E</item>
+        <item name="colorAccent">#AEAEAE</item>
+        <item name="colorControlNormal">#AEAEAE</item>
     </style>
 </resources>

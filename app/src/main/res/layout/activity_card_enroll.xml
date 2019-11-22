@@ -94,7 +94,8 @@
                             android:inputType="text"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE"/>
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -127,7 +128,8 @@
                             android:inputType="text"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE" />
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -160,7 +162,8 @@
                             android:inputType="text"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE"/>
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -193,7 +196,8 @@
                             android:inputType="text"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE" />
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -226,7 +230,8 @@
                             android:inputType="phone"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE" />
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -259,7 +264,8 @@
                             android:inputType="phone"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE"/>
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -292,7 +298,8 @@
                             android:inputType="textEmailAddress"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE"/>
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -325,7 +332,8 @@
                             android:inputType="phone"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE" />
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 
@@ -358,7 +366,8 @@
                             android:inputType="text"
                             android:textSize="10pt"
                             android:textColor="#AEAEAE"
-                            android:textColorHint="#AEAEAE" />
+                            android:textColorHint="#AEAEAE"
+                            android:theme="@style/EditTheme"/>
 
                     </LinearLayout>
 

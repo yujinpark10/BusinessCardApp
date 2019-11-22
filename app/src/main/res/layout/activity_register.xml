@@ -36,6 +36,7 @@
                 android:layout_weight="6"
                 android:hint="아이디"
                 android:inputType="text"
+                android:imeOptions="actionNext"
                 android:layout_marginRight="10dp"
                 android:maxLength="20"
                 android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTVUWXYZ,abcdefghijklmnopqrstuvwxyz"/>
@@ -76,6 +77,7 @@
                 android:layout_weight="9"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
+                android:imeOptions="actionNext"
                 android:layout_marginRight="10dp"
                 android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTVUWXYZ,abcdefghijklmnopqrstuvwxyz"/>
 
@@ -105,6 +107,7 @@
                 android:layout_weight="9"
                 android:hint="비밀번호 확인"
                 android:inputType="textPassword"
+                android:imeOptions="actionNext"
                 android:layout_marginRight="10dp"
                 android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTVUWXYZ,abcdefghijklmnopqrstuvwxyz"/>
 
@@ -134,7 +137,8 @@
                 android:layout_weight="9"
                 android:hint="이름"
                 android:layout_marginRight="10dp"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -202,7 +206,8 @@
                 android:layout_weight="9"
                 android:hint="전화번호"
                 android:layout_marginRight="10dp"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:imeOptions="actionNext"/>
 
         </LinearLayout>
 
@@ -230,7 +235,8 @@
                 android:layout_weight="9"
                 android:hint="이메일"
                 android:layout_marginRight="10dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"/>
 
         </LinearLayout>
 

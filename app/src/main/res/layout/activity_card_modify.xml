@@ -86,7 +86,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -116,7 +117,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -146,7 +148,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -176,7 +179,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -206,7 +210,8 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -236,7 +241,8 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -266,7 +272,8 @@
                         android:gravity="center"
                         android:inputType="textEmailAddress"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -296,7 +303,8 @@
                         android:gravity="center"
                         android:inputType="phone"
                         android:imeOptions="actionNext"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
@@ -326,7 +334,8 @@
                         android:gravity="center"
                         android:inputType="text"
                         android:imeOptions="actionDone"
-                        android:textSize="10pt"/>
+                        android:textSize="10pt"
+                        android:theme="@style/EditTheme"/>
 
                 </LinearLayout>
 
