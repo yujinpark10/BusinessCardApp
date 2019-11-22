@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="7dp"
                 android:background="@drawable/icon"
@@ -33,7 +33,7 @@
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="10dp"
                 android:background="@drawable/baseline_keyboard_backspace_white_18dp"
@@ -114,33 +114,41 @@
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:orientation="horizontal"
-            android:background="#2B2B2B"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/kingLayout">
+            android:background="#AEAEAE">
 
-            // 메인 화면에 대표 목록
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/kingCardImage" />
+                android:orientation="horizontal"
+                android:background="#2B2B2B"
+                android:gravity="center"
+                android:id="@+id/kingLayout"
+                android:layout_margin="2dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/kingText"
-                android:text="text"
-                android:textSize="30dp"
-                android:textColor="#FFFFFF"
-                android:gravity="center"/>
+                // 메인 화면에 대표 목록
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/kingCardImage" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/kingText"
+                    android:text="text"
+                    android:textSize="30dp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
