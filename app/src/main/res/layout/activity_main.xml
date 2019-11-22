@@ -119,6 +119,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/kingLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
@@ -132,7 +133,6 @@
                 android:orientation="horizontal"
                 android:background="#2B2B2B"
                 android:gravity="center"
-                android:id="@+id/kingLayout"
                 android:layout_margin="2dp">
 
                 // 메인 화면에 대표 목록
