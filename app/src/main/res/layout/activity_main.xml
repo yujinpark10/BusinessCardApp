@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon"
+                android:background="@drawable/blackicon"
                 android:scaleType="fitXY" />
 
             <ImageView
