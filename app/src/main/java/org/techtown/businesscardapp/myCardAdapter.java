@@ -67,6 +67,8 @@ public class myCardAdapter extends BaseAdapter{
         // Data set(filteredItemList)에서 position에 위치한 데이터 참조 획득
         cardListViewItem cardListViewItem = filteredItemList.get(position);
 
+
+
         use_name = cardListViewItem.getName();
         use_address = cardListViewItem.getAddress();
         use_company = cardListViewItem.getCompany();

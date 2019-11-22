@@ -105,7 +105,17 @@ public class MainActivity extends AppCompatActivity {
         loginpassword = auto.getString("et_password", null);
 
         //nfc 장치 사용 하기전에 부름
-         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        // 검색 버튼 클릭시
+        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
+        clearSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ListViewSearch.class);
+                startActivity(intent);
+            }
+        });
 
         // 설정 버튼 클릭시
         img_setting = (ImageView)findViewById(R.id.img_setting);
@@ -228,26 +238,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 리스트뷰 검색
-        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
-        clearSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString() ;
-
-                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
-            }
-        });
+//        // 리스트뷰 검색
+//        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
+//        clearSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable edit) {
+//                String filterText = edit.toString() ;
+//
+//                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
+//            }
+//        });
 
         // 내 명함 버튼
         img_myCard = (ImageView)findViewById(R.id.img_myCard);

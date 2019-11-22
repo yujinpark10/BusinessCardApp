@@ -127,7 +127,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -160,7 +159,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -193,7 +191,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -292,7 +289,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -325,7 +321,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -358,7 +353,6 @@
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
-
                 </LinearLayout>
 
             </LinearLayout>
