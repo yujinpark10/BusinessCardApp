@@ -15,7 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:background="#AEAEAE">
 
             <ListView
                 android:id="@+id/myCardList"
@@ -25,8 +27,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="#2B2B2B"
-                android:divider="#2B2B2B"
+                android:divider="#AEAEAE"
                 android:dividerHeight="2dp"
+                android:layout_margin="2dp"
                 android:gravity="center"
                 android:choiceMode="singleChoice"/>
 

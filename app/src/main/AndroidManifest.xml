@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ListViewSearch" android:windowSoftInputMode="adjustPan"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

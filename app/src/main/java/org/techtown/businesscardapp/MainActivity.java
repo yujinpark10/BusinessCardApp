@@ -56,13 +56,12 @@ import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean checkKing;
+    private boolean checkKing, checkBack;
 
-    private LinearLayout kingLayout;
-    private ImageView img_setting;
-    private ImageView img_myCard;
-    private ImageView img_cardEnroll;
-    private ImageView img_cardChange;
+    private LinearLayout myTextLayout, yourTextLayout, kingLayout, cardLayout, buttonLayout;
+    private ImageView img_icon, img_search, img_setting, img_back, img_myCard, img_cardEnroll, img_cardChange;
+    private ImageView img_trash1, img_trash2, img_trash3, img_trash4;
+    private ClearEditText clearSearch;
     //private Button btn_cardEnroll;
     //private Button btn_cardChange;
     private ImageView kingCardImage;
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
     private int kingCardNum;
     private String kingCardName, kingCardCompay, kingCardTeam, kingCardPosition, kingCardCoNum, kingCardNumStr, kingCardE_mail, kingCardFaxNum, kingCardAddress, kingCardImageStr;
 
-
     //nfc 장치 사용 가능 확인 변수
     NfcAdapter nfcAdapter;
 
@@ -107,13 +105,48 @@ public class MainActivity extends AppCompatActivity {
         //nfc 장치 사용 하기전에 부름
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+//        // 검색 버튼 클릭시
+//        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
+//        clearSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, ListViewSearch.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        // LinearLayout 설정 위한 변수 설정
+        img_icon = (ImageView)findViewById(R.id.icon);
+        myTextLayout = (LinearLayout)findViewById(R.id.myTextLayout);
+        yourTextLayout = (LinearLayout)findViewById(R.id.yourTextLayout);
+        kingLayout = (LinearLayout)findViewById(R.id.kingLayout);
+        cardLayout = (LinearLayout)findViewById(R.id.cardLayout);
+        buttonLayout = (LinearLayout)findViewById(R.id.buttonLayout);
+        img_trash1 = (ImageView)findViewById(R.id.img_trash1);
+        img_trash2 = (ImageView)findViewById(R.id.img_trash2);
+        img_trash3 = (ImageView)findViewById(R.id.img_trash3);
+        img_trash4 = (ImageView)findViewById(R.id.img_trash4);
+
         // 검색 버튼 클릭시
-        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
-        clearSearch.setOnClickListener(new View.OnClickListener() {
+        clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
+        img_search = (ImageView)findViewById(R.id.img_search);
+        img_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ListViewSearch.class);
-                startActivity(intent);
+                checkBack = true;
+                img_icon.setVisibility(View.GONE);
+                img_search.setVisibility(View.GONE);
+                img_setting.setVisibility(View.GONE);
+                myTextLayout.setVisibility(View.GONE);
+                yourTextLayout.setVisibility(View.GONE);
+                kingLayout.setVisibility(View.GONE);
+                buttonLayout.setVisibility(View.GONE);
+                clearSearch.setVisibility(View.VISIBLE);
+                img_back.setVisibility(View.VISIBLE);
+                img_trash1.setVisibility(View.GONE);
+                img_trash2.setVisibility(View.GONE);
+                img_trash3.setVisibility(View.GONE);
+                img_trash4.setVisibility(View.GONE);
             }
         });
 
@@ -184,6 +217,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 뒤로 가기 이미지 버튼
+        img_back = (ImageView)findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkBack = false;
+                clearSearch.setText(null);
+                clearSearch.setVisibility(View.GONE);
+                img_back.setVisibility(View.GONE);
+                img_icon.setVisibility(View.VISIBLE);
+                img_search.setVisibility(View.VISIBLE);
+                img_setting.setVisibility(View.VISIBLE);
+                myTextLayout.setVisibility(View.VISIBLE);
+                yourTextLayout.setVisibility(View.VISIBLE);
+                kingLayout.setVisibility(View.VISIBLE);
+                buttonLayout.setVisibility(View.VISIBLE);
+                img_trash1.setVisibility(View.VISIBLE);
+                img_trash2.setVisibility(View.VISIBLE);
+                img_trash3.setVisibility(View.VISIBLE);
+                img_trash4.setVisibility(View.VISIBLE);
+            }
+        });
+
         //아이디값 받아오기
         String userID = loginid;
 
@@ -195,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         taskKing.execute("http://yujinpark10.dothome.co.kr/kingCard.php", userID);
 
         // 대표 명함 클릭시
-        kingLayout = (LinearLayout)findViewById(R.id.kingLayout);
         kingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,26 +293,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        // 리스트뷰 검색
-//        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
-//        clearSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable edit) {
-//                String filterText = edit.toString() ;
-//
-//                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
-//            }
-//        });
+        // 리스트뷰 검색
+        clearSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable edit) {
+                String filterText = edit.toString() ;
+
+                ((searchAdapter)cardList.getAdapter()).getFilter().filter(filterText) ;
+            }
+        });
 
         // 내 명함 버튼
         img_myCard = (ImageView)findViewById(R.id.img_myCard);
@@ -798,11 +852,30 @@ public class MainActivity extends AppCompatActivity {
     private long time= 0;
     @Override
     public void onBackPressed(){
-        if(System.currentTimeMillis()-time>=2000){
-            time=System.currentTimeMillis();
-            Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
-        }else if(System.currentTimeMillis()-time<2000){
-            ActivityCompat.finishAffinity(this);
+        if(checkBack){
+            checkBack = false;
+            clearSearch.setText(null);
+            clearSearch.setVisibility(View.GONE);
+            img_back.setVisibility(View.GONE);
+            img_icon.setVisibility(View.VISIBLE);
+            img_search.setVisibility(View.VISIBLE);
+            img_setting.setVisibility(View.VISIBLE);
+            myTextLayout.setVisibility(View.VISIBLE);
+            yourTextLayout.setVisibility(View.VISIBLE);
+            kingLayout.setVisibility(View.VISIBLE);
+            buttonLayout.setVisibility(View.VISIBLE);
+            img_trash1.setVisibility(View.VISIBLE);
+            img_trash2.setVisibility(View.VISIBLE);
+            img_trash3.setVisibility(View.VISIBLE);
+            img_trash4.setVisibility(View.VISIBLE);
+        } else
+        {
+            if(System.currentTimeMillis()-time>=2000){
+                time=System.currentTimeMillis();
+                Toast.makeText(getApplicationContext(),"뒤로 버튼을 한번 더 누르면 종료합니다.",Toast.LENGTH_SHORT).show();
+            }else if(System.currentTimeMillis()-time<2000){
+                ActivityCompat.finishAffinity(this);
+            }
         }
     }
 }
