@@ -19,23 +19,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ListViewSearch" android:windowSoftInputMode="adjustPan"></activity>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="org.techtown.cam.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
+            <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="org.techtown.cam.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+                <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+            </provider>
+
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyBpmA6VnXlaHE-_XQotg54Hm0a1KCzdVD4" />
+            <meta-data
+                android:name="android.nfc.disable_beam_default"
+                android:value="true" />
 
-        <activity android:name=".MemberModifyActivity" />
-        <activity android:name=".CardModifyActivity" />
-        <activity android:name=".KingCardActivity" />
-        <activity android:name=".myCardListActivity" />
-        <activity android:name=".CardClicked" />
         <activity android:name=".Loading">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,24 +44,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CardEnrollActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".RegisterActivity" />
+
+        <activity android:name=".ListViewSearch" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".MemberModifyActivity" android:windowSoftInputMode="stateHidden|adjustResize"  />
+        <activity android:name=".CardModifyActivity" />
+        <activity android:name=".KingCardActivity" />
+        <activity android:name=".myCardListActivity" />
+        <activity android:name=".CardClicked" />
+        <activity android:name=".CardEnrollActivity" android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".RegisterActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".nfcChangePage" />
         <activity android:name=".QRchange_page" />
         <activity android:name=".ImageChangeTest" />
-        <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".MainActivity" android:windowSoftInputMode="adjustPan" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBpmA6VnXlaHE-_XQotg54Hm0a1KCzdVD4" />
-        <meta-data
-            android:name="android.nfc.disable_beam_default"
-            android:value="true" />
+
     </application>
 
 </manifest>
