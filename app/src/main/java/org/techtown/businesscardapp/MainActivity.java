@@ -638,8 +638,24 @@ public class MainActivity extends AppCompatActivity {
         newCanvas.drawText(kingCardNumStr,1830,rectText.height()+370,paintText5);
         paintText6.getTextBounds(kingCardCoNum,0,kingCardCoNum.length(),rectText);
         newCanvas.drawText(kingCardCoNum,1830,rectText.height()+600,paintText6);
-        paintText7.getTextBounds(kingCardE_mail,0,kingCardE_mail.length(),rectText);
-        newCanvas.drawText(kingCardE_mail,1830,rectText.height()+830,paintText7);
+        int a = kingCardE_mail.indexOf("@");
+        if(a != -1 && kingCardE_mail.length()>26)
+        {
+            Paint paintText8 = setTextsize(55);
+            String use_email2;
+            String use_email3;
+            use_email3 = kingCardE_mail.substring(0,a);
+            paintText7.getTextBounds(use_email3,0,use_email3.length(),rectText);
+            newCanvas.drawText(use_email3,1830,rectText.height()+830,paintText7);
+            use_email2 = kingCardE_mail.substring(a);
+            paintText8.getTextBounds(use_email2,0,use_email2.length(),rectText);
+            newCanvas.drawText(use_email2,2030,rectText.height()+980,paintText8);
+        }
+        else
+        {
+            paintText7.getTextBounds(kingCardE_mail,0,kingCardE_mail.length(),rectText);
+            newCanvas.drawText(kingCardE_mail,1830,rectText.height()+830,paintText7);
+        }
 
         return newBitmap;
     }

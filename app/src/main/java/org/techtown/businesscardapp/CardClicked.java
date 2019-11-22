@@ -268,8 +268,25 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             newCanvas.drawText(use_pnumber,1830,rectText.height()+370,paintText5);
             paintText6.getTextBounds(use_conumber,0,use_conumber.length(),rectText);
             newCanvas.drawText(use_conumber,1830,rectText.height()+600,paintText6);
-            paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
-            newCanvas.drawText(use_email,1830,rectText.height()+830,paintText7);
+            //이메일 길이가 길면 @ 기준으로 줄 바꿈
+            int a = use_email.indexOf("@");
+            if(a != -1 && use_email.length()>26)
+            {
+                Paint paintText8 = setTextsize(55);
+                String use_email2;
+                String use_email3;
+                use_email3 = use_email.substring(0,a);
+                paintText7.getTextBounds(use_email3,0,use_email3.length(),rectText);
+                newCanvas.drawText(use_email3,1830,rectText.height()+830,paintText7);
+                use_email2 = use_email.substring(a);
+                paintText8.getTextBounds(use_email2,0,use_email2.length(),rectText);
+                newCanvas.drawText(use_email2,2030,rectText.height()+980,paintText8);
+            }
+            else
+            {
+                paintText7.getTextBounds(use_email,0,use_email.length(),rectText);
+                newCanvas.drawText(use_email,1830,rectText.height()+830,paintText7);
+            }
 
         return newBitmap;
     }
