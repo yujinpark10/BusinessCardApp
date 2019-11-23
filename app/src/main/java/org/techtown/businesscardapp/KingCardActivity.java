@@ -3,6 +3,7 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,15 +102,22 @@ public class KingCardActivity extends AppCompatActivity {
     private class GetData extends AsyncTask<String, Void, String> {
         String errorString = null;
 
+        ProgressDialog dialog = new ProgressDialog(KingCardActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            dialog.cancel();
 
             if (result == null){
 

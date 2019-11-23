@@ -202,7 +202,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
-                                finish();
+                                //finish();
                             } else {//카드 등록 실패한경우
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
                                 dialog = builder.setMessage("명함 등록에 실패했습니다.")

@@ -10,6 +10,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -225,7 +226,7 @@ public class CardModifyActivity extends AppCompatActivity {
                                         .setPositiveButton("확인", null)
                                         .create();
                                 dialog.show();
-                                finish();
+                                //finish();
                             } else {//카드 등록 실패한경우
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CardModifyActivity.this);
                                 dialog = builder.setMessage("명함 수정에 실패했습니다.")
@@ -247,7 +248,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 intent.putExtra("cardNum", cardNum);
                 intent.putExtra("address", address);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -264,14 +264,24 @@ public class CardModifyActivity extends AppCompatActivity {
     // 내 명함 리스트뷰
     private class GetData extends AsyncTask<String, Void, String> {
         String errorString = null;
+
+        ProgressDialog dialog = new ProgressDialog(CardModifyActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            dialog.cancel();
+
             if (result == null){
             }
             else {

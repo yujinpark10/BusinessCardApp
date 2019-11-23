@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -453,15 +454,22 @@ public class MainActivity extends AppCompatActivity {
     private class GetKing extends AsyncTask<String, Void, String>{
         String errorString = null;
 
+        ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            dialog.cancel();
+
 
             if (result == null){
 
@@ -673,15 +681,22 @@ public class MainActivity extends AppCompatActivity {
     private class GetData extends AsyncTask<String, Void, String>{
         String errorString = null;
 
+        ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            dialog.cancel();
 
             if (result == null){
 
