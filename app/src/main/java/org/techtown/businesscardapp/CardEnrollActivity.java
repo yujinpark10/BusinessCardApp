@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -56,14 +57,15 @@ public class CardEnrollActivity extends AppCompatActivity {
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
     private ImageView imageView;
+    private Uri photoUri;
 
     //카메라 변수 설정
-    private static final int CAMERA_CODE = 10;
-    private static final int GALLERY_CODE = 20;
-    private static final int IMAGEDELETE_CODE = 30;
+    private static final int GALLERY_CROP_CODE = 10,
+                             CAMERA_CROP_CODE = 20,
+                             CAMERA_CROP_VIEW_CODE = 30,
+                             GALLERY_CROP_VIEW_CODE = 40;
     private String mCurrentPhotoPath;
     private String cardImage = "null";
-
     private boolean checkImage;
     private TextView imageText;
 
@@ -97,8 +99,6 @@ public class CardEnrollActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.card);
         imageText = (TextView)findViewById(R.id.imageText);
 
-
-
         //다이얼 로그 버튼 클릭
         ImageView btn_dialog = (ImageView)findViewById(R.id.getImage);
         btn_dialog.setOnClickListener(new View.OnClickListener() {
@@ -107,46 +107,6 @@ public class CardEnrollActivity extends AppCompatActivity {
                 ShowimageDialog();
             }
         });
-//
-//        //카메라 버튼 클릭
-//        Button button = (Button) findViewById(R.id.camera);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                boolean camera = ContextCompat.checkSelfPermission
-//                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-//                boolean write = ContextCompat.checkSelfPermission
-//                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-//                if (camera && write) {
-//                    //사진찍은 인텐트 코드 넣기
-//                    takePicture();
-//                } else {
-//                    Toast.makeText(CardEnrollActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        //갤러리 버튼 클릭
-//        Button button1 = (Button)findViewById(R.id.gallery);
-//        button1.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(intent,GALLERY_CODE);
-//                }
-//        });
-//
-//        //이미지 삭체 버튼 클릭
-//        Button button3 = (Button)findViewById(R.id.imagedelete);
-//        button3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ImageView imageView = (ImageView)findViewById(R.id.card);
-//                cardImage = "null";
-//                imageView.setImageResource(android.R.color.transparent);
-//            }
-//        });
-
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -167,78 +127,75 @@ public class CardEnrollActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //EditText에 현재 입력되어있는 값을 get 해온다.
-                String name = et_name.getText().toString();
-                String company = et_company.getText().toString();
-                String team = et_team.getText().toString();
-                String position = et_position.getText().toString();
-                String coNum = et_conumber.getText().toString();
-                String num = et_pnumber.getText().toString();
-                String e_mail = et_email.getText().toString();
-                String faxNum = et_fnumber.getText().toString();
-                String address = et_address.getText().toString();
-                String memo = et_memo.getText().toString();
+        //EditText에 현재 입력되어있는 값을 get 해온다.
+        String name = et_name.getText().toString();
+        String company = et_company.getText().toString();
+        String team = et_team.getText().toString();
+        String position = et_position.getText().toString();
+        String coNum = et_conumber.getText().toString();
+        String num = et_pnumber.getText().toString();
+        String e_mail = et_email.getText().toString();
+        String faxNum = et_fnumber.getText().toString();
+        String address = et_address.getText().toString();
+        String memo = et_memo.getText().toString();
 
-                //빈칸 없이 입력 확인
-                if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-                    dialog = builder.setMessage("빈칸없이 입력해주세요.")
-                            .setNegativeButton("확인", null)
-                            .create();
-                    dialog.show();
-                    return;
-                }
-
-                //카드 등록 시작
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success) {//카드등록 성공한 경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-                                dialog = builder.setMessage("명함 등록에 성공했습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create();
-                                dialog.show();
-                                //finish();
-                            } else {//카드 등록 실패한경우
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-                                dialog = builder.setMessage("명함 등록에 실패했습니다.")
-                                        .setPositiveButton("확인", null)
-                                        .create();
-                                dialog.show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        //빈칸 없이 입력 확인
+        if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+            dialog = builder.setMessage("빈칸없이 입력해주세요.")
+                    .setNegativeButton("확인", null)
+                    .create();
+            dialog.show();
+            return;
+        }
+        //카드 등록 시작
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean success = jsonObject.getBoolean("success");
+                    if (success) {//카드등록 성공한 경우
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                        dialog = builder.setMessage("명함 등록에 성공했습니다.")
+                                .setPositiveButton("확인", null)
+                                .create();
+                        dialog.show();
+                        //finish();
+                    } else {//카드 등록 실패한경우
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                        dialog = builder.setMessage("명함 등록에 실패했습니다.")
+                                .setPositiveButton("확인", null)
+                                .create();
+                        dialog.show();
                     }
-                };
-                //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, memo, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
-                queue.add(cardEnroll);
-
-                if(mine1 == 1)
-                {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
+        CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, memo, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
+        queue.add(cardEnroll);
+        if(mine1 == 1)
+        {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                         @Override
-                        public void run() {
-                            Intent intent = new Intent(CardEnrollActivity.this, myCardListActivity.class);
-                            startActivity(intent);
-                            finish();
+                        public void run() { Intent intent = new Intent(CardEnrollActivity.this, myCardListActivity.class);
+                        startActivity(intent);
+                        finish();
                         }
-                    }, 1500);
-                } else{
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
+            }, 1500);
+         } else{
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                      Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                      startActivity(intent);
+                      finish();
                         }
                     }, 1500);
                 }
@@ -309,7 +266,7 @@ public class CardEnrollActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,GALLERY_CODE);
+                startActivityForResult(intent,GALLERY_CROP_CODE);
                 Image_Dialog.cancel();
             }
         });
@@ -351,11 +308,10 @@ public class CardEnrollActivity extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             File photoFile = createImageFile();
-            Uri photoUri = FileProvider.getUriForFile(this, "org.techtown.cam.fileprovider", photoFile);
+            photoUri = FileProvider.getUriForFile(this, "org.techtown.cam.fileprovider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            startActivityForResult(intent, CAMERA_CODE);
+            startActivityForResult(intent, CAMERA_CROP_CODE);
         } catch (IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -380,21 +336,144 @@ public class CardEnrollActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+            //사진 가져 온거 크롭
+            if (requestCode ==  CAMERA_CROP_CODE && resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK) {
+                //크롭 권한추가
+                this.grantUriPermission("com.android.camera", photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
+                //이미지 크롭
+                intent.setDataAndType(photoUri, "image/*");// crop한 이미지를 저장할때 200x200 크기로 저장
+                intent.putExtra("aspectX", 5); // crop 박스의 x축 비율
+                intent.putExtra("aspectY", 9); // crop 박스의 y축 비율
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+                //이미지 뷰 이동
+                startActivityForResult(intent, CAMERA_CROP_VIEW_CODE);
+
+            }
+
+            //갤러리
+            else if (requestCode ==  GALLERY_CROP_CODE && resultCode == Activity.RESULT_OK) {
+                Uri source = data.getData();
+
+                //크롭 권한추가
+                this.grantUriPermission("com.android.camera", source, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                //이미지 크롭하기
+                intent.setDataAndType(source, "image/*");// crop한 이미지를 저장할때 200x200 크기로 저장
+                intent.putExtra("aspectX", 5); // crop 박스의 x축 비율
+                intent.putExtra("aspectY", 9); // crop 박스의 y축 비율
+                intent.putExtra("scale", true);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, source);
+
+                startActivityForResult(intent, GALLERY_CROP_VIEW_CODE);
+
+            }
+
+            //카메라 크롭 이미지 띄워주기
+            else if(requestCode == CAMERA_CROP_VIEW_CODE &&resultCode == Activity.RESULT_OK) {
+
+                //이미지 체킹
                 checkImage = true;
-
-                // 텍스트 or 이미지 뷰 선택
                 imageText.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
 
-                Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-                imageView.setImageBitmap(bitmap1);
+                //uri to bitmap
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                //비율 설정
-                int width = bitmap1.getWidth();
-                int height = bitmap1.getHeight();
+                //비트맵 좌90도 회전
+                int width1 = bitmap.getWidth();
+                int height1 = bitmap.getHeight();
+                Matrix matrix = new Matrix();
+                matrix.postRotate(-90);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, width1, height1, matrix, true);
+
+                //이미지 띄우기
+                imageView.setImageBitmap(bitmap);
+
+                //DB 올릴 이미지 리사이징
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+                int newWidth = width;
+                int newHeight = height;
+                float rate = 0.0f;
+                int maxResolution = 700;
+                if (width > height) {
+                    if (maxResolution < width) {
+                        rate = maxResolution / (float) width;
+                        newHeight = (int) (height * rate);
+                        newWidth = maxResolution;
+                    }
+                } else {
+                    if (maxResolution < height) {
+                        rate = maxResolution / (float) height;
+                        newWidth = (int) (width * rate);
+                        newHeight = maxResolution;
+                    }
+                }
+                //리사이징 이미지 저장
+                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+
+                //비트맵 -> 바이트 배열
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String bitmap1 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+                try {
+                    //DB올릴 변수에 저장
+                    cardImage = URLEncoder.encode(bitmap1, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            //갤러리 크롭 이미지 띄워주기
+            else if(requestCode == GALLERY_CROP_VIEW_CODE && resultCode == Activity.RESULT_OK){
+
+                checkImage = true;
+                if (checkImage) {
+                    imageText.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageText.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.GONE);
+                }
+
+                Uri source = data.getData();
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), source);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                //비트맵 좌90도 회전
+                int width1 = bitmap.getWidth();
+                int height1 = bitmap.getHeight();
+                Matrix matrix = new Matrix();
+                matrix.postRotate(-90);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, width1, height1, matrix, true);
+
+                //이미지 띄우기
+                imageView.setImageBitmap(bitmap);
+
+                //리사이징
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
                 int newWidth = width;
                 int newHeight = height;
                 float rate = 0.0f;
@@ -413,78 +492,18 @@ public class CardEnrollActivity extends AppCompatActivity {
                         newHeight = maxResolution;
                     }
                 }
-                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap1, newWidth, newHeight, true);
+                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
 
                 //비트맵 -> 바이트 배열
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+                String bitmap1 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
                 try {
-                    cardImage = URLEncoder.encode(bitmap2, "utf-8");
+                    cardImage = URLEncoder.encode(bitmap1, "utf-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == GALLERY_CODE) {
-                if(data == null) {
-                    return;
-                }
-                checkImage = true;
-
-                // 텍스트 or 이미지 뷰 선택
-                if (checkImage) {
-                    imageText.setVisibility(View.GONE);
-                    imageView.setVisibility(View.VISIBLE);
-                } else {
-                    imageText.setVisibility(View.VISIBLE);
-//                imageText.setText("사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요.");
-                    imageView.setVisibility(View.GONE);
-                }
-
-                Uri source = data.getData();
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                    imageView.setImageBitmap(bitmap);
-
-                    //비율 설정
-                    int width = bitmap.getWidth();
-                    int height = bitmap.getHeight();
-                    int newWidth = width;
-                    int newHeight = height;
-                    float rate = 0.0f;
-                    int maxResolution = 700;
-
-                    if (width > height) {
-                        if (maxResolution < width) {
-                            rate = maxResolution / (float) width;
-                            newHeight = (int) (height * rate);
-                            newWidth = maxResolution;
-                        }
-                    } else {
-                        if (maxResolution < height) {
-                            rate = maxResolution / (float) height;
-                            newWidth = (int) (width * rate);
-                            newHeight = maxResolution;
-                        }
-                    }
-                    Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
-
-                    //비트맵 -> 바이트 배열
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                    String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
-                    try {
-                        cardImage = URLEncoder.encode(bitmap2, "utf-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } else {
-
             }
-
     }
 }

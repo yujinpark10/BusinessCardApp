@@ -214,8 +214,8 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 intent.putExtra("cardNum", cardNum);
                 intent.putExtra("address", address);
                 intent.putExtra("mine1",mine1);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
             }
         });
 
@@ -234,15 +234,16 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 if(mine1 == 0){
+                    finish();
                     Intent intent = new Intent(CardClicked.this,MainActivity.class);
                     startActivity(intent);
-                    finish();
                 }
                 else
                 {
+                    finish();
                     Intent intent = new Intent(CardClicked.this,myCardListActivity.class);
                     startActivity(intent);
-                    finish();
+
                 }
             }
         });
@@ -253,15 +254,15 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     public void onBackPressed() {
         super.onBackPressed();
         if(mine1 == 0){
+            finish();
             Intent intent = new Intent(CardClicked.this,MainActivity.class);
             startActivity(intent);
-            finish();
         }
         else
         {
+            finish();
             Intent intent = new Intent(CardClicked.this,myCardListActivity.class);
             startActivity(intent);
-            finish();
         }
     }
 
