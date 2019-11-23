@@ -64,7 +64,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private boolean checkimage;
 
     private String use_company, use_conumber, use_pnumber, use_email, use_address, use_name, use_position;
-    private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address;
+    private TextView inp_name, inp_company, inp_team, inp_position, inp_conumber, inp_pnumber, inp_email, inp_fnumber, inp_address, inp_memo;
     private Button btn_modify, btn_delete, btn_cancel;
     private ImageView call_conumber, call_pnumber, message_pnumber, send_email,cardview;
 
@@ -87,6 +87,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
     private static final String TAG_CARDIMAGE="cardimage";
+    private static final String TAG_MEMO="memo";
     String mJsonString;
 
     private String mapResult;
@@ -109,6 +110,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         inp_email = (TextView)findViewById(R.id.inp_email);
         inp_fnumber = (TextView)findViewById(R.id.inp_fnumber);
         inp_address = (TextView)findViewById(R.id.inp_address);
+        inp_memo = (TextView)findViewById(R.id.inp_memo);
 
         userID = getIntent().getStringExtra("userID");
         cardNum = getIntent().getIntExtra("cardNum", 0);
@@ -400,6 +402,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
                 String cardimage = item.getString(TAG_CARDIMAGE);
+                String memo = item.getString(TAG_MEMO);
 
                 inp_name.setText(name);
                 inp_company.setText(company);
@@ -418,6 +421,11 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 use_address=address;
                 use_name=name;
                 use_position=position;
+
+                // 메모 있나 없나 확인
+                if(!memo.equals("null")) {
+                    inp_memo.setText(memo);
+                }
 
                 // 명함 이미지
                 cardview = (ImageView)findViewById(R.id.cardview);

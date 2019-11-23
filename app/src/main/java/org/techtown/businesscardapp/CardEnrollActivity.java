@@ -52,7 +52,7 @@ import java.util.Date;
 public class CardEnrollActivity extends AppCompatActivity {
 
     private static final String TAG = "CardEnrollActivity";
-    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
+    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address, et_memo;
     private Button btn_enrollSave, btn_enrollCancel;
     private AlertDialog dialog;
     private ImageView imageView;
@@ -91,6 +91,7 @@ public class CardEnrollActivity extends AppCompatActivity {
         et_email = (EditText)findViewById(R.id.et_email);
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText) findViewById(R.id.et_address);
+        et_memo = (EditText) findViewById(R.id.et_memo);
 
         // 이미지 띄어주는 부분 선언
         imageView = (ImageView)findViewById(R.id.card);
@@ -176,6 +177,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                 String e_mail = et_email.getText().toString();
                 String faxNum = et_fnumber.getText().toString();
                 String address = et_address.getText().toString();
+                String memo = et_memo.getText().toString();
 
                 //빈칸 없이 입력 확인
                 if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
@@ -214,7 +216,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, responseListener);
+                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, memo, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
                 queue.add(cardEnroll);
 

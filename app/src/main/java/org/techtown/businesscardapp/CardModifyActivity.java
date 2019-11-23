@@ -71,7 +71,8 @@ public class CardModifyActivity extends AppCompatActivity {
     private static final String TAG_MINE="mine";
     private static final String TAG_KING="king";
     private static final String TAG_CARDIMAGE="cardimage";
-    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address;
+    private static final String TAG_MEMO="memo";
+    private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address, et_memo;
     private Button btn_modifySave, btn_modifyCancel;
     private AlertDialog dialog;
     String mJsonString;
@@ -112,6 +113,7 @@ public class CardModifyActivity extends AppCompatActivity {
         et_fnumber = (EditText)findViewById(R.id.et_fnumber);
         et_address = (EditText)findViewById(R.id.et_address);
         imageText = (TextView) findViewById(R.id.imageText);
+        et_memo = (EditText) findViewById(R.id.et_memo);
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -198,6 +200,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 String e_mail = et_email.getText().toString();
                 String faxNum = et_fnumber.getText().toString();
                 String address = et_address.getText().toString();
+                String memo = et_memo.getText().toString();
 
                 //빈칸 없이 입력 확인
                 if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
@@ -236,7 +239,7 @@ public class CardModifyActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-                CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, cardImage, responseListener);
+                CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, cardImage, memo, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
                 queue.add(CardModify);
                 Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
@@ -578,6 +581,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 String faxNum = item.getString(TAG_FAXNUM);
                 String address = item.getString(TAG_ADDRESS);
                 String cardimage = item.getString(TAG_CARDIMAGE);
+                String memo = item.getString(TAG_MEMO);
 
                 ImageView imageView = (ImageView)findViewById(R.id.card2);
                 et_name.setText(name);
@@ -591,7 +595,10 @@ public class CardModifyActivity extends AppCompatActivity {
                 et_address.setText(address);
                 cardImage = cardimage;
 
-                //이미지 변환
+                // 메모 있나 없나 확인
+                if(!memo.equals("null")) {
+                    et_memo.setText(memo);
+                }
 
 
                 // 텍스트 or 이미지 뷰 선택
@@ -615,7 +622,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 }
 
             }catch (JSONException e) {
-
 
 
         }
