@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비밀번호 확인"
+        android:fontFamily="@font/baeminhanaair"
         android:gravity="center"
         android:textColor="#ffffff"
         android:background="#2B2B2B"
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:text="확인"
             android:textSize="20dp"
+            android:fontFamily="@font/baeminhanaair"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
@@ -49,6 +51,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="2.5dp"
             android:layout_marginBottom="5dp"
+            android:fontFamily="@font/baeminhanaair"
             android:layout_marginRight="5dp"
             android:textColor="#ffffff"
             android:background="@drawable/custon_button_ver_9"/>

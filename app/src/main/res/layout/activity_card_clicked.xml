@@ -58,6 +58,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="이름"
+                        android:fontFamily="@font/baeminjua"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
 
@@ -67,6 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="이름"
+                        android:fontFamily="@font/baeminhanaair"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
@@ -86,6 +88,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="회사명"
+                        android:fontFamily="@font/baeminjua"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
 
@@ -95,6 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="회사"
+                        android:fontFamily="@font/baeminhanaair"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
@@ -113,6 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:fontFamily="@font/baeminjua"
                         android:text="팀명"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
@@ -122,6 +127,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
+                        android:fontFamily="@font/baeminhanaair"
                         android:text="팀명"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
@@ -141,6 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:fontFamily="@font/baeminjua"
                         android:text="직책"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
@@ -151,6 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="직책"
+                        android:fontFamily="@font/baeminhanaair"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
@@ -168,6 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:fontFamily="@font/baeminjua"
                         android:text="회사번호"
                         android:textColor="#ffffff"
                         android:textSize="10pt" />
@@ -178,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="8"
                         android:text="회사번호"
+                        android:fontFamily="@font/baeminhanaair"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
@@ -204,6 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:fontFamily="@font/baeminjua"
                         android:text="전화번호"
                         android:textColor="#ffffff"
                         android:textSize="10pt" />
@@ -213,6 +224,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="7"
+                        android:fontFamily="@font/baeminhanaair"
                         android:text="전화번호"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
@@ -248,6 +260,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="이메일"
+                        android:fontFamily="@font/baeminjua"
                         android:textColor="#ffffff"
                         android:textSize="10pt" />
 
@@ -256,6 +269,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
+                        android:fontFamily="@font/baeminhanaair"
                         android:text="이메일"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"
@@ -284,6 +298,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="팩스번호"
+                        android:fontFamily="@font/baeminjua"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
 
@@ -293,6 +308,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:text="팩스번호"
+                        android:fontFamily="@font/baeminhanaair"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
                         android:textColorHint="#AEAEAE"/>
@@ -311,6 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:fontFamily="@font/baeminjua"
                         android:text="주소"
                         android:textSize="10pt"
                         android:textColor="#ffffff"/>
@@ -320,6 +337,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
+                        android:fontFamily="@font/baeminhanaair"
                         android:text="주소"
                         android:textSize="10pt"
                         android:textColor="#AEAEAE"
@@ -340,6 +358,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="mapText"
+                    android:fontFamily="@font/baeminhanaair"
                     android:textColor="#FFFFFF"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
@@ -371,6 +390,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="메모"
+                    android:fontFamily="@font/baeminjua"
                     android:textColor="#FFFFFF"
                     android:textSize="10pt"
                     android:layout_marginLeft="20dp"
@@ -381,6 +401,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:text="입력된 메모가 없습니다."
+                    android:fontFamily="@font/baeminhanaair"
                     android:textSize="10pt"
                     android:textColor="#AEAEAE"
                     android:background="@drawable/custom_edittext"/>
@@ -405,6 +426,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="수정"
+                android:fontFamily="@font/baeminjua"
                 android:textSize="24dp"
                 android:textColor="#ffffff"
                 android:layout_margin="5dp"
@@ -415,6 +437,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/baeminjua"
                 android:text="삭제"
                 android:textSize="24dp"
                 android:textColor="#ffffff"
@@ -428,6 +451,7 @@
                 android:layout_weight="1"
                 android:text="취소"
                 android:textSize="24dp"
+                android:fontFamily="@font/baeminjua"
                 android:textColor="#ffffff"
                 android:layout_margin="5dp"
                 android:background="@drawable/custon_button_ver_9"/>

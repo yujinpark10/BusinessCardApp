@@ -113,6 +113,7 @@
             android:text="내 명함"
             android:textSize="15dp"
             android:textColor="#AEAEAE"
+            android:fontFamily="@font/baeminhanaair"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"/>
 
@@ -146,6 +147,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/kingText"
                     android:text="text"
+                    android:fontFamily="@font/baeminhanaair"
                     android:textSize="30dp"
                     android:textColor="#FFFFFF"
                     android:gravity="center"/>
@@ -165,8 +167,11 @@
                 android:layout_height="wrap_content"
                 android:text="명함 목록"
                 android:textSize="15dp"
+                android:fontFamily="@font/baeminhanaair"
                 android:textColor="#AEAEAE"
-                android:layout_margin="5dp"/>
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginBottom="7dp"/>
 
         </LinearLayout>
 

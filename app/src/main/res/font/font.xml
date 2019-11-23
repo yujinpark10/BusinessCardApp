@@ -4,4 +4,16 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/baemindohyeon" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/ongothic"/>
+    <font
+        android:font="@font/baeminhanaair"
+        android:fontWeight="400"
+        android:fontStyle="normal"/>
+    <font
+        android:font="@font/baeminjua"
+        android:fontWeight="400"
+        android:fontStyle="normal"/>
 </font-family>
