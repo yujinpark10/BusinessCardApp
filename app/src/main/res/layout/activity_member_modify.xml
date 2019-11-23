@@ -100,7 +100,6 @@
                     android:hint="비밀번호"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
-                    android:fontFamily="@font/baeminhanaair"
                     android:textColor="#AEAEAE"
                     android:textColorHint="#AEAEAE"
                     android:theme="@style/EditTheme" />

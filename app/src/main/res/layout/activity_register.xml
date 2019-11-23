@@ -142,7 +142,6 @@
                 android:layout_weight="9"
                 android:hint="비밀번호 확인"
                 android:textColor="#AEAEAE"
-                android:fontFamily="@font/baeminhanaair"
                 android:textColorHint="#AEAEAE"
                 android:inputType="textPassword"
                 android:theme="@style/EditTheme"
