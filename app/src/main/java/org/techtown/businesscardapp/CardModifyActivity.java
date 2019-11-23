@@ -58,22 +58,22 @@ import java.util.Date;
 
 public class CardModifyActivity extends AppCompatActivity {
 
-    private static final String TAG_JSON="response";
+    private static final String TAG_JSON = "response";
     private static final String TAG_CARDNUM = "cardNum";
     private static final String TAG_NAME = "name";
-    private static final String TAG_COMPANY ="company";
-    private static final String TAG_TEAM="team";
-    private static final String TAG_POSITION="position";
-    private static final String TAG_CONUM="coNum";
-    private static final String TAG_NUM="num";
-    private static final String TAG_E_MAIL="e_mail";
-    private static final String TAG_FAXNUM="faxNum";
-    private static final String TAG_ADDRESS="address";
-    private static final String TAG_ID="userID";
-    private static final String TAG_MINE="mine";
-    private static final String TAG_KING="king";
-    private static final String TAG_CARDIMAGE="cardimage";
-    private static final String TAG_MEMO="memo";
+    private static final String TAG_COMPANY = "company";
+    private static final String TAG_TEAM = "team";
+    private static final String TAG_POSITION = "position";
+    private static final String TAG_CONUM = "coNum";
+    private static final String TAG_NUM = "num";
+    private static final String TAG_E_MAIL = "e_mail";
+    private static final String TAG_FAXNUM = "faxNum";
+    private static final String TAG_ADDRESS = "address";
+    private static final String TAG_ID = "userID";
+    private static final String TAG_MINE = "mine";
+    private static final String TAG_KING = "king";
+    private static final String TAG_CARDIMAGE = "cardimage";
+    private static final String TAG_MEMO = "memo";
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address, et_memo;
     private Button btn_modifySave, btn_modifyCancel;
     private AlertDialog dialog;
@@ -85,6 +85,10 @@ public class CardModifyActivity extends AppCompatActivity {
     private String cardImage;
     private boolean checkImage = false;
     private TextView imageText;
+    private String userID;
+    String address;
+    int mine1;
+    private int cardNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +97,10 @@ public class CardModifyActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         Intent intent = new Intent(this.getIntent());
-        final int cardNum = intent.getIntExtra("cardNum", 0);
-        final String userID = getIntent().getStringExtra("userID");
-        final String address = getIntent().getStringExtra("address");
-        final int mine1 = getIntent().getIntExtra("mine1",0);
+        cardNum = intent.getIntExtra("cardNum", 0);
+        userID = getIntent().getStringExtra("userID");
+        address = getIntent().getStringExtra("address");
+        mine1 = getIntent().getIntExtra("mine1", 0);
 
         //php 연동 회원 정보 받아오기
         GetData task = new GetData();
@@ -106,15 +110,15 @@ public class CardModifyActivity extends AppCompatActivity {
         requirePermission();
 
         //기본값 등록
-        et_name = (EditText)findViewById(R.id.et_name);
-        et_company = (EditText)findViewById(R.id.et_company);
-        et_team = (EditText)findViewById(R.id.et_team);
-        et_position = (EditText)findViewById(R.id.et_position);
-        et_conumber = (EditText)findViewById(R.id.et_conumber);
-        et_pnumber = (EditText)findViewById(R.id.et_pnumber);
-        et_email = (EditText)findViewById(R.id.et_email);
-        et_fnumber = (EditText)findViewById(R.id.et_fnumber);
-        et_address = (EditText)findViewById(R.id.et_address);
+        et_name = (EditText) findViewById(R.id.et_name);
+        et_company = (EditText) findViewById(R.id.et_company);
+        et_team = (EditText) findViewById(R.id.et_team);
+        et_position = (EditText) findViewById(R.id.et_position);
+        et_conumber = (EditText) findViewById(R.id.et_conumber);
+        et_pnumber = (EditText) findViewById(R.id.et_pnumber);
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_fnumber = (EditText) findViewById(R.id.et_fnumber);
+        et_address = (EditText) findViewById(R.id.et_address);
         imageText = (TextView) findViewById(R.id.imageText);
         et_memo = (EditText) findViewById(R.id.et_memo);
 
@@ -164,7 +168,7 @@ public class CardModifyActivity extends AppCompatActivity {
 //        });
 
         //다이얼 로그 버튼 클릭
-        ImageView img_dialog = (ImageView)findViewById(R.id.btn_addimage);
+        ImageView img_dialog = (ImageView) findViewById(R.id.btn_addimage);
         img_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +178,7 @@ public class CardModifyActivity extends AppCompatActivity {
 
 
         //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
-        btn_modifyCancel = (Button)findViewById(R.id.btn_modifyCancel);
+        btn_modifyCancel = (Button) findViewById(R.id.btn_modifyCancel);
         btn_modifyCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,14 +186,14 @@ public class CardModifyActivity extends AppCompatActivity {
                 intent.putExtra("userID", userID);
                 intent.putExtra("cardNum", cardNum);
                 intent.putExtra("address", address);
-                intent.putExtra("mine1",mine1);
-                startActivity(intent);
+                intent.putExtra("mine1", mine1);
                 finish();
+                startActivity(intent);
             }
         });
 
         //저장 버튼 클릭시
-        btn_modifySave = (Button)findViewById(R.id.btn_modifySave);
+        btn_modifySave = (Button) findViewById(R.id.btn_modifySave);
         btn_modifySave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -254,18 +258,19 @@ public class CardModifyActivity extends AppCompatActivity {
                         intent.putExtra("userID", userID);
                         intent.putExtra("cardNum", cardNum);
                         intent.putExtra("address", address);
-                        startActivity(intent);
+                        intent.putExtra("mine1",mine1);
                         finish();
+                        startActivity(intent);
                     }
-                },1000);
+                }, 1000);
             }
         });
     }
 
     @Override
-    protected  void onStop(){
+    protected void onStop() {
         super.onStop();
-        if(dialog != null){
+        if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }
@@ -292,9 +297,8 @@ public class CardModifyActivity extends AppCompatActivity {
 
             dialog.cancel();
 
-            if (result == null){
-            }
-            else {
+            if (result == null) {
+            } else {
                 mJsonString = result;
                 showResult();
             }
@@ -324,10 +328,9 @@ public class CardModifyActivity extends AppCompatActivity {
                 int responseStatusCode = httpURLConnection.getResponseCode();
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
@@ -336,7 +339,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
                 bufferedReader.close();
@@ -387,7 +390,7 @@ public class CardModifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,GALLERY_CODE);
+                startActivityForResult(intent, GALLERY_CODE);
                 Image_Dialog.cancel();
             }
         });
@@ -396,10 +399,10 @@ public class CardModifyActivity extends AppCompatActivity {
         img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
+                ImageView imageView = (ImageView) findViewById(R.id.card2);
                 checkImage = false;
                 // 텍스트 or 이미지 뷰 선택
-                if(checkImage) {
+                if (checkImage) {
                     imageText.setVisibility(View.GONE);
                     imageView.setVisibility(View.VISIBLE);
                 } else {
@@ -414,11 +417,9 @@ public class CardModifyActivity extends AppCompatActivity {
         });
 
         //취소 클릭시
-        btn_cancel.setOnClickListener(new View.OnClickListener()
-        {
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Image_Dialog.cancel();
             }
         });
@@ -457,11 +458,11 @@ public class CardModifyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK) {
 
             //이미지 비트맵
             Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-            ImageView imageView = (ImageView)findViewById(R.id.card2);
+            ImageView imageView = (ImageView) findViewById(R.id.card2);
             imageText.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(bitmap1);
@@ -474,19 +475,14 @@ public class CardModifyActivity extends AppCompatActivity {
             float rate = 0.0f;
             int maxResolution = 700;
 
-            if(width > height)
-            {
-                if(maxResolution < width)
-                {
+            if (width > height) {
+                if (maxResolution < width) {
                     rate = maxResolution / (float) width;
                     newHeight = (int) (height * rate);
                     newWidth = maxResolution;
                 }
-            }
-            else
-            {
-                if(maxResolution < height)
-                {
+            } else {
+                if (maxResolution < height) {
                     rate = maxResolution / (float) height;
                     newWidth = (int) (width * rate);
                     newHeight = maxResolution;
@@ -504,11 +500,8 @@ public class CardModifyActivity extends AppCompatActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }
-        else if(requestCode == GALLERY_CODE)
-        {
-            if(data == null)
-            {
+        } else if (requestCode == GALLERY_CODE) {
+            if (data == null) {
                 return;
             }
 
@@ -516,7 +509,7 @@ public class CardModifyActivity extends AppCompatActivity {
             Uri source = data.getData();
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
+                ImageView imageView = (ImageView) findViewById(R.id.card2);
                 imageText.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setImageBitmap(bitmap);
@@ -529,19 +522,14 @@ public class CardModifyActivity extends AppCompatActivity {
                 float rate = 0.0f;
                 int maxResolution = 700;
 
-                if(width > height)
-                {
-                    if(maxResolution < width)
-                    {
+                if (width > height) {
+                    if (maxResolution < width) {
                         rate = maxResolution / (float) width;
                         newHeight = (int) (height * rate);
                         newWidth = maxResolution;
                     }
-                }
-                else
-                {
-                    if(maxResolution < height)
-                    {
+                } else {
+                    if (maxResolution < height) {
                         rate = maxResolution / (float) height;
                         newWidth = (int) (width * rate);
                         newHeight = maxResolution;
@@ -559,7 +547,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-            }catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -582,12 +570,12 @@ public class CardModifyActivity extends AppCompatActivity {
     }
 
     // 내 명함 리스트뷰 검색결과
-    private void showResult(){
+    private void showResult() {
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
 
-            for(int i=0;i<jsonArray.length();i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
@@ -603,7 +591,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 String cardimage = item.getString(TAG_CARDIMAGE);
                 String memo = item.getString(TAG_MEMO);
 
-                ImageView imageView = (ImageView)findViewById(R.id.card2);
+                ImageView imageView = (ImageView) findViewById(R.id.card2);
                 et_name.setText(name);
                 et_company.setText(company);
                 et_team.setText(team);
@@ -616,7 +604,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 cardImage = cardimage;
 
                 // 메모 있나 없나 확인
-                if(!memo.equals("null")) {
+                if (!memo.equals("null")) {
                     et_memo.setText(memo);
                 }
 
@@ -631,20 +619,32 @@ public class CardModifyActivity extends AppCompatActivity {
                     imageView.setVisibility(View.GONE);
                 }
 
-                    try {
-                        String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
-                        byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
-                        Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray,0, decodedByteArray.length);
-                        imageView.setImageBitmap(bitmap2);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    String bitmap1 = URLDecoder.decode(cardimage, "utf-8");
+                    byte[] decodedByteArray = Base64.decode(bitmap1, Base64.NO_WRAP);
+                    Bitmap bitmap2 = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+                    imageView.setImageBitmap(bitmap2);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
+            }
 
-            }catch (JSONException e) {
+        } catch (JSONException e) {
 
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
+        intent.putExtra("userID", userID);
+        intent.putExtra("cardNum", cardNum);
+        intent.putExtra("address", address);
+        intent.putExtra("mine1", mine1);
+        finish();
+        startActivity(intent);
     }
 }
