@@ -72,6 +72,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
 
     private String userID, address;
     private int cardNum;
+    private int mine1;
 
     private static final String TAG_JSON="response";
     private static final String TAG_CARDNUM = "cardNum";
@@ -115,6 +116,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
 
         userID = getIntent().getStringExtra("userID");
         cardNum = getIntent().getIntExtra("cardNum", 0);
+        mine1 = getIntent().getIntExtra("mine1",0);
         address = getIntent().getStringExtra("address");
 
         // 카드번호 넘기기 성공
@@ -211,6 +213,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 intent.putExtra("userID", userID);
                 intent.putExtra("cardNum", cardNum);
                 intent.putExtra("address", address);
+                intent.putExtra("mine1",mine1);
                 startActivity(intent);
                 finish();
             }
@@ -230,9 +233,36 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if(mine1 == 0){
+                    Intent intent = new Intent(CardClicked.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Intent intent = new Intent(CardClicked.this,myCardListActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
+    }
+
+    //백버튼
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(mine1 == 0){
+            Intent intent = new Intent(CardClicked.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            Intent intent = new Intent(CardClicked.this,myCardListActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     // 명함을 그리는 비트맵 함수

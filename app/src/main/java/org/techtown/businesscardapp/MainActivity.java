@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, CardClicked.class);
                     intent.putExtra("userID", loginid);
                     intent.putExtra("cardNum", kingCardNum);
-                    intent.putExtra("mine1",1);
+                    intent.putExtra("mine1",0);
                     intent.putExtra("address", kingCardAddress);
                     startActivity(intent);
                 } else {

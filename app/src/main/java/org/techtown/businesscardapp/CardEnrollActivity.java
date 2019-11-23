@@ -220,15 +220,28 @@ public class CardEnrollActivity extends AppCompatActivity {
                 RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
                 queue.add(cardEnroll);
 
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                }, 1500);
+                if(mine1 == 1)
+                {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(CardEnrollActivity.this, myCardListActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }, 1500);
+                } else{
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }, 1500);
+                }
             }
         });
     }

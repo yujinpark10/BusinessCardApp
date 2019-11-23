@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Base64;
@@ -95,6 +96,7 @@ public class CardModifyActivity extends AppCompatActivity {
         final int cardNum = intent.getIntExtra("cardNum", 0);
         final String userID = getIntent().getStringExtra("userID");
         final String address = getIntent().getStringExtra("address");
+        final int mine1 = getIntent().getIntExtra("mine1",0);
 
         //php 연동 회원 정보 받아오기
         GetData task = new GetData();
@@ -180,6 +182,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 intent.putExtra("userID", userID);
                 intent.putExtra("cardNum", cardNum);
                 intent.putExtra("address", address);
+                intent.putExtra("mine1",mine1);
                 startActivity(intent);
                 finish();
             }
@@ -200,7 +203,7 @@ public class CardModifyActivity extends AppCompatActivity {
                 String num = et_pnumber.getText().toString();
                 String e_mail = et_email.getText().toString();
                 String faxNum = et_fnumber.getText().toString();
-                String address = et_address.getText().toString();
+                final String address = et_address.getText().toString();
                 String memo = et_memo.getText().toString();
 
                 //빈칸 없이 입력 확인
@@ -243,11 +246,18 @@ public class CardModifyActivity extends AppCompatActivity {
                 CardModify CardModify = new CardModify(Integer.toString(cardNum), name, company, team, position, coNum, num, e_mail, faxNum, address, userID, cardImage, memo, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(CardModifyActivity.this);
                 queue.add(CardModify);
-                Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
-                intent.putExtra("userID", userID);
-                intent.putExtra("cardNum", cardNum);
-                intent.putExtra("address", address);
-                startActivity(intent);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
+                        intent.putExtra("userID", userID);
+                        intent.putExtra("cardNum", cardNum);
+                        intent.putExtra("address", address);
+                        startActivity(intent);
+                        finish();
+                    }
+                },1000);
             }
         });
     }

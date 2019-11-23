@@ -117,6 +117,8 @@ public class myCardListActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(myCardListActivity.this,MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -239,6 +241,16 @@ public class myCardListActivity extends AppCompatActivity {
         } catch (JSONException e) {
 
         }
+
+    }
+
+    //백버튼
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+            Intent intent = new Intent(myCardListActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
 
     }
 }
