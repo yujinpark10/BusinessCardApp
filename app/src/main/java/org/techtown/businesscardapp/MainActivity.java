@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_E_MAIL="e_mail";
     private static final String TAG_FAXNUM="faxNum";
     private static final String TAG_CARDIMAGE="cardimage";
-    ListView cardList = null;
     String mJsonString;
+    ListView cardList = null;
     private static searchAdapter searchAdapter;
     String loginid, loginpassword;
     private int kingCardNum;

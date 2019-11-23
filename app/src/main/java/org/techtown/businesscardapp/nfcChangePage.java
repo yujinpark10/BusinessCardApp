@@ -1,11 +1,13 @@
 package org.techtown.businesscardapp;
 
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -18,11 +20,22 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 
 public class nfcChangePage extends AppCompatActivity {
@@ -33,6 +46,11 @@ public class nfcChangePage extends AppCompatActivity {
 
     private String userID;
     private String yourID;
+
+    private AlertDialog dialog;
+    private static final String TAG_JSON="response";
+    private static final String TAG_CHECK = "check";
+    String mJsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -104,8 +122,6 @@ public class nfcChangePage extends AppCompatActivity {
 
             String tagcontent = getTextFromNdefRecord(ndefRecord);
 
-
-
             // 여기가 읽은 메시지
             yourID = tagcontent;
 
@@ -116,9 +132,8 @@ public class nfcChangePage extends AppCompatActivity {
                 }
             };
 
-            CardExchange cardExchange = new CardExchange(userID, yourID, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(nfcChangePage.this);
-            queue.add(cardExchange);
+            GetData task = new GetData();
+            task.execute("http://yujinpark10.dothome.co.kr/cardExchange.php", userID, yourID);//아이디값 받아온거  보내기
 
         }else{
             Toast.makeText(this,"ndef 레코드를 찾을 수 없습니다.",Toast.LENGTH_SHORT).show();
@@ -185,6 +200,127 @@ public class nfcChangePage extends AppCompatActivity {
             Log.e("getTextFromNdefRecord",e.getMessage(),e);
         }
         return tagContent;
+    }
+
+    // 상대 명함 리스트뷰
+    private class GetData extends AsyncTask<String, Void, String> {
+        String errorString = null;
+
+        ProgressDialog dialog = new ProgressDialog(nfcChangePage.this);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            dialog.cancel();
+
+            if (result == null){
+
+            }
+            else {
+                mJsonString = result;
+                showResult();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String userID = params[1];
+            String yourID = params[2];
+            String postParameters = "userID=" + userID + "&" + "yourID=" + yourID;
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+    // 상대 명함 리스트뷰 검색결과
+    private void showResult(){
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String check_back = item.getString(TAG_CHECK);
+
+                if(check_back.equals("true")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(nfcChangePage.this);
+                    dialog = builder.setMessage("명함이 교환되었습니다.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(nfcChangePage.this);
+                    dialog = builder.setMessage("이미 교환 하셨습니다.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                }
+            }
+
+        } catch (JSONException e) {
+
+        }
+
     }
 
     //백버튼

@@ -1,9 +1,11 @@
 package org.techtown.businesscardapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -27,6 +30,17 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class QRchange_page extends AppCompatActivity {
 
     private TextView QRtext;
@@ -36,6 +50,11 @@ public class QRchange_page extends AppCompatActivity {
 
     private String userID;
     private String yourID;
+
+    private AlertDialog dialog;
+    private static final String TAG_JSON="response";
+    private static final String TAG_CHECK = "check";
+    String mJsonString;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,15 +135,135 @@ public class QRchange_page extends AppCompatActivity {
                     }
                 };
 
-                CardExchange cardExchange = new CardExchange(userID, yourID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(QRchange_page.this);
-                queue.add(cardExchange);
+                GetData task = new GetData();
+                task.execute("http://yujinpark10.dothome.co.kr/cardExchange.php", userID, yourID);//아이디값 받아온거  보내기
 
                 Toast.makeText(this,"아이디 스캔 완료 되었습니다.",Toast.LENGTH_LONG).show();
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    // 상대 명함 리스트뷰
+    private class GetData extends AsyncTask<String, Void, String> {
+        String errorString = null;
+
+        ProgressDialog dialog = new ProgressDialog(QRchange_page.this);
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("데이터 확인중");
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            dialog.cancel();
+
+            if (result == null){
+
+            }
+            else {
+                mJsonString = result;
+                showResult();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            String userID = params[1];
+            String yourID = params[2];
+            String postParameters = "userID=" + userID + "&" + "yourID=" + yourID;
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+    // 상대 명함 리스트뷰 검색결과
+    private void showResult(){
+        try {
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String check_back = item.getString(TAG_CHECK);
+
+                if(check_back.equals("true")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(QRchange_page.this);
+                    dialog = builder.setMessage("명함이 교환되었습니다.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(QRchange_page.this);
+                    dialog = builder.setMessage("이미 교환 하셨습니다.")
+                            .setPositiveButton("확인", null)
+                            .create();
+                    dialog.show();
+                }
+            }
+
+        } catch (JSONException e) {
+
+        }
+
     }
 
     //백버튼
