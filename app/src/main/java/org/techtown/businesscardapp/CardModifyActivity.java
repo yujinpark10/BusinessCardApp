@@ -15,6 +15,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -77,14 +79,19 @@ public class CardModifyActivity extends AppCompatActivity {
     private EditText et_name, et_company, et_team, et_position, et_conumber, et_pnumber, et_email, et_fnumber, et_address, et_memo;
     private Button btn_modifySave, btn_modifyCancel;
     private AlertDialog dialog;
+    private ImageView imageView;
+    private TextView imageText;
+    private Uri photoUri;
     String mJsonString;
 
-    private static final int CAMERA_CODE = 10;
-    private static final int GALLERY_CODE = 20;
+    //카메라 변수 설정
+    private static final int GALLERY_CROP_CODE = 10,
+            CAMERA_CROP_CODE = 20,
+            CAMERA_CROP_VIEW_CODE = 30,
+            GALLERY_CROP_VIEW_CODE = 40;
     private String mCurrentPhotoPath;
     private String cardImage;
     private boolean checkImage = false;
-    private TextView imageText;
     private String userID;
     String address;
     int mine1;
@@ -119,53 +126,16 @@ public class CardModifyActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         et_fnumber = (EditText) findViewById(R.id.et_fnumber);
         et_address = (EditText) findViewById(R.id.et_address);
-        imageText = (TextView) findViewById(R.id.imageText);
         et_memo = (EditText) findViewById(R.id.et_memo);
+
+        //이미지 띄어주는 부분 선언
+        imageView = (ImageView)findViewById(R.id.card2);
+        imageText = (TextView) findViewById(R.id.imageText);
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_pnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         et_fnumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-
-
-//        //카메라 버튼 클릭
-//        Button button = (Button) findViewById(R.id.camera2);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                boolean camera = ContextCompat.checkSelfPermission
-//                        (view.getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-//                boolean write = ContextCompat.checkSelfPermission
-//                        (view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-//                if (camera && write) {
-//                    //사진찍은 인텐트 코드 넣기
-//                    takePicture();
-//                } else {
-//                    Toast.makeText(CardModifyActivity.this, "카메라 권한 및 쓰기 권한을 주지 않았습니다.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        //갤러리 버튼 클릭
-//        Button button1 = (Button)findViewById(R.id.gallery2);
-//        button1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent,GALLERY_CODE);
-//            }
-//        });
-//
-//        //이미지 삭제 버튼 클릭
-//        Button button3 = (Button)findViewById(R.id.imagedelete2);
-//        button3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ImageView imageView = (ImageView)findViewById(R.id.card2);
-//                cardImage = "null";
-//                imageView.setImageResource(android.R.color.transparent);
-//            }
-//        });
 
         //다이얼 로그 버튼 클릭
         ImageView img_dialog = (ImageView) findViewById(R.id.btn_addimage);
@@ -175,7 +145,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 ShowimageDialog();
             }
         });
-
 
         //취소 버튼 클릭시 // 취소 확인하기 기능 추가하면 좋을듯
         btn_modifyCancel = (Button) findViewById(R.id.btn_modifyCancel);
@@ -390,7 +359,7 @@ public class CardModifyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, GALLERY_CODE);
+                startActivityForResult(intent, GALLERY_CROP_CODE);
                 Image_Dialog.cancel();
             }
         });
@@ -399,7 +368,6 @@ public class CardModifyActivity extends AppCompatActivity {
         img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView imageView = (ImageView) findViewById(R.id.card2);
                 checkImage = false;
                 // 텍스트 or 이미지 뷰 선택
                 if (checkImage) {
@@ -446,30 +414,170 @@ public class CardModifyActivity extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             File photoFile = createImageFile();
-            Uri photoUri = FileProvider.getUriForFile(this, "org.techtown.cam.fileprovider", photoFile);
+            photoUri = FileProvider.getUriForFile(this, "org.techtown.cam.fileprovider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            startActivityForResult(intent, CAMERA_CODE);
+            startActivityForResult(intent, CAMERA_CROP_CODE);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    //사진 파일 만들기
+    private File createImageFile() throws IOException {
+        // Create an image file namΩe
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CAMERA_CROP_CODE && resultCode == Activity.RESULT_OK) {
 
-            //이미지 비트맵
-            Bitmap bitmap1 = BitmapFactory.decodeFile(mCurrentPhotoPath);
-            ImageView imageView = (ImageView) findViewById(R.id.card2);
+            //크롭 권한추가
+            this.grantUriPermission("com.android.camera", photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            //이미지 크롭
+            intent.setDataAndType(photoUri, "image/*");// crop한 이미지를 저장할때 200x200 크기로 저장
+            intent.putExtra("aspectX", 5); // crop 박스의 x축 비율
+            intent.putExtra("aspectY", 9); // crop 박스의 y축 비율
+            intent.putExtra("scale", true);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+            //이미지 뷰 이동
+            startActivityForResult(intent, CAMERA_CROP_VIEW_CODE);
+
+        }
+
+        //갤러리
+        else if (requestCode ==  GALLERY_CROP_CODE && resultCode == Activity.RESULT_OK) {
+
+            Uri source = data.getData();
+
+            //크롭 권한추가
+            this.grantUriPermission("com.android.camera", source, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            //이미지 크롭하기
+            intent.setDataAndType(source, "image/*");// crop한 이미지를 저장할때 200x200 크기로 저장
+            intent.putExtra("aspectX", 5); // crop 박스의 x축 비율
+            intent.putExtra("aspectY", 9); // crop 박스의 y축 비율
+            intent.putExtra("scale", true);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, source);
+
+            startActivityForResult(intent, GALLERY_CROP_VIEW_CODE);
+            }
+
+        //카메라 크롭 이미지 띄워주기
+        else if(requestCode == CAMERA_CROP_VIEW_CODE &&resultCode == Activity.RESULT_OK) {
+
+            //이미지 체킹
+            checkImage = true;
             imageText.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageBitmap(bitmap1);
 
-            //비율 설정
-            int width = bitmap1.getWidth();
-            int height = bitmap1.getHeight();
+            //uri to bitmap
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //비트맵 좌90도 회전
+            int width1 = bitmap.getWidth();
+            int height1 = bitmap.getHeight();
+            Matrix matrix = new Matrix();
+            matrix.postRotate(-90);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, width1, height1, matrix, true);
+
+            //이미지 띄우기
+            imageView.setImageBitmap(bitmap);
+
+            //DB 올릴 이미지 리사이징
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            int newWidth = width;
+            int newHeight = height;
+            float rate = 0.0f;
+            int maxResolution = 700;
+            if (width > height) {
+                if (maxResolution < width) {
+                    rate = maxResolution / (float) width;
+                    newHeight = (int) (height * rate);
+                    newWidth = maxResolution;
+                }
+            } else {
+                if (maxResolution < height) {
+                    rate = maxResolution / (float) height;
+                    newWidth = (int) (width * rate);
+                    newHeight = maxResolution;
+                }
+            }
+            //리사이징 이미지 저장
+            Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+
+            //비트맵 -> 바이트 배열
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            String bitmap1 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+            try {
+                //DB올릴 변수에 저장
+                cardImage = URLEncoder.encode(bitmap1, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        //갤러리 크롭 이미지 띄워주기
+        else if(requestCode == GALLERY_CROP_VIEW_CODE && resultCode == Activity.RESULT_OK){
+
+            checkImage = true;
+            if (checkImage) {
+                imageText.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            } else {
+                imageText.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+            }
+
+            Uri source = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), source);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //비트맵 좌90도 회전
+            int width1 = bitmap.getWidth();
+            int height1 = bitmap.getHeight();
+            Matrix matrix = new Matrix();
+            matrix.postRotate(-90);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, width1, height1, matrix, true);
+
+            //이미지 띄우기
+            imageView.setImageBitmap(bitmap);
+
+            //리사이징
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
             int newWidth = width;
             int newHeight = height;
             float rate = 0.0f;
@@ -488,85 +596,19 @@ public class CardModifyActivity extends AppCompatActivity {
                     newHeight = maxResolution;
                 }
             }
-            Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap1, newWidth, newHeight, true);
+            Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
 
             //비트맵 -> 바이트 배열
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
-            String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
+            String bitmap1 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
             try {
-                cardImage = URLEncoder.encode(bitmap2, "utf-8");
+                cardImage = URLEncoder.encode(bitmap1, "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == GALLERY_CODE) {
-            if (data == null) {
-                return;
-            }
-
-
-            Uri source = data.getData();
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(source));
-                ImageView imageView = (ImageView) findViewById(R.id.card2);
-                imageText.setVisibility(View.GONE);
-                imageView.setVisibility(View.VISIBLE);
-                imageView.setImageBitmap(bitmap);
-
-                //비율 설정
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
-                int newWidth = width;
-                int newHeight = height;
-                float rate = 0.0f;
-                int maxResolution = 700;
-
-                if (width > height) {
-                    if (maxResolution < width) {
-                        rate = maxResolution / (float) width;
-                        newHeight = (int) (height * rate);
-                        newWidth = maxResolution;
-                    }
-                } else {
-                    if (maxResolution < height) {
-                        rate = maxResolution / (float) height;
-                        newWidth = (int) (width * rate);
-                        newHeight = maxResolution;
-                    }
-                }
-                Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
-
-                //비트맵 -> 바이트 배열
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                resizedbitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                String bitmap2 = Base64.encodeToString(imageBytes, Base64.DEFAULT);//NO_WRAP
-                try {
-                    cardImage = URLEncoder.encode(bitmap2, "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
         }
-    }
-
-    //사진 파일 만들기
-    private File createImageFile() throws IOException {
-        // Create an image file namΩe
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
     // 내 명함 리스트뷰 검색결과
@@ -591,7 +633,6 @@ public class CardModifyActivity extends AppCompatActivity {
                 String cardimage = item.getString(TAG_CARDIMAGE);
                 String memo = item.getString(TAG_MEMO);
 
-                ImageView imageView = (ImageView) findViewById(R.id.card2);
                 et_name.setText(name);
                 et_company.setText(company);
                 et_team.setText(team);

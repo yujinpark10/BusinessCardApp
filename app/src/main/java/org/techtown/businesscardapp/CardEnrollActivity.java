@@ -375,7 +375,6 @@ public class CardEnrollActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, source);
 
                 startActivityForResult(intent, GALLERY_CROP_VIEW_CODE);
-
             }
 
             //카메라 크롭 이미지 띄워주기

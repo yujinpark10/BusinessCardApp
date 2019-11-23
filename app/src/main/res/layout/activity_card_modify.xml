@@ -34,19 +34,23 @@
                     android:background="#2B2B2B">
 
                     <TextView
+                        android:id="@+id/imageText"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:gravity="center"
-                        android:id="@+id/imageText"
-                        android:text="사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요."
                         android:fontFamily="@font/baeminhanaair"
+                        android:text="사진이 없습니다.\n등록 하시려면 + 버튼을 눌러주세요."
                         android:textSize="24dp"
+                        android:visibility="visible"
                         android:textColor="#ffffff"/>
 
                     <ImageView
                         android:id="@+id/card2"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"
+                        android:textColor="#AEAEAE"/>
 
                     <ImageView
                         android:id="@+id/btn_addimage"
