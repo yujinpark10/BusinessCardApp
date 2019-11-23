@@ -471,7 +471,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 // 명함 이미지
                 cardview = (ImageView)findViewById(R.id.cardview);
 
-                if(cardimage.equals("null")){
+                if(cardimage.equals("null") || cardimage.equals(" ")){
                     Bitmap processedBitmap = ProcessingBitmap();
                     if(processedBitmap != null){
                         cardview.setImageBitmap(processedBitmap);
