@@ -64,6 +64,7 @@
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:fontFamily="@font/baeminjua"
                 android:background="@drawable/custon_button_ver_9"
                 android:text="로그인"
                 android:textSize="24dp"
@@ -75,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custon_button_ver_9"
                 android:text="회원가입"
+                android:fontFamily="@font/baeminjua"
                 android:layout_margin="15dp"
                 android:textSize="24dp"
                 android:textColor="#ffffff"/>

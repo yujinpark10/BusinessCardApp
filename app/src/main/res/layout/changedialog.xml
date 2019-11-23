@@ -10,10 +10,11 @@
             android:layout_height="wrap_content"
             android:text=" 명함 교환 "
             android:gravity="center"
+            android:fontFamily="@font/baeminjua"
             android:textColor="#ffffff"
             android:background="#2B2B2B"
             android:textSize="30dp"
-            android:layout_margin="5dp"/>
+            android:layout_margin="7dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:text="취소"
         android:textSize="20dp"
+        android:fontFamily="@font/baeminjua"
         android:layout_margin="5dp"
         android:textColor="#ffffff"
         android:background="@drawable/custon_button_ver_9"/>

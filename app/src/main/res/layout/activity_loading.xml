@@ -23,8 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BusinessCard"
+            android:fontFamily="@font/baeminjua"
             android:textSize="40dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 

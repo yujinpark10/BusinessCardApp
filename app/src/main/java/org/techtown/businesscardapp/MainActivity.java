@@ -3,12 +3,14 @@ package org.techtown.businesscardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -626,30 +628,30 @@ public class MainActivity extends AppCompatActivity {
         Canvas newCanvas = new Canvas(newBitmap);
 
         newCanvas.drawBitmap(bm1,0,0,null);
-        Paint paintText1 = setTextsize(140);
-        Paint paintText2 = setTextsize(80);
-        Paint paintText3 = setTextsize(120);
-        Paint paintText4 = setTextsize(60);
-        Paint paintText5 = setTextsize(80);
-        Paint paintText6 = setTextsize(80);
-        Paint paintText7 = setTextsize(55);
+        Paint paintText1 = setTextsize(100);
+        Paint paintText2 = setTextsize(50);
+        Paint paintText3 = setTextsize(90);
+        Paint paintText4 = setTextsize(40);
+        Paint paintText5 = setTextsize(50);
+        Paint paintText6 = setTextsize(50);
+        Paint paintText7 = setTextsize(40);
         Rect rectText = new Rect();
         paintText1.getTextBounds(kingCardName,0,kingCardName.length(),rectText);
         newCanvas.drawText(kingCardName,200,rectText.height()+200,paintText1);
         paintText2.getTextBounds(kingCardPosition,0,kingCardPosition.length(),rectText);
-        newCanvas.drawText(kingCardPosition,220,rectText.height()+600,paintText2);
+        newCanvas.drawText(kingCardPosition,220,rectText.height()+570,paintText2);
         paintText3.getTextBounds(kingCardCompay,0,kingCardCompay.length(),rectText);
         newCanvas.drawText(kingCardCompay,150,rectText.height()+1400,paintText3);
         paintText4.getTextBounds(kingCardAddress,0,kingCardAddress.length(),rectText);
-        newCanvas.drawText(kingCardAddress,100,rectText.height()+1730,paintText4);
+        newCanvas.drawText(kingCardAddress,120,rectText.height()+1730,paintText4);
         paintText5.getTextBounds(kingCardNumStr,0,kingCardNumStr.length(),rectText);
         newCanvas.drawText(kingCardNumStr,1830,rectText.height()+370,paintText5);
         paintText6.getTextBounds(kingCardCoNum,0,kingCardCoNum.length(),rectText);
         newCanvas.drawText(kingCardCoNum,1830,rectText.height()+600,paintText6);
         int a = kingCardE_mail.indexOf("@");
-        if(a != -1 && kingCardE_mail.length()>26)
+        if(a != -1 && kingCardE_mail.length()>24)
         {
-            Paint paintText8 = setTextsize(55);
+            Paint paintText8 = setTextsize(40);
             String use_email2;
             String use_email3;
             use_email3 = kingCardE_mail.substring(0,a);
@@ -673,6 +675,8 @@ public class MainActivity extends AppCompatActivity {
         paintText.setColor(Color.BLACK);
         paintText.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,textsize,getResources().getDisplayMetrics()));
         paintText.setStyle(Paint.Style.FILL);
+        paintText.setTypeface(ResourcesCompat.getFont(this,R.font.ongothic));
+
 
         return paintText;
     }

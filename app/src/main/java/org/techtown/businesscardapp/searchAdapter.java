@@ -48,10 +48,12 @@ public class searchAdapter extends BaseAdapter implements Filterable {
     private String use_pnumber;
     private String use_conumber;
     private String use_email;
+    Context context2;
 
     // listViewAdapter의 생성자
     public searchAdapter(Context context){
          resources = context.getResources();
+         context2 = context;
     }
 
 
@@ -211,21 +213,21 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         Canvas newCanvas = new Canvas(newBitmap);
 
         newCanvas.drawBitmap(bm1,0,0,null);
-        Paint paintText1 = setTextsize(140);
-        Paint paintText2 = setTextsize(80);
-        Paint paintText3 = setTextsize(120);
-        Paint paintText4 = setTextsize(60);
-        Paint paintText5 = setTextsize(80);
-        Paint paintText6 = setTextsize(80);
-        Paint paintText7 = setTextsize(55);
+        Paint paintText1 = setTextsize(100);
+        Paint paintText2 = setTextsize(50);
+        Paint paintText3 = setTextsize(90);
+        Paint paintText4 = setTextsize(40);
+        Paint paintText5 = setTextsize(50);
+        Paint paintText6 = setTextsize(50);
+        Paint paintText7 = setTextsize(40);
 
         Rect rectText = new Rect();
         paintText1.getTextBounds(use_name,0,use_name.length(),rectText);
         newCanvas.drawText(use_name,200,rectText.height()+200,paintText1);
         paintText2.getTextBounds(use_position,0,use_position.length(),rectText);
-        newCanvas.drawText(use_position,220,rectText.height()+600,paintText2);
+        newCanvas.drawText(use_position,220,rectText.height()+570,paintText2);
         paintText3.getTextBounds(use_company,0,use_company.length(),rectText);
-        newCanvas.drawText(use_company,150,rectText.height()+1400,paintText3);
+        newCanvas.drawText(use_company,120,rectText.height()+1400,paintText3);
         paintText4.getTextBounds(use_address,0,use_address.length(),rectText);
         newCanvas.drawText(use_address,100,rectText.height()+1730,paintText4);
         paintText5.getTextBounds(use_pnumber,0,use_pnumber.length(),rectText);
@@ -235,7 +237,7 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         int a = use_email.indexOf("@");
         if(a != -1 && use_email.length()>26)
         {
-            Paint paintText8 = setTextsize(55);
+            Paint paintText8 = setTextsize(40);
             String use_email2;
             String use_email3;
             use_email3 = use_email.substring(0,a);
@@ -259,6 +261,7 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         paintText.setColor(Color.BLACK);
         paintText.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,textsize,resources.getDisplayMetrics()));
         paintText.setStyle(Paint.Style.FILL);
+        paintText.setTypeface(ResourcesCompat.getFont(context2, R.font.ongothic));
 
         return paintText;
     }

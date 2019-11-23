@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="대표명함 설정"
+                android:fontFamily="@font/baeminjua"
                 android:textSize="18dp"
                 android:textColor="#ffffff"
                 android:layout_margin="5dp"
@@ -57,6 +58,7 @@
                 android:layout_weight="1"
                 android:text="명함 등록"
                 android:textSize="20dp"
+                android:fontFamily="@font/baeminjua"
                 android:textColor="#ffffff"
                 android:layout_margin="5dp"
                 android:background="@drawable/custon_button_ver_9"/>
@@ -68,6 +70,7 @@
                 android:layout_weight="1"
                 android:text="취소"
                 android:textSize="20dp"
+                android:fontFamily="@font/baeminjua"
                 android:textColor="#ffffff"
                 android:layout_margin="5dp"
                 android:background="@drawable/custon_button_ver_9"/>
