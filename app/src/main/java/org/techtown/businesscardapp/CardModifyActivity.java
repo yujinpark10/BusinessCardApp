@@ -27,9 +27,13 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +101,13 @@ public class CardModifyActivity extends AppCompatActivity {
     int mine1;
     private int cardNum;
 
+    // 우편주소 api
+    private LinearLayout address_layout;
+    private ImageView img_address;
+    private WebView daum_webView;
+    private Handler handler;
+    private boolean check_address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +142,27 @@ public class CardModifyActivity extends AppCompatActivity {
         //이미지 띄어주는 부분 선언
         imageView = (ImageView)findViewById(R.id.card2);
         imageText = (TextView) findViewById(R.id.imageText);
+
+        // 우편주소 api 부분
+        address_layout = (LinearLayout)findViewById(R.id.address_layout);
+
+        init_webView(); // WebView 초기화
+        handler = new Handler(); // 핸들러를 통한 JavaScript 이벤트 반응
+
+
+        img_address = (ImageView)findViewById(R.id.img_address);
+        img_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(check_address) {
+                    address_layout.setVisibility(View.GONE);
+                    check_address=false;
+                } else {
+                    address_layout.setVisibility(View.VISIBLE);
+                    check_address=true;
+                }
+            }
+        });
 
         // 전화번호 형식으로 변환하기
         et_conumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -677,15 +709,59 @@ public class CardModifyActivity extends AppCompatActivity {
 
     }
 
+    // 우편주소 웹뷰 설정
+    public void init_webView() {
+        // WebView 설정
+        daum_webView = (ScrollWebView) findViewById(R.id.daum_webView);
+
+        // JavaScript 허용
+        daum_webView.getSettings().setJavaScriptEnabled(true);
+
+        // JavaScript의 window.open 허용
+        daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+        // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
+        daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
+
+        // web client 를 chrome 으로 설정
+        daum_webView.setWebChromeClient(new WebChromeClient());
+
+        // webview url load. php 파일 주소
+        daum_webView.loadUrl("http://yujinpark10.dothome.co.kr/daum_address_embed.php");
+    }
+
+    // 우편주소 가져오기
+    private class AndroidBridge {
+        @JavascriptInterface
+        public void setAddress(final String arg1, final String arg2, final String arg3) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    et_address.setText(String.format("%s %s", arg2, arg3)); // String.format("(%s) %s %s", arg1, arg2, arg3) arg1 우편번호, arg2 arg3 주소
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+                    init_webView();
+
+                    address_layout.setVisibility(View.GONE);
+                    check_address=false;
+                }
+            });
+        }
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
-        intent.putExtra("userID", userID);
-        intent.putExtra("cardNum", cardNum);
-        intent.putExtra("address", address);
-        intent.putExtra("mine1", mine1);
-        finish();
-        startActivity(intent);
+        if(check_address){
+            address_layout.setVisibility(View.GONE);
+            check_address=false;
+        } else {
+            Intent intent = new Intent(CardModifyActivity.this, CardClicked.class);
+            intent.putExtra("userID", userID);
+            intent.putExtra("cardNum", cardNum);
+            intent.putExtra("address", address);
+            intent.putExtra("mine1", mine1);
+            finish();
+            startActivity(intent);
+        }
     }
 }

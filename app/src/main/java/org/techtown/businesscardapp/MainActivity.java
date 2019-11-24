@@ -100,7 +100,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        //아이디값 저장 변수
+//        // 우편주소 api 사용하기
+//        Button button = (Button)findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, DaumWebViewActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+       //아이디값 저장 변수
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         loginid = auto.getString("et_id",null);
         loginpassword = auto.getString("et_password", null);

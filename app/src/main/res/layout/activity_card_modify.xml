@@ -375,7 +375,7 @@
                             android:id="@+id/et_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="9"
+                            android:layout_weight="8"
                             android:hint="주소"
                             android:gravity="center"
                             android:inputType="text"
@@ -385,6 +385,29 @@
                             android:textColor="#AEAEAE"
                             android:textColorHint="#AEAEAE"
                             android:theme="@style/EditTheme"/>
+
+                        <ImageView
+                            android:id="@+id/img_address"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/baseline_map_white_48dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/address_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:visibility="gone">
+
+                        <org.techtown.businesscardapp.ScrollWebView
+                            android:id="@+id/daum_webView"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
 

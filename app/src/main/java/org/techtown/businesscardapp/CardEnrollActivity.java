@@ -26,9 +26,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +73,13 @@ public class CardEnrollActivity extends AppCompatActivity {
     private boolean checkImage;
     private TextView imageText;
 
+    // 우편주소 api
+    private LinearLayout address_layout;
+    private ImageView img_address;
+    private WebView daum_webView;
+    private Handler handler;
+    private boolean check_address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +110,27 @@ public class CardEnrollActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.card);
         imageText = (TextView)findViewById(R.id.imageText);
 
+        // 우편주소 api 부분
+        address_layout = (LinearLayout)findViewById(R.id.address_layout);
+
+        init_webView(); // WebView 초기화
+        handler = new Handler(); // 핸들러를 통한 JavaScript 이벤트 반응
+
+
+        img_address = (ImageView)findViewById(R.id.img_address);
+        img_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(check_address) {
+                    address_layout.setVisibility(View.GONE);
+                    check_address=false;
+                } else {
+                    address_layout.setVisibility(View.VISIBLE);
+                    check_address=true;
+                }
+            }
+        });
+
         //다이얼 로그 버튼 클릭
         ImageView btn_dialog = (ImageView)findViewById(R.id.getImage);
         btn_dialog.setOnClickListener(new View.OnClickListener() {
@@ -127,79 +159,79 @@ public class CardEnrollActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-        //EditText에 현재 입력되어있는 값을 get 해온다.
-        String name = et_name.getText().toString();
-        String company = et_company.getText().toString();
-        String team = et_team.getText().toString();
-        String position = et_position.getText().toString();
-        String coNum = et_conumber.getText().toString();
-        String num = et_pnumber.getText().toString();
-        String e_mail = et_email.getText().toString();
-        String faxNum = et_fnumber.getText().toString();
-        String address = et_address.getText().toString();
-        String memo = et_memo.getText().toString();
+                //EditText에 현재 입력되어있는 값을 get 해온다.
+                String name = et_name.getText().toString();
+                String company = et_company.getText().toString();
+                String team = et_team.getText().toString();
+                String position = et_position.getText().toString();
+                String coNum = et_conumber.getText().toString();
+                String num = et_pnumber.getText().toString();
+                String e_mail = et_email.getText().toString();
+                String faxNum = et_fnumber.getText().toString();
+                String address = et_address.getText().toString();
+                String memo = et_memo.getText().toString();
 
-        //빈칸 없이 입력 확인
-        if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-            dialog = builder.setMessage("빈칸없이 입력해주세요.")
-                    .setNegativeButton("확인", null)
-                    .create();
-            dialog.show();
-            return;
-        }
-        //카드 등록 시작
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    boolean success = jsonObject.getBoolean("success");
-                    if (success) {//카드등록 성공한 경우
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-                        dialog = builder.setMessage("명함 등록에 성공했습니다.")
-                                .setPositiveButton("확인", null)
-                                .create();
-                        dialog.show();
-                        //finish();
-                    } else {//카드 등록 실패한경우
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
-                        dialog = builder.setMessage("명함 등록에 실패했습니다.")
-                                .setPositiveButton("확인", null)
-                                .create();
-                        dialog.show();
+                //빈칸 없이 입력 확인
+                if (name.equals("") || company.equals("") || team.equals("") || position.equals("") || coNum.equals("") || num.equals("") || e_mail.equals("") || faxNum.equals("") || address.equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                    dialog = builder.setMessage("빈칸없이 입력해주세요.")
+                            .setNegativeButton("확인", null)
+                            .create();
+                    dialog.show();
+                    return;
+                }
+                //카드 등록 시작
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) {//카드등록 성공한 경우
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                                dialog = builder.setMessage("명함 등록에 성공했습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create();
+                                dialog.show();
+                                //finish();
+                            } else {//카드 등록 실패한경우
+                                AlertDialog.Builder builder = new AlertDialog.Builder(CardEnrollActivity.this);
+                                dialog = builder.setMessage("명함 등록에 실패했습니다.")
+                                        .setPositiveButton("확인", null)
+                                        .create();
+                                dialog.show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
-        CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, memo, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
-        queue.add(cardEnroll);
-        if(mine1 == 1)
-        {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() { Intent intent = new Intent(CardEnrollActivity.this, myCardListActivity.class);
-                        startActivity(intent);
-                        finish();
-                        }
-            }, 1500);
-         } else{
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                      Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
-                      startActivity(intent);
-                      finish();
-                        }
+                };
+                //서버로 volley 이용해서 요청을 함.name, company, team, position, coNum, num, e_mail, faxNum, address
+                CardEnroll cardEnroll = new CardEnroll(name, company, team, position, coNum, num, e_mail, faxNum, address, userID, mine, cardImage, memo, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(CardEnrollActivity.this);
+                queue.add(cardEnroll);
+                if(mine1 == 1)
+                {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() { Intent intent = new Intent(CardEnrollActivity.this, myCardListActivity.class);
+                                startActivity(intent);
+                                finish();
+                                }
                     }, 1500);
+                 } else{
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                              Intent intent = new Intent(CardEnrollActivity.this, MainActivity.class);
+                              startActivity(intent);
+                              finish();
+                                }
+                            }, 1500);
+                    }
                 }
-            }
         });
     }
 
@@ -504,5 +536,54 @@ public class CardEnrollActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+    }
+
+    // 우편주소 웹뷰 설정
+    public void init_webView() {
+        // WebView 설정
+        daum_webView = (ScrollWebView) findViewById(R.id.daum_webView);
+
+        // JavaScript 허용
+        daum_webView.getSettings().setJavaScriptEnabled(true);
+
+        // JavaScript의 window.open 허용
+        daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+        // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
+        daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
+
+        // web client 를 chrome 으로 설정
+        daum_webView.setWebChromeClient(new WebChromeClient());
+
+        // webview url load. php 파일 주소
+        daum_webView.loadUrl("http://yujinpark10.dothome.co.kr/daum_address_embed.php");
+    }
+
+    // 우편주소 가져오기
+    private class AndroidBridge {
+        @JavascriptInterface
+        public void setAddress(final String arg1, final String arg2, final String arg3) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    et_address.setText(String.format("%s %s", arg2, arg3)); // String.format("(%s) %s %s", arg1, arg2, arg3) arg1 우편번호, arg2 arg3 주소
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+                    init_webView();
+
+                    address_layout.setVisibility(View.GONE);
+                    check_address=false;
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(check_address){
+            address_layout.setVisibility(View.GONE);
+            check_address=false;
+        } else {
+            finish();
+        }
     }
 }

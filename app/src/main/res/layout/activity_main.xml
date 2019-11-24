@@ -237,6 +237,12 @@
                 android:scaleType="fitXY"
                 android:background="@drawable/main_change" />
 
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/button"-->
+<!--                android:text="버튼"/>-->
+
         </LinearLayout>
 
     </LinearLayout>
