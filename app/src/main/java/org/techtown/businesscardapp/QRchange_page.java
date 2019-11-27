@@ -1,12 +1,20 @@
 package org.techtown.businesscardapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,11 +44,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class QRchange_page extends AppCompatActivity {
 
@@ -56,11 +69,45 @@ public class QRchange_page extends AppCompatActivity {
     private static final String TAG_CHECK = "check";
     String mJsonString;
 
+    // 위치
+    private String provider, change_where;
+    private double longitude, latitude, altitude;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_change);
         getSupportActionBar().hide();
+
+        final LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        // 위치 정보 사용 권한 얻기
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(QRchange_page.this, new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, 0);
+        } else {
+            // 위치 정보
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            provider = location.getProvider();
+            latitude = location.getLatitude(); // 위도
+            longitude = location.getLongitude(); // 경도
+            altitude = location.getAltitude();
+
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> list = null;
+
+            try{
+                list = geocoder.getFromLocation(latitude, longitude, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("text", "입출력 오류");
+            }
+
+            if(list !=null) {
+                change_where = list.get(0).getAddressLine(0);
+            }
+        }
 
         QRtext = (TextView)findViewById(R.id.QRtext);
         QRimage = (ImageView)findViewById(R.id.QRimage);
@@ -135,8 +182,14 @@ public class QRchange_page extends AppCompatActivity {
                     }
                 };
 
+                // 시간
+                long todayTime = System.currentTimeMillis(); // 현재 시간을 msec 으로 구한다.
+                Date todayDate = new Date(todayTime); // 현재 시간을 date 변수에 저장한다.
+                SimpleDateFormat todayFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // 시간을 나타낼 포맷을 정한다
+                String change_time = todayFormat.format(todayDate);
+
                 GetData task = new GetData();
-                task.execute("http://yujinpark10.dothome.co.kr/cardExchange.php", userID, yourID);//아이디값 받아온거  보내기
+                task.execute("http://yujinpark10.dothome.co.kr/cardExchange.php", userID, yourID, change_where, change_time);//아이디값 받아온거  보내기
 
 //                Toast.makeText(this,"아이디 스캔 완료 되었습니다.",Toast.LENGTH_LONG).show();
             }
@@ -181,7 +234,9 @@ public class QRchange_page extends AppCompatActivity {
             String serverURL = params[0];
             String userID = params[1];
             String yourID = params[2];
-            String postParameters = "userID=" + userID + "&" + "yourID=" + yourID;
+            String change_where = params[3];
+            String change_time = params[4];
+            String postParameters = "userID=" + userID + "&" + "yourID=" + yourID + "&" + "change_where=" + change_where + "&" + "change_time=" + change_time;
 
             try {
                 URL url = new URL(serverURL);

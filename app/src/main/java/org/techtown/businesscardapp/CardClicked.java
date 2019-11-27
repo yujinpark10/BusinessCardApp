@@ -91,6 +91,9 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG_KING="king";
     private static final String TAG_CARDIMAGE="cardimage";
     private static final String TAG_MEMO="memo";
+    private static final String TAG_PNUM="p_cardNum";
+    private static final String TAG_WHERE="c_where";
+    private static final String TAG_TIME="c_time";
     String mJsonString;
 
     private String mapResult;
@@ -444,6 +447,9 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 String address = item.getString(TAG_ADDRESS);
                 String cardimage = item.getString(TAG_CARDIMAGE);
                 String memo = item.getString(TAG_MEMO);
+                String p_cardNum = item.getString(TAG_PNUM);
+                String where = item.getString(TAG_WHERE);
+                String time = item.getString(TAG_TIME);
 
                 inp_name.setText(name);
                 inp_company.setText(company);
@@ -466,6 +472,17 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                 // 메모 있나 없나 확인
                 if(!memo.equals("null")) {
                     inp_memo.setText(memo);
+                }
+
+                if(p_cardNum!="0") {
+                    LinearLayout changeLayout = (LinearLayout)findViewById(R.id.changeLayout);
+                    changeLayout.setVisibility(View.VISIBLE);
+
+                    TextView c_where = (TextView)findViewById(R.id.c_where);
+                    c_where.setText("교환 장소 : " + where);
+
+                    TextView c_time = (TextView)findViewById(R.id.c_time);
+                    c_time.setText("교환 시간 : " + time);
                 }
 
                 // 명함 이미지

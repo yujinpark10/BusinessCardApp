@@ -110,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        // 현재 위치를 찾아보자
+//        Button button = (Button)findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, WhereMeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
        //아이디값 저장 변수
         SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
         loginid = auto.getString("et_id",null);
@@ -117,16 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         //nfc 장치 사용 하기전에 부름
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-//        // 검색 버튼 클릭시
-//        final ClearEditText clearSearch = (ClearEditText)findViewById(R.id.clearSearch);
-//        clearSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, ListViewSearch.class);
-//                startActivity(intent);
-//            }
-//        });
 
         // LinearLayout 설정 위한 변수 설정
         img_icon = (ImageView)findViewById(R.id.icon);
