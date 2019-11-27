@@ -474,7 +474,7 @@ public class CardClicked extends AppCompatActivity implements OnMapReadyCallback
                     inp_memo.setText(memo);
                 }
 
-                if(p_cardNum!="0") {
+                if(!p_cardNum.equals("0")) {
                     LinearLayout changeLayout = (LinearLayout)findViewById(R.id.changeLayout);
                     changeLayout.setVisibility(View.VISIBLE);
 
