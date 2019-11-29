@@ -155,6 +155,11 @@ public class searchAdapter extends BaseAdapter implements Filterable {
         return listFilter ;
     }
 
+    public void init() {
+        cardListViewItemList = new ArrayList<cardListViewItem>();
+        filteredItemList = cardListViewItemList;
+    }
+
     // 검색 부분
     private class ListFilter extends Filter {
         @Override

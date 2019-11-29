@@ -174,6 +174,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
+                            case R.id.refresh:
+//                                // 둘다 가능 밑에꺼가 공간을 좀 덜 쓰고 빠를거 같음
+//                                searchAdapter = new searchAdapter(MainActivity.this);
+//                                cardList.setAdapter(searchAdapter);
+                                searchAdapter.init();
+                                GetData task = new GetData();
+                                task.execute("http://yujinpark10.dothome.co.kr/maincardlist.php", loginid);
+                                return true;
+
                             case R.id.logout:
                                 Toast.makeText(getApplicationContext(), "logout", Toast.LENGTH_SHORT);
                                 Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);

@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:title="새로고침"
+        android:id="@+id/refresh"/>
+
+    <item
         android:title="로그아웃"
         android:id="@+id/logout" />
 
