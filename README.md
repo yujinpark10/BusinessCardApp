@@ -4,7 +4,6 @@
  - 명함을 관리 보관 하는 어플리케이션
  
 ## 시연 영상
-
 <div horizontal layout>
 
  <div vertical layout>
@@ -13,7 +12,7 @@
  </div>
   
  <div vertical layout> 
-  <div>명함 검색</div>
+  명함 검색
   <div><image width="200px" height="auto"  margin-right="30" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" ></div>
  </div>
    
