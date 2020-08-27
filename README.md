@@ -10,6 +10,9 @@
 
 * 명함 검색, 대표명함 설정
 <div>
-<image width="200px" height="auto" margin-right="30px" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" >
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" >
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384574-e9350e80-e869-11ea-8b64-f066c992bd32.gif" >
- </div>
+</div>
+ 
+ * 카드 클릭
+ <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384549-e4705a80-e869-11ea-880a-c523a13c3b8c.gif" >
