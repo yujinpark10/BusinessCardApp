@@ -20,5 +20,6 @@
     <image width="300px" heigh="600" src="https://user-images.githubusercontent.com/55723654/91384574-e9350e80-e869-11ea-8b64-f066c992bd32.gif" >
   </div>
   
+  </div>
 </div>
 
