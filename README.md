@@ -25,7 +25,7 @@
 </div>
 
 * 교환 클릭
-<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384549-e4705a80-e869-11ea-880a-c523a13c3b8c.gif">
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384564-e803e180-e869-11ea-9df3-cd884d05ebc0.gif">
  
 * FNC 교환, QR 코드 교환
 <div>
