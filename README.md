@@ -5,13 +5,13 @@
  
 ## 시연 영상
 
-### 로그인
-<div>
+ 로그인
+ <div>
   <image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
 </div>
 
-### 명함 검색              대표명함 설정
+### 명함 검색, 대표명함 설정
 <div> 
- <image margin-right = "30px" width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" >
-  <image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384574-e9350e80-e869-11ea-8b64-f066c992bd32.gif" >
+ <image width="300px" heigh="600" margin-right="30px" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" >
+  <image width="300px" heigh="600" src="https://user-images.githubusercontent.com/55723654/91384574-e9350e80-e869-11ea-8b64-f066c992bd32.gif" >
 </div>
