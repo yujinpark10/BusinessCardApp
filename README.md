@@ -6,5 +6,5 @@
 ## 시연 영상
 ### 로그인
 <div>
-  <image src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif">
+  <image src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif" width="400">
 </div>
