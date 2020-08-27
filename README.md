@@ -5,7 +5,7 @@
 ==============
 ## 시연 영상
 ### 로그인
-<div style="width: 500px; height: 500px; position: relative; top: 0; left: -100px">
+<div style="width: 300px; height: 300px; position: relative; top: 0; left: -100px">
   <image style="position: absolute; clip: rect(0 150px 0 150px)" width="500px"
          src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif" >
 </div>
