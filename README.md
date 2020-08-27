@@ -5,6 +5,6 @@
 ==============
 ## 시연 영상
 ### 로그인
-<div width ="200" height ="200" position = "relative" top= "0" left= "-100">
-  <image position="absolute" clip = "rect(0 299px 29px 193px)" width ="500" height ="200" src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif">
+<div>
+  <image src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif">
 </div>
