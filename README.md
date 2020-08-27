@@ -5,3 +5,6 @@
 ==============
 ## 시연 영상
 ### 로그인
+<div>
+  <image width="200" src="httpsuser-images.githubusercontent.com5572365491380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif">
+</div>
