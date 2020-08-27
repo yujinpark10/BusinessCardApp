@@ -30,6 +30,7 @@
 * FNC 교환, QR 코드 교환
 <div>
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384558-e6d2b480-e869-11ea-88a6-429d826fe7cb.gif">
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384563-e76b4b00-e869-11ea-970a-a2b3b2049302.gif">
 </div>
   
 *로그아웃...
