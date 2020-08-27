@@ -6,5 +6,5 @@
 ## 시연 영상
 ### 로그인
 <div width="300px" heigh = "600" position = "relative" overflow = "hidden">
-  <image src="https://user-images.githubusercontent.com/55723654/91380111-23e57980-e85f-11ea-9079-b390205cdcf8.gif" >
+  <image src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
 </div>
