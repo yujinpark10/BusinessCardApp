@@ -23,3 +23,14 @@
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384552-e5a18780-e869-11ea-9ba0-0f170e6ca019.gif">
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384555-e63a1e00-e869-11ea-8050-727bdeeb5bde.gif">
 </div>
+
+* 교환 클릭
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384549-e4705a80-e869-11ea-880a-c523a13c3b8c.gif">
+ 
+* FNC 교환, QR 코드 교환
+<div>
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384558-e6d2b480-e869-11ea-88a6-429d826fe7cb.gif">
+</div>
+  
+*로그아웃...
+<image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384566-e803e180-e869-11ea-8186-6a1956e84ab1.gif">  
