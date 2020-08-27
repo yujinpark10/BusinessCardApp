@@ -33,5 +33,5 @@
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384563-e76b4b00-e869-11ea-970a-a2b3b2049302.gif">
 </div>
   
-*로그아웃...
+* 로그아웃...
 <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384566-e803e180-e869-11ea-8186-6a1956e84ab1.gif">  
