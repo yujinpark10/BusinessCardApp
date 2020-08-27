@@ -7,7 +7,7 @@
 
  로그인
  <div>
-  <image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
+  <image width="200px" height="auto" src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
 </div>
 
 ### 명함 검색, 대표명함 설정
