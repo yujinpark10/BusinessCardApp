@@ -5,6 +5,9 @@
 ==============
 ## 시연 영상
 ### 로그인
-<div width="300px" heigh = "600" position = "relative" overflow = "hidden">
-  <image src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
+<image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384570-e89c7800-e869-11ea-845e-8c3b937535cc.gif" >
+### 명함 검색, 대표 명함 설정
+<div  position = "relative" overflow = "hidden"> 
+ <image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384572-e89c7800-e869-11ea-9685-b36e80f128a0.gif" >
+  <image width="300px" heigh = "600" src="https://user-images.githubusercontent.com/55723654/91384574-e9350e80-e869-11ea-8b64-f066c992bd32.gif" >
 </div>
